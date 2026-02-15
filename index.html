@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="ko-KR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>존엄한 삶의 마무리 준비 체크리스트</title>
+  <style>
+    :root{
+      --bg:#0b1411;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.08);
+      --line:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.66);
+
+      --ok:#27d6a7;
+      --na:#f1c27a;
+
+      --radius:18px;
+      --radiusSm:14px;
+      --shadow:0 18px 60px rgba(0,0,0,.45);
+
+      --font: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at 15% 0%, rgba(39,214,167,.14), transparent 60%),
+        radial-gradient(900px 650px at 95% 10%, rgba(110,160,255,.10), transparent 60%),
+        radial-gradient(700px 520px at 60% 100%, rgba(241,194,122,.10), transparent 60%),
+        var(--bg);
+      min-height:100vh;
+      padding:22px 14px 42px;
+    }
+    .wrap{ max-width:980px; margin:0 auto; }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    h1{
+      margin:0;
+      font-size:clamp(20px, 3.2vw, 28px);
+      letter-spacing:-0.02em;
+      font-weight:820;
+      line-height:1.2;
+    }
+    .sub{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+      max-width:70ch;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:.18s ease;
+      font-weight:750;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform:translateY(-1px); background:rgba(255,255,255,.10); }
+    .btn:active{ transform:translateY(0); }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    /* Summary */
+    .summary{
+      padding:18px 18px 14px;
+      display:grid;
+      gap:10px;
+    }
+    .count{
+      font-size:clamp(26px, 5vw, 40px);
+      font-weight:900;
+      letter-spacing:-0.02em;
+    }
+    .bar{
+      height:12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    .bar i{
+      display:block;
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(39,214,167,.92), rgba(39,214,167,.45));
+      transition:width .22s ease;
+    }
+    .hint{
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.4;
+    }
+    .toast{
+      display:none;
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.4;
+    }
+    .toast.show{ display:block; }
+
+    /* Groups */
+    .grid{
+      padding:14px;
+      border-top:1px solid var(--line);
+      display:grid;
+      gap:12px;
+    }
+    details{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:var(--radiusSm);
+      overflow:hidden;
+    }
+    details[open]{ background:rgba(255,255,255,.055); }
+    summary{
+      list-style:none;
+      cursor:pointer;
+      padding:14px 14px;
+      user-select:none;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .gtitle{
+      display:flex; flex-direction:column; gap:4px;
+    }
+    .gtitle strong{ font-size:15px; letter-spacing:-0.01em; }
+    .gtitle span{ font-size:12px; color:var(--muted); }
+    .chev{ color:var(--muted); font-size:12px; }
+
+    .items{
+      padding:10px;
+      border-top:1px solid var(--line);
+      display:grid;
+      gap:10px;
+    }
+    .item{
+      background:rgba(0,0,0,.16);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:10px;
+      align-items:center;
+    }
+    .name{
+      font-weight:820;
+      letter-spacing:-0.01em;
+      font-size:14px;
+      line-height:1.25;
+    }
+    .desc{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.35;
+    }
+
+    /* Segmented controls */
+    .seg{
+      display:inline-flex;
+      border:1px solid var(--line);
+      border-radius:999px;
+      overflow:hidden;
+      background:rgba(255,255,255,.04);
+    }
+    .seg button{
+      border:0;
+      background:transparent;
+      color:var(--muted);
+      padding:9px 10px;
+      cursor:pointer;
+      font-weight:820;
+      font-size:12px;
+      transition:.15s ease;
+      white-space:nowrap;
+    }
+    .seg button:hover{ background:rgba(255,255,255,.07); }
+    .seg button.active{
+      color:rgba(0,0,0,.86);
+      background:linear-gradient(180deg, rgba(39,214,167,.92), rgba(39,214,167,.64));
+    }
+    .seg button.na.active{
+      color:rgba(0,0,0,.86);
+      background:linear-gradient(180deg, rgba(241,194,122,.95), rgba(241,194,122,.62));
+    }
+
+    /* Pet excluded styling */
+    .item.excluded{
+      opacity:.68;
+      border-style:dashed;
+    }
+
+    @media (min-width: 860px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+      .span2{ grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>존엄한 삶의 마무리 준비 체크리스트</h1>
+      <p class="sub">
+        체크는 단순하게. 삶은 정직하게.<br/>
+        각 항목은 <b>완료/미완료</b>로만 점검합니다. 단, <b>반려동물 돌봄</b>은 없을 수 있으므로 <b>해당 없음</b>을 선택하면 분모에서 제외됩니다.
+      </p>
+    </div>
+    <button class="btn" id="resetBtn" type="button">초기화</button>
+  </header>
+
+  <section class="card">
+    <div class="summary">
+      <div class="count" id="countText">완료 0 / 12</div>
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="toast" id="toast"></div>
+      <div class="hint">배포 링크로 열어도 각자 기기에서만 저장됩니다(개인정보 수집 없음).</div>
+    </div>
+
+    <div class="grid span2">
+
+      <details open>
+        <summary>
+          <div class="gtitle">
+            <strong>Ⅰ. 의료적 자기결정</strong>
+            <span>내 뜻이 남는 최소한의 준비 (4)</span>
+          </div>
+          <div class="chev">열기/닫기</div>
+        </summary>
+        <div class="items">
+          <div class="item">
+            <div>
+              <div class="name">사전연명의료의향서</div>
+              <div class="desc">무의미한 연명의료 시행 여부를 미리 결정</div>
+            </div>
+            <div class="seg" data-id="advance_directive">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">의료 대리인 지정</div>
+              <div class="desc">의사결정 불능 시 나의 의사를 대변할 사람 지정</div>
+            </div>
+            <div class="seg" data-id="medical_proxy">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">사전치매요양의향서</div>
+              <div class="desc">인지 저하 시 원하는 돌봄 방향과 거주 방식 기록</div>
+            </div>
+            <div class="seg" data-id="dementia_care_plan">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">호스피스·완화의료 이해</div>
+              <div class="desc">통증 완화와 존엄 중심 돌봄에 대한 이해</div>
+            </div>
+            <div class="seg" data-id="hospice_understanding">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details open>
+        <summary>
+          <div class="gtitle">
+            <strong>Ⅱ. 돌봄 환경 설계</strong>
+            <span>돌봄이 가능한 환경을 미리 정돈 (3)</span>
+          </div>
+          <div class="chev">열기/닫기</div>
+        </summary>
+        <div class="items">
+          <div class="item">
+            <div>
+              <div class="name">간병 재정 계획</div>
+              <div class="desc">장기요양보험 및 돌봄 비용 구조 사전 점검</div>
+            </div>
+            <div class="seg" data-id="care_finance_plan">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">임종 장소 선택</div>
+              <div class="desc">가정·병원·요양시설 등 선호 환경 결정</div>
+            </div>
+            <div class="seg" data-id="place_of_death">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+
+          <div class="item" id="petRow">
+            <div>
+              <div class="name">반려동물 돌봄 계획</div>
+              <div class="desc">부재 시 보호처 및 돌봄 지침 마련 (없으면 ‘해당 없음’)</div>
+            </div>
+            <div class="seg" data-id="pet_plan">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+              <button type="button" class="opt na" data-val="na">해당 없음</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details open>
+        <summary>
+          <div class="gtitle">
+            <strong>Ⅲ. 자산·유산 정리</strong>
+            <span>남길 것과 정리할 것을 단정히 (3)</span>
+          </div>
+          <div class="chev">열기/닫기</div>
+        </summary>
+        <div class="items">
+          <div class="item">
+            <div>
+              <div class="name">유언장 작성</div>
+              <div class="desc">재산, 권리, 관계에 대한 법적 의사 정리</div>
+            </div>
+            <div class="seg" data-id="will">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">장기기증 희망등록</div>
+              <div class="desc">생명 나눔에 대한 공식적 의사 표현</div>
+            </div>
+            <div class="seg" data-id="organ_donation">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">디지털 유산·유품 정리</div>
+              <div class="desc">SNS 계정 처리 및 소중한 물건의 귀속처 지정</div>
+            </div>
+            <div class="seg" data-id="digital_legacy">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details open>
+        <summary>
+          <div class="gtitle">
+            <strong>Ⅳ. 관계·의례 준비</strong>
+            <span>남겨질 사람들을 위한 마지막 정리 (3)</span>
+          </div>
+          <div class="chev">열기/닫기</div>
+        </summary>
+        <div class="items">
+          <div class="item">
+            <div>
+              <div class="name">삶의 메시지 기록</div>
+              <div class="desc">가족에게 남길 편지, 화해와 용서, 가치 선언문</div>
+            </div>
+            <div class="seg" data-id="life_message">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">사전장례의향서</div>
+              <div class="desc">장례 방식, 추모 형식, 영적 요소 선택</div>
+            </div>
+            <div class="seg" data-id="funeral_preferences">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">긴급 연락망 정리</div>
+              <div class="desc">위급 시 연락 우선순위 및 부고 알림 대상 정리</div>
+            </div>
+            <div class="seg" data-id="emergency_contacts">
+              <button type="button" class="opt" data-val="0">미완료</button>
+              <button type="button" class="opt" data-val="1">완료</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // =========================
+  // 웰다잉 체크리스트 (배포용)
+  // - 2상태: 미완료/완료
+  // - 반려동물만 3상태: 미완료/완료/해당 없음(분모 제외)
+  // =========================
+
+  const STORAGE_KEY = "goyohan_welldying_checklist_v2";
+
+  const countText = document.getElementById("countText");
+  const barFill   = document.getElementById("barFill");
+  const toast     = document.getElementById("toast");
+  const resetBtn  = document.getElementById("resetBtn");
+  const petRow    = document.getElementById("petRow");
+
+  // state values: "0"(미완료) | "1"(완료) | "na"(해당없음 - pet only)
+  let state = {};
+
+  function load(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      state = raw ? (JSON.parse(raw) || {}) : {};
+    }catch(e){
+      state = {};
+    }
+  }
+  function save(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove("show"), 2400);
+  }
+
+  function segments(){
+    return Array.from(document.querySelectorAll(".seg"));
+  }
+
+  function getVal(id){
+    return (state[id] ?? "0");
+  }
+
+  function setActive(segEl, val){
+    const btns = segEl.querySelectorAll("button.opt");
+    btns.forEach(b => b.classList.toggle("active", b.dataset.val === String(val)));
+  }
+
+  function compute(){
+    const segs = segments();
+
+    let denom = 12;           // 요청 고정: 12개
+    let done  = 0;
+
+    // 반려동물 해당 없음이면 분모에서 1 제외 → 11
+    const pet = getVal("pet_plan");
+    if(pet === "na") denom = 11;
+
+    // 완료 카운트: 11개는 "1"이면 완료,
+    // 반려동물은 "1"만 완료로 세고, "na"는 제외
+    segs.forEach(seg => {
+      const id = seg.dataset.id;
+      const v = getVal(id);
+
+      if(id === "pet_plan"){
+        if(v === "1") done += 1;
+      }else{
+        if(v === "1") done += 1;
+      }
+    });
+
+    // 분모가 11이면, pet_plan이 na일 때 pet이 미완료/완료로 계산되지 않으므로
+    // done이 최대 11이 되는 구조가 자연스럽게 유지됩니다.
+
+    const pct = denom > 0 ? Math.round((done / denom) * 100) : 0;
+    countText.textContent = `완료 ${done} / ${denom}`;
+    barFill.style.width = `${pct}%`;
+
+    // pet row style
+    if(pet === "na"){
+      petRow.classList.add("excluded");
+    }else{
+      petRow.classList.remove("excluded");
+    }
+  }
+
+  function render(){
+    segments().forEach(seg => {
+      const id = seg.dataset.id;
+      const v = getVal(id);
+      setActive(seg, v);
+    });
+    compute();
+  }
+
+  function onSegClick(e){
+    const btn = e.target.closest("button.opt");
+    if(!btn) return;
+
+    const seg = e.currentTarget;
+    const id  = seg.dataset.id;
+    const val = btn.dataset.val; // 0/1/na
+
+    // na는 반려동물만 허용 (안전장치)
+    if(val === "na" && id !== "pet_plan") return;
+
+    state[id] = val;
+    save();
+    setActive(seg, val);
+    compute();
+
+    if(id === "pet_plan" && val === "na"){
+      showToast("반려동물 항목은 점검 대상에서 제외되었습니다. (분모 11)");
+    }
+    if(id === "pet_plan" && val !== "na"){
+      showToast("반려동물 항목이 점검 대상에 포함되었습니다. (분모 12)");
+    }
+  }
+
+  function bind(){
+    segments().forEach(seg => seg.addEventListener("click", onSegClick));
+
+    resetBtn.addEventListener("click", () => {
+      const ok = confirm("모든 항목을 ‘미완료’로 초기화할까요?");
+      if(!ok) return;
+      state = {};
+      save();
+      render();
+      showToast("초기화되었습니다.");
+    });
+  }
+
+  load();
+  bind();
+  render();
+</script>
+</body>
+</html>
