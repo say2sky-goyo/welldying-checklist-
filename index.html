@@ -6,21 +6,28 @@
   <title>존엄한 삶의 마무리 준비 체크리스트</title>
   <style>
     :root{
-      --bg:#0b1411;
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.08);
-      --line:rgba(255,255,255,.12);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.66);
+      /* Deep navy theme */
+      --bg0:#061427;
+      --bg1:#071a33;
+      --bg2:#081f3d;
 
-      --ok:#27d6a7;
-      --na:#f1c27a;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --line: rgba(255,255,255,.12);
 
-      --radius:18px;
-      --radiusSm:14px;
-      --shadow:0 18px 60px rgba(0,0,0,.45);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.66);
 
-      --font: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", Segoe UI, Roboto, Arial, sans-serif;
+      --ok: #33d6c5;     /* teal mint */
+      --alt: #ffd089;    /* amber */
+      --na: #9fb4ff;     /* soft periwinkle for N/A badge */
+
+      --radius: 18px;
+      --radiusSm: 14px;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+
+      --font: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo",
+              "Noto Sans KR", Segoe UI, Roboto, Arial, sans-serif;
     }
 
     *{ box-sizing:border-box; }
@@ -29,10 +36,10 @@
       font-family:var(--font);
       color:var(--text);
       background:
-        radial-gradient(1100px 700px at 15% 0%, rgba(39,214,167,.14), transparent 60%),
-        radial-gradient(900px 650px at 95% 10%, rgba(110,160,255,.10), transparent 60%),
-        radial-gradient(700px 520px at 60% 100%, rgba(241,194,122,.10), transparent 60%),
-        var(--bg);
+        radial-gradient(1100px 700px at 15% 0%, rgba(51,214,197,.14), transparent 60%),
+        radial-gradient(900px 650px at 95% 12%, rgba(159,180,255,.12), transparent 62%),
+        radial-gradient(800px 520px at 55% 100%, rgba(255,208,137,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, var(--bg2));
       min-height:100vh;
       padding:22px 14px 42px;
     }
@@ -49,7 +56,7 @@
       margin:0;
       font-size:clamp(20px, 3.2vw, 28px);
       letter-spacing:-0.02em;
-      font-weight:820;
+      font-weight:860;
       line-height:1.2;
     }
     .sub{
@@ -57,7 +64,7 @@
       color:var(--muted);
       font-size:13px;
       line-height:1.45;
-      max-width:70ch;
+      max-width:78ch;
     }
 
     .btn{
@@ -69,7 +76,7 @@
       border-radius:12px;
       cursor:pointer;
       transition:.18s ease;
-      font-weight:750;
+      font-weight:780;
       font-size:13px;
       white-space:nowrap;
     }
@@ -77,7 +84,7 @@
     .btn:active{ transform:translateY(0); }
 
     .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
       border:1px solid var(--line);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
@@ -99,7 +106,7 @@
       height:12px;
       border-radius:999px;
       border:1px solid var(--line);
-      background:rgba(0,0,0,.22);
+      background:rgba(0,0,0,.24);
       overflow:hidden;
     }
     .bar i{
@@ -107,7 +114,7 @@
       height:100%;
       width:0%;
       border-radius:999px;
-      background:linear-gradient(90deg, rgba(39,214,167,.92), rgba(39,214,167,.45));
+      background:linear-gradient(90deg, rgba(51,214,197,.92), rgba(51,214,197,.45));
       transition:width .22s ease;
     }
     .hint{
@@ -172,7 +179,7 @@
       align-items:center;
     }
     .name{
-      font-weight:820;
+      font-weight:860;
       letter-spacing:-0.01em;
       font-size:14px;
       line-height:1.25;
@@ -198,7 +205,7 @@
       color:var(--muted);
       padding:9px 10px;
       cursor:pointer;
-      font-weight:820;
+      font-weight:860;
       font-size:12px;
       transition:.15s ease;
       white-space:nowrap;
@@ -206,16 +213,16 @@
     .seg button:hover{ background:rgba(255,255,255,.07); }
     .seg button.active{
       color:rgba(0,0,0,.86);
-      background:linear-gradient(180deg, rgba(39,214,167,.92), rgba(39,214,167,.64));
+      background:linear-gradient(180deg, rgba(51,214,197,.92), rgba(51,214,197,.64));
     }
-    .seg button.na.active{
+    .seg button.alt.active{
       color:rgba(0,0,0,.86);
-      background:linear-gradient(180deg, rgba(241,194,122,.95), rgba(241,194,122,.62));
+      background:linear-gradient(180deg, rgba(255,208,137,.95), rgba(255,208,137,.62));
     }
 
-    /* Pet excluded styling */
+    /* N/A styling (pet only) */
     .item.excluded{
-      opacity:.68;
+      opacity:.72;
       border-style:dashed;
     }
 
@@ -233,8 +240,9 @@
     <div>
       <h1>존엄한 삶의 마무리 준비 체크리스트</h1>
       <p class="sub">
-        체크는 단순하게. 삶은 정직하게.<br/>
-        각 항목은 <b>완료/미완료</b>로만 점검합니다. 단, <b>반려동물 돌봄</b>은 없을 수 있으므로 <b>해당 없음</b>을 선택하면 분모에서 제외됩니다.
+        체크는 간결하게, 삶은 선명하게.<br/>
+        각 항목은 요청하신 기준으로 <b>작성/미작성</b>, <b>결정/미결정</b>을 선택합니다.
+        반려동물이 없다면 <b>해당없음</b>을 선택하여 분모에서 제외됩니다.
       </p>
     </div>
     <button class="btn" id="resetBtn" type="button">초기화</button>
@@ -245,16 +253,17 @@
       <div class="count" id="countText">완료 0 / 12</div>
       <div class="bar"><i id="barFill"></i></div>
       <div class="toast" id="toast"></div>
-      <div class="hint">배포 링크로 열어도 각자 기기에서만 저장됩니다(개인정보 수집 없음).</div>
+      <div class="hint">이 체크는 각 사용자의 기기(브라우저)에만 저장됩니다(서버 저장/수집 없음).</div>
     </div>
 
     <div class="grid span2">
 
+      <!-- 1. 의료적 자기결정 -->
       <details open>
         <summary>
           <div class="gtitle">
-            <strong>Ⅰ. 의료적 자기결정</strong>
-            <span>내 뜻이 남는 최소한의 준비 (4)</span>
+            <strong>1. 의료적 자기결정 (작성/미작성)</strong>
+            <span>의료 상황에서 ‘나의 뜻’을 남기는 준비</span>
           </div>
           <div class="chev">열기/닫기</div>
         </summary>
@@ -264,31 +273,20 @@
               <div class="name">사전연명의료의향서</div>
               <div class="desc">무의미한 연명의료 시행 여부를 미리 결정</div>
             </div>
-            <div class="seg" data-id="advance_directive">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
+            <div class="seg" data-id="m1_advance_directive" data-type="write2">
+              <button type="button" class="opt" data-val="0">미작성</button>
+              <button type="button" class="opt" data-val="1">작성</button>
             </div>
           </div>
 
           <div class="item">
             <div>
               <div class="name">의료 대리인 지정</div>
-              <div class="desc">의사결정 불능 시 나의 의사를 대변할 사람 지정</div>
+              <div class="desc">의사결정이 어려울 때 나의 의사를 대변할 사람 지정</div>
             </div>
-            <div class="seg" data-id="medical_proxy">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
-            </div>
-          </div>
-
-          <div class="item">
-            <div>
-              <div class="name">사전치매요양의향서</div>
-              <div class="desc">인지 저하 시 원하는 돌봄 방향과 거주 방식 기록</div>
-            </div>
-            <div class="seg" data-id="dementia_care_plan">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
+            <div class="seg" data-id="m1_medical_proxy" data-type="write2">
+              <button type="button" class="opt" data-val="0">미작성</button>
+              <button type="button" class="opt" data-val="1">작성</button>
             </div>
           </div>
 
@@ -297,64 +295,54 @@
               <div class="name">호스피스·완화의료 이해</div>
               <div class="desc">통증 완화와 존엄 중심 돌봄에 대한 이해</div>
             </div>
-            <div class="seg" data-id="hospice_understanding">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
+            <div class="seg" data-id="m1_hospice_understanding" data-type="write2">
+              <button type="button" class="opt" data-val="0">미작성</button>
+              <button type="button" class="opt" data-val="1">작성</button>
             </div>
           </div>
         </div>
       </details>
 
+      <!-- 2. 돌봄 자기결정 -->
       <details open>
         <summary>
           <div class="gtitle">
-            <strong>Ⅱ. 돌봄 환경 설계</strong>
-            <span>돌봄이 가능한 환경을 미리 정돈 (3)</span>
+            <strong>2. 돌봄 자기결정 (작성/미작성)</strong>
+            <span>돌봄의 방식과 장소를 ‘미리 말해두는’ 준비</span>
           </div>
           <div class="chev">열기/닫기</div>
         </summary>
         <div class="items">
           <div class="item">
             <div>
-              <div class="name">간병 재정 계획</div>
-              <div class="desc">장기요양보험 및 돌봄 비용 구조 사전 점검</div>
+              <div class="name">사전치매요양의향서</div>
+              <div class="desc">인지 저하 시 원하는 돌봄 방향과 거주 방식 기록</div>
             </div>
-            <div class="seg" data-id="care_finance_plan">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
+            <div class="seg" data-id="m2_dementia_plan" data-type="write2">
+              <button type="button" class="opt" data-val="0">미작성</button>
+              <button type="button" class="opt" data-val="1">작성</button>
             </div>
           </div>
 
           <div class="item">
             <div>
-              <div class="name">임종 장소 선택</div>
-              <div class="desc">가정·병원·요양시설 등 선호 환경 결정</div>
+              <div class="name">거동이 어려울 때 돌봄받고 싶은 장소</div>
+              <div class="desc">의식이 있으나 거동이 어려울 때, 돌봄을 받고 싶은 장소</div>
             </div>
-            <div class="seg" data-id="place_of_death">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
-            </div>
-          </div>
-
-          <div class="item" id="petRow">
-            <div>
-              <div class="name">반려동물 돌봄 계획</div>
-              <div class="desc">부재 시 보호처 및 돌봄 지침 마련 (없으면 ‘해당 없음’)</div>
-            </div>
-            <div class="seg" data-id="pet_plan">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
-              <button type="button" class="opt na" data-val="na">해당 없음</button>
+            <div class="seg" data-id="m2_care_place_when_difficult" data-type="write2">
+              <button type="button" class="opt" data-val="0">미작성</button>
+              <button type="button" class="opt" data-val="1">작성</button>
             </div>
           </div>
         </div>
       </details>
 
+      <!-- 3. 자산·유산 정리 -->
       <details open>
         <summary>
           <div class="gtitle">
-            <strong>Ⅲ. 자산·유산 정리</strong>
-            <span>남길 것과 정리할 것을 단정히 (3)</span>
+            <strong>3. 자산·유산 정리 (결정/미결정)</strong>
+            <span>남길 것과 정리할 것을 정돈하는 준비</span>
           </div>
           <div class="chev">열기/닫기</div>
         </summary>
@@ -364,20 +352,9 @@
               <div class="name">유언장 작성</div>
               <div class="desc">재산, 권리, 관계에 대한 법적 의사 정리</div>
             </div>
-            <div class="seg" data-id="will">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
-            </div>
-          </div>
-
-          <div class="item">
-            <div>
-              <div class="name">장기기증 희망등록</div>
-              <div class="desc">생명 나눔에 대한 공식적 의사 표현</div>
-            </div>
-            <div class="seg" data-id="organ_donation">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
+            <div class="seg" data-id="m3_will" data-type="decide2">
+              <button type="button" class="opt" data-val="0">미결정</button>
+              <button type="button" class="opt" data-val="1">결정</button>
             </div>
           </div>
 
@@ -386,53 +363,125 @@
               <div class="name">디지털 유산·유품 정리</div>
               <div class="desc">SNS 계정 처리 및 소중한 물건의 귀속처 지정</div>
             </div>
-            <div class="seg" data-id="digital_legacy">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
+            <div class="seg" data-id="m3_digital_legacy" data-type="decide2">
+              <button type="button" class="opt" data-val="0">미결정</button>
+              <button type="button" class="opt" data-val="1">결정</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">간병 재정 계획</div>
+              <div class="desc">장기요양보험 및 돌봄 비용 구조 사전 점검</div>
+            </div>
+            <div class="seg" data-id="m3_care_finance" data-type="decide2">
+              <button type="button" class="opt" data-val="0">미결정</button>
+              <button type="button" class="opt" data-val="1">결정</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="name">장기기증 희망등록</div>
+              <div class="desc">생명 나눔에 대한 공식적 의사 표현</div>
+            </div>
+            <div class="seg" data-id="m3_organ_donation" data-type="organ3">
+              <button type="button" class="opt" data-val="0">미결정</button>
+              <button type="button" class="opt" data-val="1">결정</button>
+              <button type="button" class="opt alt" data-val="2">원하지 않음</button>
             </div>
           </div>
         </div>
       </details>
 
+      <!-- 4. 존재의 기록 -->
       <details open>
         <summary>
           <div class="gtitle">
-            <strong>Ⅳ. 관계·의례 준비</strong>
-            <span>남겨질 사람들을 위한 마지막 정리 (3)</span>
+            <strong>4. 존재의 기록 (작성/미작성)</strong>
+            <span>기억·회상·용서·화해로 ‘나’를 남기는 준비</span>
           </div>
           <div class="chev">열기/닫기</div>
         </summary>
         <div class="items">
           <div class="item">
             <div>
-              <div class="name">삶의 메시지 기록</div>
-              <div class="desc">가족에게 남길 편지, 화해와 용서, 가치 선언문</div>
+              <div class="name">자서전, 화해와 용서, 가치 선언문</div>
+              <div class="desc">실존과 관련된 기억/회상/용서/화해</div>
             </div>
-            <div class="seg" data-id="life_message">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
+            <div class="seg" data-id="m4_existence_record" data-type="write2">
+              <button type="button" class="opt" data-val="0">미작성</button>
+              <button type="button" class="opt" data-val="1">작성</button>
             </div>
           </div>
+        </div>
+      </details>
 
+      <!-- 5. 임종 돌봄 및 장례 의향 -->
+      <details open>
+        <summary>
+          <div class="gtitle">
+            <strong>5. 임종 돌봄 및 장례 의향 (작성/미작성)</strong>
+            <span>마지막 돌봄과 의례의 방향을 남기는 준비</span>
+          </div>
+          <div class="chev">열기/닫기</div>
+        </summary>
+        <div class="items">
           <div class="item">
             <div>
               <div class="name">사전장례의향서</div>
               <div class="desc">장례 방식, 추모 형식, 영적 요소 선택</div>
             </div>
-            <div class="seg" data-id="funeral_preferences">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
+            <div class="seg" data-id="m5_funeral" data-type="write2">
+              <button type="button" class="opt" data-val="0">미작성</button>
+              <button type="button" class="opt" data-val="1">작성</button>
             </div>
           </div>
+        </div>
+      </details>
 
+      <!-- 6. 긴급 연락망 정리 -->
+      <details open>
+        <summary>
+          <div class="gtitle">
+            <strong>6. 긴급 연락망 정리 (작성/미작성)</strong>
+            <span>위급 시 연락의 우선순위를 남기는 준비</span>
+          </div>
+          <div class="chev">열기/닫기</div>
+        </summary>
+        <div class="items">
           <div class="item">
             <div>
-              <div class="name">긴급 연락망 정리</div>
-              <div class="desc">위급 시 연락 우선순위 및 부고 알림 대상 정리</div>
+              <div class="name">위급 시 연락 우선순위 및 부고 알림 대상</div>
+              <div class="desc">긴급 상황에서 ‘누구에게 먼저’ 연락할지 정리</div>
             </div>
-            <div class="seg" data-id="emergency_contacts">
-              <button type="button" class="opt" data-val="0">미완료</button>
-              <button type="button" class="opt" data-val="1">완료</button>
+            <div class="seg" data-id="m6_emergency_contacts" data-type="write2">
+              <button type="button" class="opt" data-val="0">미작성</button>
+              <button type="button" class="opt" data-val="1">작성</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- 7. 반려동물 돌봄 계획 -->
+      <details open>
+        <summary>
+          <div class="gtitle">
+            <strong>7. 반려동물 돌봄 계획 (결정/미결정/해당없음)</strong>
+            <span>반려동물이 있을 때만 점검하는 준비</span>
+          </div>
+          <div class="chev">열기/닫기</div>
+        </summary>
+        <div class="items">
+          <div class="item" id="petRow">
+            <div>
+              <div class="name">부재 시 보호처 및 돌봄 지침</div>
+              <div class="desc">반려동물이 없다면 ‘해당없음’을 선택</div>
+            </div>
+            <div class="seg" data-id="m7_pet_plan" data-type="pet3">
+              <button type="button" class="opt" data-val="0">미결정</button>
+              <button type="button" class="opt" data-val="1">결정</button>
+              <button type="button" class="opt alt" data-val="na">해당없음</button>
             </div>
           </div>
         </div>
@@ -444,13 +493,15 @@
 </div>
 
 <script>
-  // =========================
-  // 웰다잉 체크리스트 (배포용)
-  // - 2상태: 미완료/완료
-  // - 반려동물만 3상태: 미완료/완료/해당 없음(분모 제외)
-  // =========================
+  // ==========================================
+  // 고요한결정 - 배포용 체크리스트 (v3)
+  // - 상단: 완료 X / Y
+  // - 반려동물(해당없음) 선택 시 분모에서 제외
+  // - 장기기증: 결정/미결정/원하지 않음(원하지 않음도 '선택 완료'로 카운트)
+  // - 저장: localStorage (개인 기기)
+  // ==========================================
 
-  const STORAGE_KEY = "goyohan_welldying_checklist_v2";
+  const STORAGE_KEY = "goyohan_welldying_checklist_v3";
 
   const countText = document.getElementById("countText");
   const barFill   = document.getElementById("barFill");
@@ -458,7 +509,10 @@
   const resetBtn  = document.getElementById("resetBtn");
   const petRow    = document.getElementById("petRow");
 
-  // state values: "0"(미완료) | "1"(완료) | "na"(해당없음 - pet only)
+  // State values per segment:
+  // - write2 / decide2: "0" or "1"
+  // - organ3: "0" or "1" or "2" (2 = 원하지 않음)
+  // - pet3: "0" or "1" or "na" (na = 해당없음)
   let state = {};
 
   function load(){
@@ -493,38 +547,56 @@
     btns.forEach(b => b.classList.toggle("active", b.dataset.val === String(val)));
   }
 
+  function isCountedAsComplete(segEl, val){
+    const type = segEl.dataset.type;
+
+    // 작성/결정 계열: 1이면 완료
+    if(type === "write2" || type === "decide2"){
+      return val === "1";
+    }
+
+    // 장기기증: 1(결정) 또는 2(원하지 않음)도 완료로 카운트
+    if(type === "organ3"){
+      return (val === "1" || val === "2");
+    }
+
+    // 반려동물: 1(결정)만 완료, na는 분모 제외
+    if(type === "pet3"){
+      return val === "1";
+    }
+
+    return false;
+  }
+
   function compute(){
     const segs = segments();
 
-    let denom = 12;           // 요청 고정: 12개
+    // 총 항목 수: 세그먼트 개수(현재 12) - 반려동물 NA 시 1 제외
+    let denom = segs.length;
     let done  = 0;
 
-    // 반려동물 해당 없음이면 분모에서 1 제외 → 11
-    const pet = getVal("pet_plan");
-    if(pet === "na") denom = 11;
+    const petVal = getVal("m7_pet_plan");
+    if(petVal === "na"){
+      denom -= 1;
+    }
 
-    // 완료 카운트: 11개는 "1"이면 완료,
-    // 반려동물은 "1"만 완료로 세고, "na"는 제외
     segs.forEach(seg => {
       const id = seg.dataset.id;
-      const v = getVal(id);
+      const val = getVal(id);
 
-      if(id === "pet_plan"){
-        if(v === "1") done += 1;
-      }else{
-        if(v === "1") done += 1;
+      // 반려동물 NA는 분모 제외, 완료 계산도 제외
+      if(seg.dataset.type === "pet3" && val === "na"){
+        return;
       }
+      if(isCountedAsComplete(seg, val)) done += 1;
     });
-
-    // 분모가 11이면, pet_plan이 na일 때 pet이 미완료/완료로 계산되지 않으므로
-    // done이 최대 11이 되는 구조가 자연스럽게 유지됩니다.
 
     const pct = denom > 0 ? Math.round((done / denom) * 100) : 0;
     countText.textContent = `완료 ${done} / ${denom}`;
     barFill.style.width = `${pct}%`;
 
     // pet row style
-    if(pet === "na"){
+    if(petVal === "na"){
       petRow.classList.add("excluded");
     }else{
       petRow.classList.remove("excluded");
@@ -546,21 +618,28 @@
 
     const seg = e.currentTarget;
     const id  = seg.dataset.id;
-    const val = btn.dataset.val; // 0/1/na
+    const val = btn.dataset.val; // "0" | "1" | "2" | "na"
 
-    // na는 반려동물만 허용 (안전장치)
-    if(val === "na" && id !== "pet_plan") return;
+    // 안전장치: 타입별 허용값
+    const type = seg.dataset.type;
+    const allowed =
+      (type === "write2"  && (val === "0" || val === "1")) ||
+      (type === "decide2" && (val === "0" || val === "1")) ||
+      (type === "organ3"  && (val === "0" || val === "1" || val === "2")) ||
+      (type === "pet3"    && (val === "0" || val === "1" || val === "na"));
+
+    if(!allowed) return;
 
     state[id] = val;
     save();
     setActive(seg, val);
     compute();
 
-    if(id === "pet_plan" && val === "na"){
-      showToast("반려동물 항목은 점검 대상에서 제외되었습니다. (분모 11)");
+    if(id === "m7_pet_plan" && val === "na"){
+      showToast("반려동물 항목은 점검 대상에서 제외되었습니다. (분모 -1)");
     }
-    if(id === "pet_plan" && val !== "na"){
-      showToast("반려동물 항목이 점검 대상에 포함되었습니다. (분모 12)");
+    if(id === "m7_pet_plan" && val !== "na"){
+      showToast("반려동물 항목이 점검 대상에 포함되었습니다.");
     }
   }
 
@@ -568,7 +647,7 @@
     segments().forEach(seg => seg.addEventListener("click", onSegClick));
 
     resetBtn.addEventListener("click", () => {
-      const ok = confirm("모든 항목을 ‘미완료’로 초기화할까요?");
+      const ok = confirm("모든 항목을 ‘미작성/미결정’으로 초기화할까요?");
       if(!ok) return;
       state = {};
       save();
