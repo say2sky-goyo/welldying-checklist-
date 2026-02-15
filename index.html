@@ -1,664 +1,721 @@
 <!doctype html>
-<html lang="ko-KR">
+<html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>존엄한 삶의 마무리 준비 체크리스트</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>존엄한 이행을 위한 자기결정 설계</title>
   <style>
     :root{
-      /* Deep navy theme */
-      --bg0:#061427;
-      --bg1:#071a33;
-      --bg2:#081f3d;
+      /* Blue (not navy) */
+      --bg0:#0b55d4;
+      --bg1:#0a6bff;
+      --bg2:#2f8dff;
 
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.08);
-      --line: rgba(255,255,255,.12);
-
+      --panel: rgba(255,255,255,.10);
+      --panel2: rgba(255,255,255,.14);
+      --line: rgba(255,255,255,.16);
       --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.66);
+      --muted: rgba(255,255,255,.72);
 
-      --ok: #33d6c5;     /* teal mint */
-      --alt: #ffd089;    /* amber */
-      --na: #9fb4ff;     /* soft periwinkle for N/A badge */
+      --ok:#37d07a;
+      --na:#b7c6ff;
 
+      --shadow: 0 16px 50px rgba(0,0,0,.22);
       --radius: 18px;
-      --radiusSm: 14px;
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-
-      --font: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo",
-              "Noto Sans KR", Segoe UI, Roboto, Arial, sans-serif;
+      --radius2: 14px;
+      --max: 980px;
+      --font: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
     }
 
-    *{ box-sizing:border-box; }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:var(--font);
-      color:var(--text);
+      font-family: var(--font);
+      color: var(--text);
       background:
-        radial-gradient(1100px 700px at 15% 0%, rgba(51,214,197,.14), transparent 60%),
-        radial-gradient(900px 650px at 95% 12%, rgba(159,180,255,.12), transparent 62%),
-        radial-gradient(800px 520px at 55% 100%, rgba(255,208,137,.10), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, var(--bg2));
+        radial-gradient(1200px 700px at 15% 10%, rgba(255,255,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(255,255,255,.14), transparent 60%),
+        linear-gradient(160deg, var(--bg0), var(--bg1) 45%, var(--bg2));
       min-height:100vh;
-      padding:22px 14px 42px;
     }
-    .wrap{ max-width:980px; margin:0 auto; }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 22px 16px 34px;
+    }
 
     header{
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 16px 14px;
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+
+    .titleRow{
       display:flex;
-      justify-content:space-between;
       align-items:flex-start;
-      gap:12px;
-      margin-bottom:14px;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
     h1{
       margin:0;
-      font-size:clamp(20px, 3.2vw, 28px);
-      letter-spacing:-0.02em;
-      font-weight:860;
-      line-height:1.2;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+      line-height: 1.25;
     }
     .sub{
-      margin:8px 0 0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
-      max-width:78ch;
+      margin-top:8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .actions{
+      display:flex; gap:8px; align-items:center;
     }
 
     .btn{
-      appearance:none;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:12px;
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
       cursor:pointer;
-      transition:.18s ease;
-      font-weight:780;
-      font-size:13px;
+      font-weight: 800;
+      font-size: 13px;
+      transition: transform .06s ease, background .15s ease;
+      user-select:none;
       white-space:nowrap;
     }
-    .btn:hover{ transform:translateY(-1px); background:rgba(255,255,255,.10); }
-    .btn:active{ transform:translateY(0); }
+    .btn:active{ transform: scale(.98); }
+    .btn:hover{ background: rgba(255,255,255,.14); }
 
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    /* Summary */
     .summary{
-      padding:18px 18px 14px;
+      margin-top: 14px;
       display:grid;
-      gap:10px;
+      grid-template-columns: 1fr;
+      gap: 10px;
     }
-    .count{
-      font-size:clamp(26px, 5vw, 40px);
-      font-weight:900;
-      letter-spacing:-0.02em;
+
+    .countLine{
+      display:flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
     }
+    .countBig{
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.3px;
+    }
+    .countSmall{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
     .bar{
-      height:12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.24);
+      height: 12px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
       overflow:hidden;
     }
-    .bar i{
+    .bar > i{
       display:block;
       height:100%;
-      width:0%;
-      border-radius:999px;
-      background:linear-gradient(90deg, rgba(51,214,197,.92), rgba(51,214,197,.45));
-      transition:width .22s ease;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(255,255,255,.55));
+      border-radius: 999px;
+      transition: width .25s ease;
     }
-    .hint{
-      color:var(--muted);
-      font-size:12.5px;
-      line-height:1.4;
-    }
-    .toast{
-      display:none;
-      color:var(--muted);
-      font-size:12.5px;
-      line-height:1.4;
-    }
-    .toast.show{ display:block; }
 
-    /* Groups */
-    .grid{
-      padding:14px;
-      border-top:1px solid var(--line);
-      display:grid;
-      gap:12px;
-    }
+    main{ margin-top: 16px; }
+
     details{
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius:var(--radiusSm);
-      overflow:hidden;
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.14);
+      margin-bottom: 12px;
     }
-    details[open]{ background:rgba(255,255,255,.055); }
     summary{
-      list-style:none;
       cursor:pointer;
-      padding:14px 14px;
-      user-select:none;
+      list-style:none;
       display:flex;
-      justify-content:space-between;
       align-items:center;
-      gap:10px;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 4px;
+      user-select:none;
     }
     summary::-webkit-details-marker{ display:none; }
-    .gtitle{
-      display:flex; flex-direction:column; gap:4px;
+    .secTitle{
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      font-size: 15px;
+      line-height: 1.2;
     }
-    .gtitle strong{ font-size:15px; letter-spacing:-0.01em; }
-    .gtitle span{ font-size:12px; color:var(--muted); }
-    .chev{ color:var(--muted); font-size:12px; }
+    .secMeta{
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
 
-    .items{
-      padding:10px;
-      border-top:1px solid var(--line);
-      display:grid;
-      gap:10px;
-    }
+    .items{ margin-top: 8px; display:grid; gap: 10px; }
+
     .item{
-      background:rgba(0,0,0,.16);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: var(--radius2);
+      padding: 12px 12px 10px;
       display:grid;
       grid-template-columns: 1fr auto;
-      gap:10px;
-      align-items:center;
+      gap: 10px;
+      align-items: center;
     }
+
+    .label{ min-width: 0; }
     .name{
-      font-weight:860;
-      letter-spacing:-0.01em;
-      font-size:14px;
-      line-height:1.25;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: -0.2px;
+      line-height: 1.25;
+      margin: 0;
     }
     .desc{
-      margin-top:4px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.35;
+      margin: 6px 0 0 0;
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.35;
     }
 
-    /* Segmented controls */
     .seg{
       display:inline-flex;
-      border:1px solid var(--line);
-      border-radius:999px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
       overflow:hidden;
-      background:rgba(255,255,255,.04);
+      background: rgba(0,0,0,.12);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
     }
     .seg button{
-      border:0;
-      background:transparent;
-      color:var(--muted);
-      padding:9px 10px;
+      border: 0;
+      background: transparent;
+      color: rgba(255,255,255,.82);
+      padding: 9px 10px;
       cursor:pointer;
-      font-weight:860;
-      font-size:12px;
-      transition:.15s ease;
-      white-space:nowrap;
+      font-weight: 900;
+      font-size: 12px;
+      min-width: 64px;
+      transition: background .15s ease, color .15s ease, transform .06s ease;
     }
-    .seg button:hover{ background:rgba(255,255,255,.07); }
-    .seg button.active{
-      color:rgba(0,0,0,.86);
-      background:linear-gradient(180deg, rgba(51,214,197,.92), rgba(51,214,197,.64));
+    .seg button:active{ transform: scale(.98); }
+
+    .seg button.on{
+      background: rgba(255,255,255,.92);
+      color: rgba(0,0,0,.86);
     }
-    .seg button.alt.active{
-      color:rgba(0,0,0,.86);
-      background:linear-gradient(180deg, rgba(255,208,137,.95), rgba(255,208,137,.62));
+    .seg button.on.ok{ background: rgba(55,208,122,.95); color: #062012; }
+    .seg button.on.na{ background: rgba(183,198,255,.95); color: #0a1736; }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.92);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      backdrop-filter: blur(8px);
+      max-width: calc(100vw - 28px);
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateX(-50%) translateY(-2px);
     }
 
-    /* N/A styling (pet only) */
-    .item.excluded{
-      opacity:.72;
-      border-style:dashed;
+    footer{
+      margin-top: 16px;
+      color: rgba(255,255,255,.78);
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: center;
+      padding: 14px 10px 4px;
+    }
+    .org{
+      margin-top: 10px;
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      color: rgba(255,255,255,.92);
+    }
+    .closing{
+      margin-top: 10px;
+      font-weight: 900;
+      color: rgba(255,255,255,.90);
+      letter-spacing: -0.2px;
+      white-space: pre-line;
     }
 
-    @media (min-width: 860px){
-      .grid{ grid-template-columns: 1fr 1fr; }
-      .span2{ grid-column: 1 / -1; }
+    @media (max-width: 520px){
+      .item{ grid-template-columns: 1fr; gap: 10px; }
+      .seg{ width: 100%; }
+      .seg button{ flex: 1; min-width: 0; }
+      .actions{ width: 100%; justify-content:flex-end; }
+      .countLine{ align-items:flex-start; }
     }
   </style>
 </head>
 
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <header>
+      <div class="titleRow">
+        <div>
+          <h1>존엄한 이행을 위한 자기결정 설계</h1>
+          <div class="sub">삶의 마지막을 상상하는 일은<br/>삶의 우선순위를 다시 정하는 일입니다.</div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="btnReset" type="button">초기화</button>
+          <button class="btn" id="btnToggleAll" type="button">전체 접기</button>
+        </div>
+      </div>
 
-  <header>
-    <div>
-      <h1>존엄한 삶의 마무리 준비 체크리스트</h1>
-      <p class="sub">
-        체크는 간결하게, 삶은 선명하게.<br/>
-        각 항목은 요청하신 기준으로 <b>작성/미작성</b>, <b>결정/미결정</b>을 선택합니다.
-        반려동물이 없다면 <b>해당없음</b>을 선택하여 분모에서 제외됩니다.
-      </p>
-    </div>
-    <button class="btn" id="resetBtn" type="button">초기화</button>
-  </header>
+      <div class="summary">
+        <div class="countLine">
+          <div class="countBig" id="countText">작성 0 / 0</div>
+          <div class="countSmall" id="countNote">반려동물 항목이 ‘해당없음’이면 분모에서 제외됩니다</div>
+        </div>
+        <div class="bar" aria-label="진행률">
+          <i id="barFill"></i>
+        </div>
+      </div>
+    </header>
 
-  <section class="card">
-    <div class="summary">
-      <div class="count" id="countText">완료 0 / 12</div>
-      <div class="bar"><i id="barFill"></i></div>
-      <div class="toast" id="toast"></div>
-      <div class="hint">이 체크는 각 사용자의 기기(브라우저)에만 저장됩니다(서버 저장/수집 없음).</div>
-    </div>
-
-    <div class="grid span2">
-
+    <main id="main">
       <!-- 1. 의료적 자기결정 -->
-      <details open>
+      <details open class="sec" data-sec="sec1">
         <summary>
-          <div class="gtitle">
-            <strong>1. 의료적 자기결정 (작성/미작성)</strong>
-            <span>의료 상황에서 ‘나의 뜻’을 남기는 준비</span>
-          </div>
-          <div class="chev">열기/닫기</div>
+          <div class="secTitle">1) 의료적 자기결정</div>
+          <div class="secMeta" data-secmeta="sec1">0 / 3</div>
         </summary>
         <div class="items">
-          <div class="item">
-            <div>
-              <div class="name">사전연명의료의향서</div>
-              <div class="desc">무의미한 연명의료 시행 여부를 미리 결정</div>
+          <div class="item" data-item="ad">
+            <div class="label">
+              <p class="name">사전연명의료의향서</p>
+              <p class="desc">연명의료에 대한 의사를 문서로 남김(작성/등록 중심)</p>
             </div>
-            <div class="seg" data-id="m1_advance_directive" data-type="write2">
-              <button type="button" class="opt" data-val="0">미작성</button>
-              <button type="button" class="opt" data-val="1">작성</button>
-            </div>
-          </div>
-
-          <div class="item">
-            <div>
-              <div class="name">의료 대리인 지정</div>
-              <div class="desc">의사결정이 어려울 때 나의 의사를 대변할 사람 지정</div>
-            </div>
-            <div class="seg" data-id="m1_medical_proxy" data-type="write2">
-              <button type="button" class="opt" data-val="0">미작성</button>
-              <button type="button" class="opt" data-val="1">작성</button>
+            <div class="seg" role="group" aria-label="사전연명의료의향서 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
             </div>
           </div>
 
-          <div class="item">
-            <div>
-              <div class="name">호스피스·완화의료 이해</div>
-              <div class="desc">통증 완화와 존엄 중심 돌봄에 대한 이해</div>
+          <div class="item" data-item="proxy">
+            <div class="label">
+              <p class="name">의료 대리인(의사결정 지원자) 지정</p>
+              <p class="desc">내 뜻을 설명하고 연결할 사람을 정해 두기</p>
             </div>
-            <div class="seg" data-id="m1_hospice_understanding" data-type="write2">
-              <button type="button" class="opt" data-val="0">미작성</button>
-              <button type="button" class="opt" data-val="1">작성</button>
+            <div class="seg" role="group" aria-label="의료 대리인 지정 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
+            </div>
+          </div>
+
+          <div class="item" data-item="hospice">
+            <div class="label">
+              <p class="name">호스피스·완화의료 이해</p>
+              <p class="desc">원하면 받는다/받지 않는다의 기준을 ‘글로’ 남김</p>
+            </div>
+            <div class="seg" role="group" aria-label="호스피스 이해 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
             </div>
           </div>
         </div>
       </details>
 
       <!-- 2. 돌봄 자기결정 -->
-      <details open>
+      <details open class="sec" data-sec="sec2">
         <summary>
-          <div class="gtitle">
-            <strong>2. 돌봄 자기결정 (작성/미작성)</strong>
-            <span>돌봄의 방식과 장소를 ‘미리 말해두는’ 준비</span>
-          </div>
-          <div class="chev">열기/닫기</div>
+          <div class="secTitle">2) 돌봄 자기결정</div>
+          <div class="secMeta" data-secmeta="sec2">0 / 2</div>
         </summary>
         <div class="items">
-          <div class="item">
-            <div>
-              <div class="name">사전치매요양의향서</div>
-              <div class="desc">인지 저하 시 원하는 돌봄 방향과 거주 방식 기록</div>
+          <div class="item" data-item="dementia">
+            <div class="label">
+              <p class="name">사전 치매·요양 의향(돌봄 선호)</p>
+              <p class="desc">인지저하/돌봄 필요 시, 치료·요양·돌봄의 선호를 남김</p>
             </div>
-            <div class="seg" data-id="m2_dementia_plan" data-type="write2">
-              <button type="button" class="opt" data-val="0">미작성</button>
-              <button type="button" class="opt" data-val="1">작성</button>
+            <div class="seg" role="group" aria-label="사전 치매·요양 의향 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
             </div>
           </div>
 
-          <div class="item">
-            <div>
-              <div class="name">거동이 어려울 때 돌봄받고 싶은 장소</div>
-              <div class="desc">의식이 있으나 거동이 어려울 때, 돌봄을 받고 싶은 장소</div>
+          <div class="item" data-item="place">
+            <div class="label">
+              <p class="name">거동 제한 시 돌봄 장소 선호</p>
+              <p class="desc">집/시설/병원 등 ‘1순위’ 중심으로 기록</p>
             </div>
-            <div class="seg" data-id="m2_care_place_when_difficult" data-type="write2">
-              <button type="button" class="opt" data-val="0">미작성</button>
-              <button type="button" class="opt" data-val="1">작성</button>
+            <div class="seg" role="group" aria-label="돌봄 장소 선호 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
             </div>
           </div>
         </div>
       </details>
 
       <!-- 3. 자산·유산 정리 -->
-      <details open>
+      <details open class="sec" data-sec="sec3">
         <summary>
-          <div class="gtitle">
-            <strong>3. 자산·유산 정리 (결정/미결정)</strong>
-            <span>남길 것과 정리할 것을 정돈하는 준비</span>
-          </div>
-          <div class="chev">열기/닫기</div>
+          <div class="secTitle">3) 자산·유산 정리</div>
+          <div class="secMeta" data-secmeta="sec3">0 / 4</div>
         </summary>
         <div class="items">
-          <div class="item">
-            <div>
-              <div class="name">유언장 작성</div>
-              <div class="desc">재산, 권리, 관계에 대한 법적 의사 정리</div>
+          <div class="item" data-item="will">
+            <div class="label">
+              <p class="name">유언장 작성</p>
+              <p class="desc">재산, 권리, 관계에 대한 법적 의사 정리</p>
             </div>
-            <div class="seg" data-id="m3_will" data-type="decide2">
-              <button type="button" class="opt" data-val="0">미결정</button>
-              <button type="button" class="opt" data-val="1">결정</button>
-            </div>
-          </div>
-
-          <div class="item">
-            <div>
-              <div class="name">디지털 유산·유품 정리</div>
-              <div class="desc">SNS 계정 처리 및 소중한 물건의 귀속처 지정</div>
-            </div>
-            <div class="seg" data-id="m3_digital_legacy" data-type="decide2">
-              <button type="button" class="opt" data-val="0">미결정</button>
-              <button type="button" class="opt" data-val="1">결정</button>
+            <div class="seg" role="group" aria-label="유언장 작성 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
             </div>
           </div>
 
-          <div class="item">
-            <div>
-              <div class="name">간병 재정 계획</div>
-              <div class="desc">장기요양보험 및 돌봄 비용 구조 사전 점검</div>
+          <div class="item" data-item="digital">
+            <div class="label">
+              <p class="name">디지털 유산·유품 정리</p>
+              <p class="desc">SNS/계정 처리 및 소중한 물건의 귀속처 지정</p>
             </div>
-            <div class="seg" data-id="m3_care_finance" data-type="decide2">
-              <button type="button" class="opt" data-val="0">미결정</button>
-              <button type="button" class="opt" data-val="1">결정</button>
+            <div class="seg" role="group" aria-label="디지털 유산 정리 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
             </div>
           </div>
 
-          <div class="item">
-            <div>
-              <div class="name">장기기증 희망등록</div>
-              <div class="desc">생명 나눔에 대한 공식적 의사 표현</div>
+          <div class="item" data-item="careMoney">
+            <div class="label">
+              <p class="name">간병 재정 계획</p>
+              <p class="desc">장기요양보험 및 돌봄 비용 구조 사전 점검</p>
             </div>
-            <div class="seg" data-id="m3_organ_donation" data-type="organ3">
-              <button type="button" class="opt" data-val="0">미결정</button>
-              <button type="button" class="opt" data-val="1">결정</button>
-              <button type="button" class="opt alt" data-val="2">원하지 않음</button>
+            <div class="seg" role="group" aria-label="간병 재정 계획 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
+            </div>
+          </div>
+
+          <div class="item" data-item="organ">
+            <div class="label">
+              <p class="name">장기기증 의향</p>
+              <p class="desc">희망/비희망 포함, 의사를 문서로 남김</p>
+            </div>
+            <div class="seg" role="group" aria-label="장기기증 의향 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
             </div>
           </div>
         </div>
       </details>
 
       <!-- 4. 존재의 기록 -->
-      <details open>
+      <details open class="sec" data-sec="sec4">
         <summary>
-          <div class="gtitle">
-            <strong>4. 존재의 기록 (작성/미작성)</strong>
-            <span>기억·회상·용서·화해로 ‘나’를 남기는 준비</span>
-          </div>
-          <div class="chev">열기/닫기</div>
+          <div class="secTitle">4) 존재의 기록</div>
+          <div class="secMeta" data-secmeta="sec4">0 / 3</div>
         </summary>
         <div class="items">
-          <div class="item">
-            <div>
-              <div class="name">자서전, 화해와 용서, 가치 선언문</div>
-              <div class="desc">실존과 관련된 기억/회상/용서/화해</div>
+          <div class="item" data-item="autoBio">
+            <div class="label">
+              <p class="name">자서전·구술 기록</p>
+              <p class="desc">내 삶의 서사를 남기는 1회 이상의 기록</p>
             </div>
-            <div class="seg" data-id="m4_existence_record" data-type="write2">
-              <button type="button" class="opt" data-val="0">미작성</button>
-              <button type="button" class="opt" data-val="1">작성</button>
+            <div class="seg" role="group" aria-label="자서전·구술 기록 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
+            </div>
+          </div>
+
+          <div class="item" data-item="reconcile">
+            <div class="label">
+              <p class="name">화해·정리(관계의 매듭)</p>
+              <p class="desc">사과/감사/용서/안부 등 ‘전하고 싶은 말’의 구조화</p>
+            </div>
+            <div class="seg" role="group" aria-label="화해·정리 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
+            </div>
+          </div>
+
+          <div class="item" data-item="values">
+            <div class="label">
+              <p class="name">가치 선언(나의 우선순위)</p>
+              <p class="desc">치료·돌봄·관계·자유·종교 등 핵심 가치 3~5개를 글로 남김</p>
+            </div>
+            <div class="seg" role="group" aria-label="가치 선언 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
             </div>
           </div>
         </div>
       </details>
 
       <!-- 5. 임종 돌봄 및 장례 의향 -->
-      <details open>
+      <details open class="sec" data-sec="sec5">
         <summary>
-          <div class="gtitle">
-            <strong>5. 임종 돌봄 및 장례 의향 (작성/미작성)</strong>
-            <span>마지막 돌봄과 의례의 방향을 남기는 준비</span>
-          </div>
-          <div class="chev">열기/닫기</div>
+          <div class="secTitle">5) 임종 돌봄 및 장례 의향</div>
+          <div class="secMeta" data-secmeta="sec5">0 / 2</div>
         </summary>
         <div class="items">
-          <div class="item">
-            <div>
-              <div class="name">사전장례의향서</div>
-              <div class="desc">장례 방식, 추모 형식, 영적 요소 선택</div>
+          <div class="item" data-item="funeral">
+            <div class="label">
+              <p class="name">사전 장례 의향</p>
+              <p class="desc">규모·형식·알림 범위·비용 기준 등 핵심만 간단히 기록</p>
             </div>
-            <div class="seg" data-id="m5_funeral" data-type="write2">
-              <button type="button" class="opt" data-val="0">미작성</button>
-              <button type="button" class="opt" data-val="1">작성</button>
+            <div class="seg" role="group" aria-label="사전 장례 의향 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
+            </div>
+          </div>
+
+          <div class="item" data-item="eolEnv">
+            <div class="label">
+              <p class="name">임종 돌봄 환경 선호</p>
+              <p class="desc">조용함/면회/음악/조명/종교·의례 등 환경의 기준을 남김</p>
+            </div>
+            <div class="seg" role="group" aria-label="임종 돌봄 환경 선호 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
             </div>
           </div>
         </div>
       </details>
 
       <!-- 6. 긴급 연락망 정리 -->
-      <details open>
+      <details open class="sec" data-sec="sec6">
         <summary>
-          <div class="gtitle">
-            <strong>6. 긴급 연락망 정리 (작성/미작성)</strong>
-            <span>위급 시 연락의 우선순위를 남기는 준비</span>
-          </div>
-          <div class="chev">열기/닫기</div>
+          <div class="secTitle">6) 긴급 연락망 정리</div>
+          <div class="secMeta" data-secmeta="sec6">0 / 2</div>
         </summary>
         <div class="items">
-          <div class="item">
-            <div>
-              <div class="name">위급 시 연락 우선순위 및 부고 알림 대상</div>
-              <div class="desc">긴급 상황에서 ‘누구에게 먼저’ 연락할지 정리</div>
+          <div class="item" data-item="contacts">
+            <div class="label">
+              <p class="name">우선 연락처(1~3순위)</p>
+              <p class="desc">긴급 상황에서 ‘누가 먼저’인지 한 줄로 정리</p>
             </div>
-            <div class="seg" data-id="m6_emergency_contacts" data-type="write2">
-              <button type="button" class="opt" data-val="0">미작성</button>
-              <button type="button" class="opt" data-val="1">작성</button>
+            <div class="seg" role="group" aria-label="우선 연락처 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
+            </div>
+          </div>
+
+          <div class="item" data-item="notice">
+            <div class="label">
+              <p class="name">부고·애도 알림 범위</p>
+              <p class="desc">누구에게, 어떤 방식으로, 언제 알릴지의 기준</p>
+            </div>
+            <div class="seg" role="group" aria-label="부고·애도 알림 범위 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
             </div>
           </div>
         </div>
       </details>
 
       <!-- 7. 반려동물 돌봄 계획 -->
-      <details open>
+      <details open class="sec" data-sec="sec7">
         <summary>
-          <div class="gtitle">
-            <strong>7. 반려동물 돌봄 계획 (결정/미결정/해당없음)</strong>
-            <span>반려동물이 있을 때만 점검하는 준비</span>
-          </div>
-          <div class="chev">열기/닫기</div>
+          <div class="secTitle">7) 반려동물 돌봄 계획</div>
+          <div class="secMeta" data-secmeta="sec7">0 / 1</div>
         </summary>
         <div class="items">
-          <div class="item" id="petRow">
-            <div>
-              <div class="name">부재 시 보호처 및 돌봄 지침</div>
-              <div class="desc">반려동물이 없다면 ‘해당없음’을 선택</div>
+          <div class="item" data-item="pet">
+            <div class="label">
+              <p class="name">반려동물 돌봄(지침 + 대안 보호처)</p>
+              <p class="desc">돌봄 담당자/비상 대안(보호소·지인 등)을 간단히 남김</p>
             </div>
-            <div class="seg" data-id="m7_pet_plan" data-type="pet3">
-              <button type="button" class="opt" data-val="0">미결정</button>
-              <button type="button" class="opt" data-val="1">결정</button>
-              <button type="button" class="opt alt" data-val="na">해당없음</button>
+            <div class="seg" role="group" aria-label="반려동물 돌봄 상태">
+              <button type="button" data-state="0">미작성</button>
+              <button type="button" data-state="1">작성</button>
+              <button type="button" data-state="na">해당없음</button>
             </div>
           </div>
         </div>
       </details>
 
-    </div>
-  </section>
+      <footer>
+        <div>이 페이지의 체크 결과는 사용자 브라우저에만 저장됩니다(서버로 전송되지 않음).</div>
+        <div class="org">웰다잉통합예술교육협회</div>
+        <div class="closing">존엄은 우연히 주어지지 않습니다.
+준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.</div>
+      </footer>
+    </main>
+  </div>
 
-</div>
+  <div class="toast" id="toast">저장됨</div>
 
-<script>
-  // ==========================================
-  // 고요한결정 - 배포용 체크리스트 (v3)
-  // - 상단: 완료 X / Y
-  // - 반려동물(해당없음) 선택 시 분모에서 제외
-  // - 장기기증: 결정/미결정/원하지 않음(원하지 않음도 '선택 완료'로 카운트)
-  // - 저장: localStorage (개인 기기)
-  // ==========================================
+  <script>
+    const STORE_KEY = "goyohan_welldying_checklist_v4_blue_write";
 
-  const STORAGE_KEY = "goyohan_welldying_checklist_v3";
+    const toast = document.getElementById("toast");
+    const countText = document.getElementById("countText");
+    const countNote = document.getElementById("countNote");
+    const barFill = document.getElementById("barFill");
+    const btnReset = document.getElementById("btnReset");
+    const btnToggleAll = document.getElementById("btnToggleAll");
 
-  const countText = document.getElementById("countText");
-  const barFill   = document.getElementById("barFill");
-  const toast     = document.getElementById("toast");
-  const resetBtn  = document.getElementById("resetBtn");
-  const petRow    = document.getElementById("petRow");
+    const secs = Array.from(document.querySelectorAll("details.sec"));
+    const items = Array.from(document.querySelectorAll(".item[data-item]"));
 
-  // State values per segment:
-  // - write2 / decide2: "0" or "1"
-  // - organ3: "0" or "1" or "2" (2 = 원하지 않음)
-  // - pet3: "0" or "1" or "na" (na = 해당없음)
-  let state = {};
-
-  function load(){
-    try{
-      const raw = localStorage.getItem(STORAGE_KEY);
-      state = raw ? (JSON.parse(raw) || {}) : {};
-    }catch(e){
-      state = {};
-    }
-  }
-  function save(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }
-
-  function showToast(msg){
-    toast.textContent = msg;
-    toast.classList.add("show");
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(() => toast.classList.remove("show"), 2400);
-  }
-
-  function segments(){
-    return Array.from(document.querySelectorAll(".seg"));
-  }
-
-  function getVal(id){
-    return (state[id] ?? "0");
-  }
-
-  function setActive(segEl, val){
-    const btns = segEl.querySelectorAll("button.opt");
-    btns.forEach(b => b.classList.toggle("active", b.dataset.val === String(val)));
-  }
-
-  function isCountedAsComplete(segEl, val){
-    const type = segEl.dataset.type;
-
-    // 작성/결정 계열: 1이면 완료
-    if(type === "write2" || type === "decide2"){
-      return val === "1";
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=>toast.classList.remove("show"), 1100);
     }
 
-    // 장기기증: 1(결정) 또는 2(원하지 않음)도 완료로 카운트
-    if(type === "organ3"){
-      return (val === "1" || val === "2");
+    function loadState(){
+      try{ return JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); }
+      catch(e){ return {}; }
+    }
+    function saveState(state){
+      localStorage.setItem(STORE_KEY, JSON.stringify(state));
     }
 
-    // 반려동물: 1(결정)만 완료, na는 분모 제외
-    if(type === "pet3"){
-      return val === "1";
+    function setSegUI(seg, value){
+      const btns = Array.from(seg.querySelectorAll("button"));
+      btns.forEach(b=>{
+        b.classList.remove("on","ok","na");
+        if(String(b.dataset.state) === String(value)){
+          b.classList.add("on");
+          if(value === "1") b.classList.add("ok");
+          if(value === "na") b.classList.add("na");
+        }
+      });
     }
 
-    return false;
-  }
-
-  function compute(){
-    const segs = segments();
-
-    // 총 항목 수: 세그먼트 개수(현재 12) - 반려동물 NA 시 1 제외
-    let denom = segs.length;
-    let done  = 0;
-
-    const petVal = getVal("m7_pet_plan");
-    if(petVal === "na"){
-      denom -= 1;
+    function getItemValue(itemEl){
+      return itemEl.dataset.value ?? "0";
+    }
+    function setItemValue(itemEl, value){
+      itemEl.dataset.value = value;
+      const seg = itemEl.querySelector(".seg");
+      setSegUI(seg, value);
     }
 
-    segs.forEach(seg => {
-      const id = seg.dataset.id;
-      const val = getVal(id);
+    function compute(){
+      let denom = 0;
+      let done = 0;
 
-      // 반려동물 NA는 분모 제외, 완료 계산도 제외
-      if(seg.dataset.type === "pet3" && val === "na"){
-        return;
-      }
-      if(isCountedAsComplete(seg, val)) done += 1;
-    });
+      items.forEach(it=>{
+        const key = it.dataset.item;
+        const v = getItemValue(it);
 
-    const pct = denom > 0 ? Math.round((done / denom) * 100) : 0;
-    countText.textContent = `완료 ${done} / ${denom}`;
-    barFill.style.width = `${pct}%`;
+        if(key === "pet" && v === "na"){
+          return; // excluded
+        }
+        denom += 1;
+        if(v === "1") done += 1;
+      });
 
-    // pet row style
-    if(petVal === "na"){
-      petRow.classList.add("excluded");
-    }else{
-      petRow.classList.remove("excluded");
+      const pct = denom ? Math.round((done/denom)*100) : 0;
+      countText.textContent = `작성 ${done} / ${denom}`;
+      barFill.style.width = `${pct}%`;
+
+      const pet = items.find(x=>x.dataset.item==="pet");
+      const pv = pet ? getItemValue(pet) : "0";
+      countNote.textContent = (pv === "na")
+        ? "반려동물 항목은 점검 대상에서 제외되었습니다"
+        : "반려동물 항목은 ‘해당없음’ 선택 가능";
+
+      secs.forEach(sec=>{
+        const secId = sec.dataset.sec;
+        const secItems = Array.from(sec.querySelectorAll(".item[data-item]"));
+        let sDen = 0, sDone = 0;
+
+        secItems.forEach(it=>{
+          const key = it.dataset.item;
+          const v = getItemValue(it);
+          if(key === "pet" && v === "na") return;
+          sDen += 1;
+          if(v === "1") sDone += 1;
+        });
+
+        const meta = document.querySelector(`[data-secmeta="${secId}"]`);
+        if(meta) meta.textContent = `${sDone} / ${sDen}`;
+      });
     }
-  }
 
-  function render(){
-    segments().forEach(seg => {
-      const id = seg.dataset.id;
-      const v = getVal(id);
-      setActive(seg, v);
-    });
-    compute();
-  }
+    function wire(){
+      const state = loadState();
 
-  function onSegClick(e){
-    const btn = e.target.closest("button.opt");
-    if(!btn) return;
+      items.forEach(it=>{
+        const key = it.dataset.item;
+        const v = state[key] ?? "0";
+        setItemValue(it, v);
+      });
 
-    const seg = e.currentTarget;
-    const id  = seg.dataset.id;
-    const val = btn.dataset.val; // "0" | "1" | "2" | "na"
+      items.forEach(it=>{
+        const key = it.dataset.item;
+        const seg = it.querySelector(".seg");
+        seg.addEventListener("click", (e)=>{
+          const btn = e.target.closest("button");
+          if(!btn) return;
+          const v = btn.dataset.state;
 
-    // 안전장치: 타입별 허용값
-    const type = seg.dataset.type;
-    const allowed =
-      (type === "write2"  && (val === "0" || val === "1")) ||
-      (type === "decide2" && (val === "0" || val === "1")) ||
-      (type === "organ3"  && (val === "0" || val === "1" || val === "2")) ||
-      (type === "pet3"    && (val === "0" || val === "1" || val === "na"));
+          setItemValue(it, v);
 
-    if(!allowed) return;
+          const newState = loadState();
+          newState[key] = v;
+          saveState(newState);
 
-    state[id] = val;
-    save();
-    setActive(seg, val);
-    compute();
+          if(key === "pet" && v === "na"){
+            showToast("반려동물 항목 제외됨");
+          }else{
+            showToast("저장됨");
+          }
+          compute();
+        });
+      });
 
-    if(id === "m7_pet_plan" && val === "na"){
-      showToast("반려동물 항목은 점검 대상에서 제외되었습니다. (분모 -1)");
+      btnReset.addEventListener("click", ()=>{
+        if(!confirm("모든 항목을 ‘미작성’으로 초기화할까요?")) return;
+        saveState({});
+        items.forEach(it=> setItemValue(it, "0"));
+        showToast("초기화 완료");
+        compute();
+      });
+
+      btnToggleAll.addEventListener("click", ()=>{
+        const anyOpen = secs.some(s=>s.open);
+        secs.forEach(s=> s.open = !anyOpen);
+        btnToggleAll.textContent = anyOpen ? "전체 펼치기" : "전체 접기";
+      });
+
+      compute();
     }
-    if(id === "m7_pet_plan" && val !== "na"){
-      showToast("반려동물 항목이 점검 대상에 포함되었습니다.");
-    }
-  }
 
-  function bind(){
-    segments().forEach(seg => seg.addEventListener("click", onSegClick));
-
-    resetBtn.addEventListener("click", () => {
-      const ok = confirm("모든 항목을 ‘미작성/미결정’으로 초기화할까요?");
-      if(!ok) return;
-      state = {};
-      save();
-      render();
-      showToast("초기화되었습니다.");
-    });
-  }
-
-  load();
-  bind();
-  render();
-</script>
+    wire();
+  </script>
 </body>
 </html>
