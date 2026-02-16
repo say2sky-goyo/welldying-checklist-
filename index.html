@@ -6,7 +6,7 @@
   <title>존엄한 이행을 위한 자기결정 설계</title>
   <style>
     :root{
-      /* 배경: 일반 파랑(blue) 계열 */
+      /* 전체 바탕: 파랑은 그대로 */
       --bg0:#0b55d4;
       --bg1:#0a6bff;
       --bg2:#2f8dff;
@@ -25,9 +25,13 @@
       --max: 980px;
       --font: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
 
-      /* 하단 글자 영역(요청: 짙은 파랑) */
-      --footerNavy: rgba(6, 24, 70, .72);
-      --footerNavy2: rgba(6, 24, 70, .58);
+      /* 하단 영역: 짙은 파랑 */
+      --footerNavyA: rgba(6, 24, 70, .78);
+      --footerNavyB: rgba(6, 24, 70, .62);
+
+      /* “글자 배경도 짙게”: 라벨/칩 배경 */
+      --chipBg: rgba(4, 18, 55, .55);
+      --chipLine: rgba(255,255,255,.18);
     }
 
     *{box-sizing:border-box}
@@ -166,7 +170,7 @@
     .secTitle{
       font-weight: 900;
       letter-spacing: -0.2px;
-      font-size: 15px; /* 기준 글자 크기 */
+      font-size: 15px;
       line-height: 1.2;
     }
     .secMeta{
@@ -267,19 +271,18 @@
       padding: 14px 10px 4px;
     }
 
-    /* 요청: 글자가 있는 영역 = 짙은 파랑 */
+    /* 하단: 협회/문구/링크가 들어가는 “짙은 파랑 영역” */
     .footerBox{
       margin-top: 12px;
-      background: linear-gradient(180deg, var(--footerNavy), var(--footerNavy2));
+      background: linear-gradient(180deg, var(--footerNavyA), var(--footerNavyB));
       border: 1px solid rgba(255,255,255,.20);
       border-radius: 16px;
-      padding: 14px 12px;
+      padding: 14px 12px 12px;
       box-shadow: 0 12px 30px rgba(0,0,0,.18);
     }
 
-    /* 요청: 아래 3줄 텍스트 크기 = 섹션 제목(.secTitle, 15px) */
-    .org,
-    .closing{
+    /* 요청: ‘6) 긴급 연락망 정리’와 같은 크기(=15px) */
+    .org, .closing{
       font-size: 15px;
       font-weight: 900;
       letter-spacing: -0.2px;
@@ -290,12 +293,35 @@
       white-space: pre-line;
     }
 
+    /* 요청: “각 글자색의 배경색도 같이 짙게” → 텍스트를 ‘칩/라벨’ 위에 올림 */
+    .chip{
+      display:inline-block;
+      max-width: 100%;
+      background: var(--chipBg);
+      border: 1px solid var(--chipLine);
+      border-radius: 12px;
+      padding: 8px 10px;
+      line-height: 1.35;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+    }
+    .chip.block{
+      display:block;
+      text-align:center;
+    }
+
+    /* 링크 버튼 2개(홈페이지/블로그) */
+    .linkRow{
+      margin-top: 10px;
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
     .orgLink{
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap: 8px;
-      margin-top: 10px;
       font-size: 13px;
       font-weight: 900;
       color: rgba(255,255,255,.92);
@@ -320,6 +346,7 @@
       .seg button{ flex: 1; min-width: 0; }
       .actions{ width: 100%; justify-content:flex-end; }
       .countLine{ align-items:flex-start; }
+      .orgLink{ width: 100%; }
     }
   </style>
 </head>
@@ -605,13 +632,21 @@
         <div>이 페이지의 체크 결과는 사용자 브라우저에만 저장됩니다(서버로 전송되지 않음).</div>
 
         <div class="footerBox">
-          <div class="org">웰다잉통합예술교육협회</div>
-          <div class="closing">존엄은 우연히 주어지지 않습니다.
-준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.</div>
+          <div class="org"><span class="chip">웰다잉통합예술교육협회</span></div>
 
-          <a class="orgLink" href="http://wia-edu.org" target="_blank" rel="noopener noreferrer">
-            협회 홈페이지 바로가기 <small>http://wia-edu.org</small>
-          </a>
+          <div class="closing">
+            <span class="chip block">존엄은 우연히 주어지지 않습니다.</span>
+            <span class="chip block" style="margin-top:8px;">준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.</span>
+          </div>
+
+          <div class="linkRow" aria-label="협회 링크">
+            <a class="orgLink" href="http://wia-edu.org" target="_blank" rel="noopener noreferrer">
+              홈페이지 <small>http://wia-edu.org</small>
+            </a>
+            <a class="orgLink" href="https://blog.naver.com/say2sky" target="_blank" rel="noopener noreferrer">
+              블로그 <small>blog.naver.com/say2sky</small>
+            </a>
+          </div>
         </div>
       </footer>
     </main>
@@ -620,7 +655,7 @@
   <div class="toast" id="toast">저장됨</div>
 
   <script>
-    const STORE_KEY = "goyohan_welldying_checklist_v4_blue_footerNavy";
+    const STORE_KEY = "goyohan_welldying_checklist_v5_footerChipLinks";
 
     const toast = document.getElementById("toast");
     const countText = document.getElementById("countText");
@@ -676,9 +711,7 @@
         const key = it.dataset.item;
         const v = getItemValue(it);
 
-        if(key === "pet" && v === "na"){
-          return; // excluded
-        }
+        if(key === "pet" && v === "na") return; // 제외
         denom += 1;
         if(v === "1") done += 1;
       });
