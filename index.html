@@ -6,15 +6,14 @@
   <title>존엄한 이행을 위한 자기결정 설계</title>
   <style>
     :root{
-      /* 전체 바탕: 파랑은 그대로 */
+      /* 전체 바탕: 파랑은 그대로 유지 */
       --bg0:#0b55d4;
       --bg1:#0a6bff;
       --bg2:#2f8dff;
 
-      --panel: rgba(255,255,255,.10);
-      --line: rgba(255,255,255,.16);
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.72);
+      --line: rgba(255,255,255,.18);
 
       --ok:#37d07a;
       --na:#b7c6ff;
@@ -25,13 +24,13 @@
       --max: 980px;
       --font: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
 
-      /* 하단 영역: 짙은 파랑 */
+      /* 체크리스트 박스(섹션/항목 카드): “6) 긴급 연락망 정리”처럼 짙은 파랑 */
+      --boxNavyA: rgba(6, 24, 70, .42);   /* 섹션(details) */
+      --boxNavyB: rgba(6, 24, 70, .54);   /* 항목(.item)   */
+
+      /* 하단 footerBox: 기존처럼 짙은 파랑 유지 */
       --footerNavyA: rgba(6, 24, 70, .78);
       --footerNavyB: rgba(6, 24, 70, .62);
-
-      /* “글자 배경도 짙게”: 라벨/칩 배경 */
-      --chipBg: rgba(4, 18, 55, .55);
-      --chipLine: rgba(255,255,255,.18);
     }
 
     *{box-sizing:border-box}
@@ -84,9 +83,7 @@
       line-height: 1.45;
     }
 
-    .actions{
-      display:flex; gap:8px; align-items:center;
-    }
+    .actions{ display:flex; gap:8px; align-items:center; }
 
     .btn{
       border:1px solid var(--line);
@@ -147,14 +144,16 @@
 
     main{ margin-top: 16px; }
 
+    /* ✅ 섹션 박스(details)를 짙은 파랑으로 */
     details{
-      background: rgba(255,255,255,.08);
-      border: 1px solid var(--line);
+      background: var(--boxNavyA);
+      border: 1px solid rgba(255,255,255,.18);
       border-radius: var(--radius);
       padding: 10px 12px;
       box-shadow: 0 10px 26px rgba(0,0,0,.14);
       margin-bottom: 12px;
     }
+
     summary{
       cursor:pointer;
       list-style:none;
@@ -170,7 +169,7 @@
     .secTitle{
       font-weight: 900;
       letter-spacing: -0.2px;
-      font-size: 15px;
+      font-size: 15px; /* 기준 글자 크기 */
       line-height: 1.2;
     }
     .secMeta{
@@ -182,9 +181,10 @@
 
     .items{ margin-top: 8px; display:grid; gap: 10px; }
 
+    /* ✅ 항목 카드(.item)도 더 짙은 파랑으로 */
     .item{
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.16);
+      background: var(--boxNavyB);
+      border: 1px solid rgba(255,255,255,.18);
       border-radius: var(--radius2);
       padding: 12px 12px 10px;
       display:grid;
@@ -204,7 +204,7 @@
     .desc{
       margin: 6px 0 0 0;
       font-size: 12.5px;
-      color: var(--muted);
+      color: rgba(255,255,255,.78); /* 짙은 박스 위 가독성 보정 */
       line-height: 1.35;
     }
 
@@ -213,13 +213,13 @@
       border: 1px solid rgba(255,255,255,.18);
       border-radius: 999px;
       overflow:hidden;
-      background: rgba(0,0,0,.12);
+      background: rgba(0,0,0,.14);
       box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
     }
     .seg button{
       border: 0;
       background: transparent;
-      color: rgba(255,255,255,.82);
+      color: rgba(255,255,255,.84);
       padding: 9px 10px;
       cursor:pointer;
       font-weight: 900;
@@ -271,7 +271,7 @@
       padding: 14px 10px 4px;
     }
 
-    /* 하단: 협회/문구/링크가 들어가는 “짙은 파랑 영역” */
+    /* 하단: 협회/문구/링크가 들어가는 “짙은 파랑 영역”(기존 느낌 유지) */
     .footerBox{
       margin-top: 12px;
       background: linear-gradient(180deg, var(--footerNavyA), var(--footerNavyB));
@@ -281,7 +281,7 @@
       box-shadow: 0 12px 30px rgba(0,0,0,.18);
     }
 
-    /* 요청: ‘6) 긴급 연락망 정리’와 같은 크기(=15px) */
+    /* 요청: 아래 텍스트 크기 = 섹션 제목(.secTitle, 15px) */
     .org, .closing{
       font-size: 15px;
       font-weight: 900;
@@ -293,23 +293,6 @@
       white-space: pre-line;
     }
 
-    /* 요청: “각 글자색의 배경색도 같이 짙게” → 텍스트를 ‘칩/라벨’ 위에 올림 */
-    .chip{
-      display:inline-block;
-      max-width: 100%;
-      background: var(--chipBg);
-      border: 1px solid var(--chipLine);
-      border-radius: 12px;
-      padding: 8px 10px;
-      line-height: 1.35;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
-    }
-    .chip.block{
-      display:block;
-      text-align:center;
-    }
-
-    /* 링크 버튼 2개(홈페이지/블로그) */
     .linkRow{
       margin-top: 10px;
       display:flex;
@@ -632,12 +615,9 @@
         <div>이 페이지의 체크 결과는 사용자 브라우저에만 저장됩니다(서버로 전송되지 않음).</div>
 
         <div class="footerBox">
-          <div class="org"><span class="chip">웰다잉통합예술교육협회</span></div>
-
-          <div class="closing">
-            <span class="chip block">존엄은 우연히 주어지지 않습니다.</span>
-            <span class="chip block" style="margin-top:8px;">준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.</span>
-          </div>
+          <div class="org">웰다잉통합예술교육협회</div>
+          <div class="closing">존엄은 우연히 주어지지 않습니다.
+준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.</div>
 
           <div class="linkRow" aria-label="협회 링크">
             <a class="orgLink" href="http://wia-edu.org" target="_blank" rel="noopener noreferrer">
@@ -655,7 +635,7 @@
   <div class="toast" id="toast">저장됨</div>
 
   <script>
-    const STORE_KEY = "goyohan_welldying_checklist_v5_footerChipLinks";
+    const STORE_KEY = "goyohan_welldying_checklist_v6_navyBoxes";
 
     const toast = document.getElementById("toast");
     const countText = document.getElementById("countText");
