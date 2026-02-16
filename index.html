@@ -6,13 +6,12 @@
   <title>존엄한 이행을 위한 자기결정 설계</title>
   <style>
     :root{
-      /* Blue (not navy) */
+      /* 배경: 일반 파랑(blue) 계열 */
       --bg0:#0b55d4;
       --bg1:#0a6bff;
       --bg2:#2f8dff;
 
       --panel: rgba(255,255,255,.10);
-      --panel2: rgba(255,255,255,.14);
       --line: rgba(255,255,255,.16);
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.72);
@@ -25,6 +24,10 @@
       --radius2: 14px;
       --max: 980px;
       --font: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+
+      /* 하단 글자 영역(요청: 짙은 파랑) */
+      --footerNavy: rgba(6, 24, 70, .72);
+      --footerNavy2: rgba(6, 24, 70, .58);
     }
 
     *{box-sizing:border-box}
@@ -159,10 +162,11 @@
       user-select:none;
     }
     summary::-webkit-details-marker{ display:none; }
+
     .secTitle{
       font-weight: 900;
       letter-spacing: -0.2px;
-      font-size: 15px;
+      font-size: 15px; /* 기준 글자 크기 */
       line-height: 1.2;
     }
     .secMeta{
@@ -262,18 +266,52 @@
       text-align: center;
       padding: 14px 10px 4px;
     }
-    .org{
-      margin-top: 10px;
+
+    /* 요청: 글자가 있는 영역 = 짙은 파랑 */
+    .footerBox{
+      margin-top: 12px;
+      background: linear-gradient(180deg, var(--footerNavy), var(--footerNavy2));
+      border: 1px solid rgba(255,255,255,.20);
+      border-radius: 16px;
+      padding: 14px 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    }
+
+    /* 요청: 아래 3줄 텍스트 크기 = 섹션 제목(.secTitle, 15px) */
+    .org,
+    .closing{
+      font-size: 15px;
       font-weight: 900;
       letter-spacing: -0.2px;
       color: rgba(255,255,255,.92);
     }
     .closing{
-      margin-top: 10px;
-      font-weight: 900;
-      color: rgba(255,255,255,.90);
-      letter-spacing: -0.2px;
+      margin-top: 8px;
       white-space: pre-line;
+    }
+
+    .orgLink{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 900;
+      color: rgba(255,255,255,.92);
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.10);
+      transition: transform .06s ease, background .15s ease;
+    }
+    .orgLink:hover{ background: rgba(255,255,255,.14); }
+    .orgLink:active{ transform: scale(.98); }
+    .orgLink small{
+      font-size: 12px;
+      font-weight: 800;
+      color: rgba(255,255,255,.80);
     }
 
     @media (max-width: 520px){
@@ -565,9 +603,16 @@
 
       <footer>
         <div>이 페이지의 체크 결과는 사용자 브라우저에만 저장됩니다(서버로 전송되지 않음).</div>
-        <div class="org">웰다잉통합예술교육협회</div>
-        <div class="closing">존엄은 우연히 주어지지 않습니다.
+
+        <div class="footerBox">
+          <div class="org">웰다잉통합예술교육협회</div>
+          <div class="closing">존엄은 우연히 주어지지 않습니다.
 준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.</div>
+
+          <a class="orgLink" href="http://wia-edu.org" target="_blank" rel="noopener noreferrer">
+            협회 홈페이지 바로가기 <small>http://wia-edu.org</small>
+          </a>
+        </div>
       </footer>
     </main>
   </div>
@@ -575,7 +620,7 @@
   <div class="toast" id="toast">저장됨</div>
 
   <script>
-    const STORE_KEY = "goyohan_welldying_checklist_v4_blue_write";
+    const STORE_KEY = "goyohan_welldying_checklist_v4_blue_footerNavy";
 
     const toast = document.getElementById("toast");
     const countText = document.getElementById("countText");
