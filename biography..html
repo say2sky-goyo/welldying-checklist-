@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 이야기: 자기쓰기 자서전 워크북</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f7f3f0; 
+            --paper-color: #ffffff;
+            --main-text: #444444; 
+            --point-color: #a7b0ca; 
+            --sub-point: #d1b2c4; 
+            --border-color: #e2ddd9;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--main-text);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            word-break: keep-all;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 25px;
+            background: var(--paper-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .exclude-from-pdf { display: block; }
+        .top-warning {
+            background-color: #fff;
+            border: 1px solid var(--sub-point);
+            color: #8a6d7d;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .btn-area {
+            position: sticky;
+            top: 15px;
+            text-align: right;
+            margin-bottom: 25px;
+            z-index: 100;
+        }
+
+        button {
+            background-color: var(--point-color);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(167, 176, 202, 0.4);
+        }
+
+        header { text-align: center; margin-bottom: 60px; }
+        .main-title { font-size: 2.2rem; color: #5a5a5a; margin-bottom: 15px; font-weight: bold; }
+        .sub-title { font-size: 1.15rem; color: #888; margin-bottom: 20px; line-height: 1.5; }
+
+        .name-input { text-align: right; margin-bottom: 40px; font-size: 1.1rem; }
+        .name-input input {
+            border: none; border-bottom: 1px solid #ccc; padding: 5px 10px; width: 150px; outline: none; background: transparent;
+        }
+
+        /* 섹션 전체가 페이지 중간에서 잘리지 않도록 설정 */
+        section {
+            page-break-inside: avoid; 
+            margin-bottom: 30px;
+        }
+
+        h2 { 
+            display: inline-block;
+            background: linear-gradient(transparent 70%, #ece0e8 30%);
+            color: #6a5d7a; 
+            padding: 0 5px;
+            margin-top: 40px;
+            font-size: 1.5rem;
+        }
+        
+        h3 { color: #78829d; margin-top: 30px; border-left: 5px solid var(--point-color); padding-left: 12px; }
+
+        .intro-box {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+            page-break-inside: avoid;
+        }
+
+        .check-item { display: flex; align-items: flex-start; margin-bottom: 12px; }
+        .check-item input[type="checkbox"] { 
+            width: 19px; height: 19px; margin-right: 12px; accent-color: var(--sub-point);
+        }
+
+        .input-group {
+            margin: 15px 0 25px 0;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            page-break-inside: avoid; /* 질문과 답변칸 결합 */
+        }
+        label { display: block; font-weight: bold; margin-bottom: 12px; color: #555; }
+        textarea {
+            width: 100%; min-height: 100px; border: 1px solid #e2ddd9; border-radius: 8px;
+            padding: 15px; font-size: 1rem; font-family: inherit; resize: none; box-sizing: border-box;
+        }
+
+        /* 표 잘림 방지 */
+        .table-wrapper {
+            page-break-inside: avoid;
+            margin: 20px 0;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid var(--border-color); padding: 12px; text-align: center; }
+        th { background-color: #f2f4f7; }
+        tr { page-break-inside: avoid; }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            page-break-inside: avoid; /* 하단 맺음말 영역 통째로 이동 */
+        }
+
+        .contact-card {
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        @media print {
+            .exclude-from-pdf { display: none !important; }
+            body { background-color: #fff; }
+            .container { box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="workbook-content">
+    
+    <div class="exclude-from-pdf">
+        <div class="top-warning">
+            ⚠️ <strong>주의:</strong> 작성 내용은 서버에 저장하지 않습니다.<br>
+            새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.
+        </div>
+        <div class="btn-area">
+            <button onclick="saveAsPDF()">📄 PDF 다운로드 / 전송하기</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="main-title">📖 나의 이야기: 자기쓰기 자서전 워크북 📖</div>
+        <div class="sub-title">― 존재를 기록하고 삶을 껴안아 내 삶을 다정하게 읽어주는 시간 ―</div>
+    </header>
+
+    <div class="name-input">이름: <input type="text"></div>
+
+    <section>
+        <h2>Ⅰ. 이 여정을 시작하는 당신에게</h2>
+        <div class="intro-box">
+            자서전을 쓴다는 것은 단순히 지나온 시간을 나열하는 숙제가 아닙니다. 그것은 흩어진 기억의 구슬을 '나'라는 실로 꿰어 보배를 만드는 철학적 실천이자, 스스로를 다시 만나는 심리적 통합의 과정입니다.
+            <ul style="margin-top:15px;">
+                <li><strong>이야기의 힘:</strong> 자신의 삶을 ‘이야기 구조’로 엮을 때 안정된 정체성을 얻습니다.</li>
+                <li><strong>생애의 완성:</strong> 노년기의 핵심 과제인 ‘자아통합’을 이루는 과정입니다.</li>
+                <li><strong>의미의 발견:</strong> 시련 속에서도 실존할 힘을 얻는 길잡이가 되어줄 것입니다.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>PART 1. 마음의 도면 그리기 (설계)</h2>
+        <h3>1. 목적 명료화: 나는 왜 쓰려 하는가?</h3>
+        <div class="input-group">
+            <div class="check-item"><input type="checkbox"> 자녀와 후손에게 나의 뿌리와 유산을 남기기 위해</div>
+            <div class="check-item"><input type="checkbox"> 마음속 깊은 상처를 직면하고 치유하기 위해</div>
+            <div class="check-item"><input type="checkbox"> 내 삶의 궤적에서 숨겨진 의미를 찾기 위해</div>
+            <div class="check-item"><input type="checkbox"> 죽음을 담담히 준비하며 생애를 통합하기 위해</div>
+        </div>
+        <div class="input-group">
+            <label>✍️ 나의 선언: "내가 이 자서전을 쓰는 이유는..."</label>
+            <textarea oninput="autoResize(this)"></textarea>
+        </div>
+
+        <h3>2. 독자 설정: 누구에게 들려줄 이야기인가?</h3>
+        <div class="input-group">
+            <div class="check-item"><input type="checkbox"> 나 자신 &nbsp;&nbsp; <input type="checkbox"> 나의 가족 &nbsp;&nbsp; <input type="checkbox"> 세상 사람들</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>PART 2. 기억의 재료 모으기 (탐색)</h2>
+        <div class="intro-box">
+            <strong>• 체크리스트:</strong> 
+            <input type="checkbox"> 사진첩 &nbsp; <input type="checkbox"> 편지/일기 &nbsp; <input type="checkbox"> 졸업장/상장 &nbsp; <input type="checkbox"> 가족관계도 &nbsp; <input type="checkbox"> 옛집 주소
+        </div>
+
+        <h3>• 생애 연표: 기억의 지도</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr><th width="20%">시기</th><th>주요 사건</th><th>당시의 감정</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>출생~유년</td><td><textarea oninput="autoResize(this)"></textarea></td><td><textarea oninput="autoResize(this)"></textarea></td></tr>
+                    <tr><td>학창 시절</td><td><textarea oninput="autoResize(this)"></textarea></td><td><textarea oninput="autoResize(this)"></textarea></td></tr>
+                    <tr><td>청년/일</td><td><textarea oninput="autoResize(this)"></textarea></td><td><textarea oninput="autoResize(this)"></textarea></td></tr>
+                    <tr><td>중년/현재</td><td><textarea oninput="autoResize(this)"></textarea></td><td><textarea oninput="autoResize(this)"></textarea></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>PART 3. 내 삶의 여덟 가지 풍경 (실전 서술)</h2>
+        <div class="input-group"><label>1. 뿌리와 첫 기억: 당신이 태어난 집의 냄새와 부모님의 모습</label><textarea oninput="autoResize(this)"></textarea></div>
+        <div class="input-group"><label>2. 빛과 그림자: 가장 오래된 기억 하나를 구체적으로 묘사</label><textarea oninput="autoResize(this)"></textarea></div>
+        <div class="input-group"><label>3. 성장의 시간: 마음을 흔들었던 스승이나 친구, 첫 부딪힘</label><textarea oninput="autoResize(this)"></textarea></div>
+        <div class="input-group"><label>4. 일과 삶의 무게: 당신의 손이 해온 일과 그 의미</label><textarea oninput="autoResize(this)"></textarea></div>
+        <div class="input-group"><label>5. 사랑과 관계: 가장 소중한 타인과 그 영향</label><textarea oninput="autoResize(this)"></textarea></div>
+        <div class="input-group"><label>6. 인생의 파도: 삶의 방향을 바꾼 '전환점'</label><textarea oninput="autoResize(this)"></textarea></div>
+        <div class="input-group"><label>7. 마음의 나침반: 포기하지 않은 원칙과 감사한 세 가지</label><textarea oninput="autoResize(this)"></textarea></div>
+        <div class="input-group"><label>8. 아름다운 마무리: 기억되고 싶은 모습과 전하고 싶은 진심</label><textarea oninput="autoResize(this)"></textarea></div>
+    </section>
+
+    <section>
+        <h2>PART 4. 집필 원칙과 윤리 (방법)</h2>
+        <div class="intro-box">
+            1. <strong>장면을 그리세요:</strong> 오감을 활용해 구체적으로 서술하세요.<br>
+            2. <strong>솔직함이 힘입니다:</strong> 미화보다 진짜 감정을 담으세요.<br>
+            3. <strong>관계적 윤리:</strong> 타인의 사생활을 존중하며 따뜻한 거리를 두세요.
+        </div>
+    </section>
+
+    <section id="final-checklist">
+        <h2>Ⅴ. 마무리하며: 최종 체크리스트</h2>
+        <div class="input-group">
+            <div class="check-item"><input type="checkbox"> 목적이 분명한가? &nbsp; <input type="checkbox"> 감정과 해석이 담겼는가? &nbsp; <input type="checkbox"> 구체적인 장면인가?</div>
+        </div>
+        <div class="input-group">
+            <label>✍️ 나를 한 문장으로 표현한다면?</label>
+            <textarea oninput="autoResize(this)" placeholder="나는 ________________ 한 사람이다."></textarea>
+        </div>
+    </section>
+
+    <div class="footer">
+        <p style="text-align: center; font-style: italic; color: #777; margin-bottom: 30px;">
+            당신의 삶은 그 자체로 충분히 아름답고 기록될 가치가 있습니다. <br>
+            이 기록은 당신이 세상에 남기는 가장 고귀한 선물입니다.
+        </p>
+
+        <div class="contact-card">
+            <strong>웰다잉통합예술교육협회</strong><br>
+            <p style="margin-top:10px;">"존엄은 우연히 주어지지 않습니다. 준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다."</p>
+            <div style="font-size: 0.9rem; margin-top:15px;">
+                문의: 010-5635-7989 | wia-edu@naver.com | 홈페이지: wia-edu.org
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function autoResize(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+    }
+    window.onbeforeunload = function() { return "내용이 저장되지 않습니다. 정말 나가시겠습니까?"; };
+    function saveAsPDF() {
+        const element = document.getElementById('workbook-content');
+        const exclude = document.querySelector('.exclude-from-pdf');
+        exclude.style.display = 'none';
+        
+        const opt = {
+            margin: [15, 12, 15, 12],
+            filename: '나의이야기_자서전_워크북.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save().then(() => { 
+            exclude.style.display = 'block'; 
+        });
+    }
+</script>
+</body>
+</html>
