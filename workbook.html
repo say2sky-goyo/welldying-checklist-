@@ -23,7 +23,6 @@
             word-break: keep-all;
         }
 
-        /* 웹 화면용 컨테이너 패딩 */
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -32,10 +31,7 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
-        /* PDF 저장 시 제거할 영역 */
-        .exclude-from-pdf {
-            display: block;
-        }
+        .exclude-from-pdf { display: block; }
 
         .top-warning {
             background-color: #fff4f4;
@@ -71,11 +67,11 @@
         header {
             text-align: center;
             margin-bottom: 50px;
-            padding-top: 10px; /* 제목 상단 여백 */
+            padding-top: 10px;
         }
 
         .main-title { font-size: 2.2rem; color: #4a5a4c; margin-bottom: 10px; font-weight: bold; }
-        .sub-title { font-size: 1.2rem; color: #7a8a99; margin-bottom: 5px; }
+        .sub-title { font-size: 1.25rem; color: #6a7a6c; margin-bottom: 5px; font-style: italic; }
         .disclaimer { font-size: 0.9rem; color: #999; }
 
         h2 { color: var(--point-color); border-bottom: 2px solid var(--point-color); padding-bottom: 5px; margin-top: 50px; }
@@ -89,7 +85,7 @@
             padding: 20px;
             border-radius: 10px;
             border: 1px solid var(--border-color);
-            page-break-inside: avoid; /* 질문과 입력칸이 페이지 중간에서 잘리지 않게 함 */
+            page-break-inside: avoid; /* 질문과 답변칸이 페이지 경계에서 잘리지 않도록 함 */
         }
 
         label { display: block; font-weight: bold; margin-bottom: 10px; color: #444; }
@@ -114,11 +110,13 @@
         }
         .option-item label { display: inline; font-weight: normal; cursor: pointer; margin: 0; }
 
+        /* 하단 맺음말 영역: 페이지 분할 방지 */
         .footer {
             margin-top: 60px;
             padding-top: 30px;
             border-top: 2px solid var(--point-color);
             font-size: 0.95rem;
+            page-break-inside: avoid; /* 맺음말 전체가 한 페이지에 나오도록 유도 */
         }
 
         .contact-box {
@@ -140,7 +138,6 @@
         .association-info { margin-top: 15px; line-height: 1.6; }
         .link-text { color: var(--point-color); text-decoration: none; font-weight: bold; }
 
-        /* PDF 출력 시 레이아웃 조정 */
         @media print {
             .exclude-from-pdf { display: none !important; }
             .container { box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; }
@@ -161,9 +158,9 @@
         </div>
     </div>
 
-    <header id="pdf-header">
+    <header>
         <div class="main-title">📘 그대에게 닿을 나의 이야기</div>
-        <div class="sub-title">부제: 삶의 갈무리와 사랑하는 이들을 위한 기록</div>
+        <div class="sub-title">부제: 석양에 머문 문장들, 사랑하는 이에게 남기는 빛</div>
         <div class="disclaimer">(비상업적 용도의 무료 배포를 권장합니다)</div>
     </header>
 
@@ -335,23 +332,17 @@
         const element = document.getElementById('workbook-pdf');
         const exclude = document.querySelector('.exclude-from-pdf');
         
-        // PDF 생성 시 버튼과 경고창을 아예 DOM에서 일시적으로 숨김
         exclude.style.display = 'none';
 
         const opt = {
             margin: [15, 15, 15, 15],
             filename: '그대에게_닿을_나의_이야기.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { 
-                scale: 2, 
-                useCORS: true,
-                scrollY: 0 // 스크롤 위치에 상관없이 맨 위부터 캡처
-            },
+            html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-            // 저장 완료 후 다시 버튼 표시
             exclude.style.display = 'block';
         });
     }
