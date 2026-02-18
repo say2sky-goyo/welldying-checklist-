@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>그대에게 닿을 나의 이야기 - 워크북</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #fdfaf5; /* 눈이 편안한 베이지 */
+            --main-text: #444;
+            --point-color: #8da490; /* 파스텔 그린 */
+            --sub-color: #b8c6db; /* 파스텔 블루 */
+            --border-color: #e0dcd5;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--main-text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            word-break: keep-all;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--point-color);
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 { color: #5a6d5c; font-size: 1.8rem; margin-bottom: 10px; }
+        h2 { color: #7a8a99; font-size: 1.1rem; font-weight: normal; }
+        h3 { color: var(--point-color); border-left: 5px solid var(--point-color); padding-left: 10px; margin-top: 40px; }
+
+        .section-box {
+            background-color: #f9fbf9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: none;
+            background-color: #fff;
+            box-sizing: border-box;
+            min-height: 80px;
+        }
+
+        .btn-area {
+            position: sticky;
+            top: 10px;
+            text-align: right;
+            margin-bottom: 20px;
+            z-index: 100;
+        }
+
+        button {
+            background-color: var(--point-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover { background-color: #7a8f7d; }
+
+        .footer-info {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 1px dashed var(--border-color);
+            background: #fafafa;
+        }
+
+        @media print {
+            .btn-area { display: none; }
+            .container { box-shadow: none; padding: 0; }
+        }
+
+        /* 스마트폰 최적화 */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.4rem; }
+            .container { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="workbook">
+    <div class="btn-area">
+        <button onclick="savePDF()">📄 PDF로 저장/전송하기</button>
+    </div>
+
+    <header>
+        <h1>📘 그대에게 닿을 나의 이야기</h1>
+        <h2>부제: 삶의 갈무리와 사랑하는 이들을 위한 기록</h2>
+        <p style="font-size: 0.85rem; color: #888;">(비상업적 용도의 무료 배포를 권장합니다)</p>
+    </header>
+
+    <div class="intro">
+        <p>본 워크북은 <strong>존엄치료(Dignity Therapy)</strong>의 철학을 바탕으로, 삶의 궤적을 정리하고 사랑하는 이들에게 정서적 유산을 남기고자 하는 분들을 위해 제작되었습니다.</p>
+    </div>
+
+    <section>
+        <h3>Ⅰ. 시작하며: 존엄의 가치</h3>
+        <p>인간은 신체적으로 약해질지라도, 자신의 삶을 반추하고 목소리를 낼 수 있을 때 진정한 존엄을 유지합니다. 당신은 풍성한 역사를 지닌 고유한 인격체입니다.</p>
+        <div class="section-box">
+            <strong>🎯 핵심 목표</strong>
+            <ul>
+                <li>고통의 완화: 삶의 의미 재발견</li>
+                <li>자아의 통합: 존재의 연속성 회복</li>
+                <li>정서적 유대: 관계 속 위치 확인</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h3>Ⅱ. 마음지기(진행자) 가이드 (3No 원칙)</h3>
+        <p>1. <strong>No Correction</strong> (교정 금지) | 2. <strong>No Hurrying</strong> (침묵 존중) | 3. <strong>No Pressure</strong> (강요 금지)</p>
+    </section>
+
+    <section id="workbook-content">
+        <h3>Ⅲ. [워크북] 나의 삶, 나의 목소리</h3>
+        
+        <div class="section-box">
+            <h4>제1장. 눈부신 기억의 조각</h4>
+            <div class="input-group">
+                <label>• 당신의 인생에서 가장 빛나던 시절은 언제였으며, 그때 당신은 어떤 모습이었나요?</label>
+                <textarea oninput="autoResize(this)"></textarea>
+            </div>
+            <div class="input-group">
+                <label>• 떠올리기만 해도 미소가 지어지는 소중한 장소나 순간은 어디인가요?</label>
+                <textarea oninput="autoResize(this)"></textarea>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h4>제2장. 삶을 일군 긍지와 성취</h4>
+            <div class="input-group">
+                <label>• 스스로가 대견했던 최고의 순간은?</label>
+                <textarea oninput="autoResize(this)"></textarea>
+            </div>
+            <div class="input-group">
+                <label>• 나를 지탱한 힘(신념이나 사람):</label>
+                <textarea oninput="autoResize(this)"></textarea>
+            </div>
+            <div class="input-group">
+                <label>• 나의 정의: "나는 [ ]한 사람이었다."</label>
+                <textarea oninput="autoResize(this)"></textarea>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h4>제3장. 사랑하는 이들에게 띄우는 편지</h4>
+            <div class="input-group">
+                <label>• 고맙다, 미안하다, 사랑한다는 진심을 남겨주세요.</label>
+                <textarea oninput="autoResize(this)"></textarea>
+            </div>
+            <div class="input-group">
+                <label>• 가족에게 물려주고 싶은 나만의 손맛(레시피)이나 습관:</label>
+                <textarea oninput="autoResize(this)"></textarea>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h4>제4장. 세상에 남기는 지혜</h4>
+            <div class="input-group">
+                <label>• 후손들에게 전해주고 싶은 삶의 이정표와 조언:</label>
+                <textarea oninput="autoResize(this)"></textarea>
+            </div>
+            <div class="input-group">
+                <label>• 마지막 문장: "나의 삶은 [ ]였다."</label>
+                <textarea oninput="autoResize(this)"></textarea>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer-info">
+        <p>🌿 <strong>맺음말:</strong> 당신이라는 소중한 흔적이 남기에 인생은 아름답습니다. 이 기록은 당신이 남기는 마지막 선물이 될 것입니다.</p>
+        <hr>
+        <p><strong>[프로그램 문의] 웰다잉통합예술교육협회</strong><br>
+        전화: 010-5635-7989 | 이메일: wia-edu@naver.com<br>
+        궁금하신 사항은 위 연락처로 편하게 문의해 주시기 바랍니다.</p>
+        <p style="font-size: 0.7rem;">⚖️ 저작권 안내: 본 자료는 비상업적 용도로 자유롭게 활용 가능하며, 재배포 시 출처를 명시해 주시기 바랍니다.</p>
+    </div>
+</div>
+
+<script>
+    // 텍스트 영역 자동 높이 조절
+    function autoResize(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+    }
+
+    // PDF 저장 함수
+    function savePDF() {
+        const element = document.getElementById('workbook');
+        const opt = {
+            margin: 10,
+            filename: '그대에게_닿을_나의_이야기.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // 버튼 잠시 숨기기
+        document.querySelector('.btn-area').style.display = 'none';
+        
+        html2pdf().set(opt).from(element).save().then(() => {
+            // 저장 후 버튼 다시 표시
+            document.querySelector('.btn-area').style.display = 'block';
+        });
+    }
+</script>
+
+</body>
+</html>
