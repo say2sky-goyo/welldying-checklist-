@@ -31,6 +31,18 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
+        /* 경고 안내 박스 */
+        .top-warning {
+            background-color: #fff4f4;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
         .btn-area {
             position: sticky;
             top: 20px;
@@ -113,24 +125,25 @@
         .security-info {
             text-align: center;
             font-size: 0.85rem;
-            color: #d9534f; /* 주의를 끄는 부드러운 빨간색 */
+            color: #d9534f;
             margin-bottom: 20px;
             font-weight: bold;
         }
 
-        .association-info {
-            margin-top: 15px;
-            line-height: 1.6;
-        }
-
+        .association-info { margin-top: 15px; line-height: 1.6; }
         .link-text { color: var(--point-color); text-decoration: none; font-weight: bold; }
 
-        @media print { .btn-area { display: none; } }
+        @media print { .btn-area, .top-warning { display: none; } }
     </style>
 </head>
 <body>
 
 <div class="container" id="workbook-pdf">
+    <div class="top-warning">
+        ⚠️ <strong>주의:</strong> 본 페이지는 개인정보 보호를 위해 작성 내용을 서버에 저장하지 않습니다.<br>
+        창을 닫거나 새로고침하면 내용이 삭제되니, <strong>작성 후 반드시 하단의 PDF 저장 버튼</strong>을 이용해 주세요.
+    </div>
+
     <div class="btn-area">
         <button onclick="savePDF()">📄 PDF로 저장 및 전송</button>
     </div>
@@ -296,11 +309,18 @@
 </div>
 
 <script>
+    // 1. 텍스트 박스 자동 높이 조절
     function autoResize(textarea) {
         textarea.style.height = 'auto';
         textarea.style.height = textarea.scrollHeight + 'px';
     }
 
+    // 2. 이탈 방지 경고창 기능
+    window.onbeforeunload = function() {
+        return "작성 중인 내용이 저장되지 않고 사라질 수 있습니다. 정말 나가시겠습니까?";
+    };
+
+    // 3. PDF 저장 기능
     function savePDF() {
         const element = document.getElementById('workbook-pdf');
         const opt = {
@@ -312,10 +332,15 @@
         };
 
         const btn = document.querySelector('.btn-area');
+        const warning = document.querySelector('.top-warning');
+        
+        // 저장 시 불필요한 부분 숨기기
         btn.style.display = 'none';
+        warning.style.display = 'none';
 
         html2pdf().set(opt).from(element).save().then(() => {
             btn.style.display = 'block';
+            warning.style.display = 'block';
         });
     }
 </script>
