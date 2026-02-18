@@ -7,9 +7,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            --bg-color: #fdfaf5; /* 눈이 편안한 베이지 */
+            --bg-color: #fdfaf5; 
             --main-text: #333;
-            --point-color: #8da490; /* 파스텔 그린 */
+            --point-color: #8da490; 
             --border-color: #e0dcd5;
         }
 
@@ -49,10 +49,7 @@
             font-size: 1rem;
             font-weight: bold;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
         }
-
-        button:hover { transform: scale(1.05); }
 
         header {
             text-align: center;
@@ -80,7 +77,7 @@
 
         textarea {
             width: 100%;
-            min-height: 120px;
+            min-height: 100px;
             border: 1px solid #d1dbd3;
             border-radius: 8px;
             padding: 15px;
@@ -89,10 +86,15 @@
             resize: none;
             background-color: #fff;
             box-sizing: border-box;
-            transition: border-color 0.3s;
         }
 
-        textarea:focus { outline: none; border-color: var(--point-color); }
+        /* 선택 버튼 스타일 */
+        .selection-area { margin: 15px 0; }
+        .option-item { display: flex; align-items: center; margin-bottom: 12px; }
+        .option-item input[type="radio"] { 
+            width: 20px; height: 20px; accent-color: var(--point-color); cursor: pointer; margin-right: 10px;
+        }
+        .option-item label { display: inline; font-weight: normal; cursor: pointer; margin: 0; }
 
         .footer {
             margin-top: 60px;
@@ -175,7 +177,7 @@
         <textarea oninput="autoResize(this)"></textarea>
     </div>
     <div class="input-box">
-        <label>• [활동]: 리즈 시절 사진 붙이기 또는 행복했던 장면 그리기 (내용 입력)</label>
+        <label>• [활동]: 리즈 시절 사진 붙이기 또는 행복했던 장면 그리기</label>
         <textarea oninput="autoResize(this)"></textarea>
     </div>
 
@@ -232,10 +234,22 @@
     <h2>Ⅳ. 유산 문서(Legacy Document) 활용</h2>
     <div class="content-section">
 1. 보관: 정돈된 글과 함께 당시의 대화 음성(USB/QR)을 함께 보관하면 감동이 배가됩니다.
-2. 전달 방식 (본인 선택):
-• [ ] 지금 가족과 함께 읽으며 온기를 나누기
-• [ ] 특정 기념일(생일, 결혼기념일 등)에 전달하기
-• [ ] 사후 유품으로 전달하여 마지막 위로 전하기
+
+<strong>2. 전달 방식 (본인 선택):</strong>
+<div class="selection-area">
+    <div class="option-item">
+        <input type="radio" id="delivery1" name="delivery_method">
+        <label for="delivery1">지금 가족과 함께 읽으며 온기를 나누기</label>
+    </div>
+    <div class="option-item">
+        <input type="radio" id="delivery2" name="delivery_method">
+        <label for="delivery2">특정 기념일(생일, 결혼기념일 등)에 전달하기</label>
+    </div>
+    <div class="option-item">
+        <input type="radio" id="delivery3" name="delivery_method">
+        <label for="delivery3">사후 유품으로 전달하여 마지막 위로 전하기</label>
+    </div>
+</div>
     </div>
 
     <div class="footer">
@@ -269,7 +283,7 @@
             margin: [10, 10, 10, 10],
             filename: '그대에게_닿을_나의_이야기.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
+            html2canvas: { scale: 2 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
