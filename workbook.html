@@ -88,7 +88,6 @@
             box-sizing: border-box;
         }
 
-        /* 선택 버튼 스타일 */
         .selection-area { margin: 15px 0; }
         .option-item { display: flex; align-items: center; margin-bottom: 12px; }
         .option-item input[type="radio"] { 
@@ -99,16 +98,32 @@
         .footer {
             margin-top: 60px;
             padding-top: 30px;
-            border-top: 1px solid var(--border-color);
+            border-top: 2px solid var(--point-color);
             font-size: 0.95rem;
         }
 
         .contact-box {
             background: #f4f4f4;
-            padding: 20px;
+            padding: 25px;
             border-radius: 8px;
             margin-top: 20px;
+            border-left: 5px solid var(--point-color);
         }
+
+        .security-info {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #d9534f; /* 주의를 끄는 부드러운 빨간색 */
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .association-info {
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        .link-text { color: var(--point-color); text-decoration: none; font-weight: bold; }
 
         @media print { .btn-area { display: none; } }
     </style>
@@ -253,20 +268,29 @@
     </div>
 
     <div class="footer">
+        <div class="security-info">
+            ※ 이 페이지의 체크 결과는 사용자 브라우저에만 저장됩니다(서버로 전송되지 않음).
+        </div>
+
         <p><strong>💡 기록을 돕는 '말문 열기' 팁</strong></p>
         <p>• 오감을 자극하세요: "어땠나요?"보다 "그때 어떤 소리가 들렸고 어떤 냄새가 났나요?"라고 질문하면 기억이 더 선명해집니다.<br>
         • 취향을 물어보세요: 사소한 취향(좋아하는 노래, 커피, 꽃)을 묻는 것이 큰 이야기의 시작이 될 수 있습니다.<br>
         • 동행자가 되어주세요: 당신은 치료자가 아니라, 인생이라는 여행을 함께 돌아보는 동행자임을 잊지 마세요.</p>
         
-        <p style="font-size: 0.8rem; color: #888; margin-top: 30px;">⚖️ 저작권 안내: 본 자료는 비상업적 용도로 자유롭게 활용 가능하며, 재배포 시 출처를 명시해 주시기 바랍니다. (의료적 처방을 대체할 수는 없습니다.)</p>
+        <p style="font-size: 0.8rem; color: #888; margin-top: 30px;">⚖️ 저작권 안내: 본 자료는 비상업적 용도로 자유롭게 활용 가능하며, 재배포 시 출처를 명시해 주시기 바랍니다.</p>
         
         <p><strong>🌿 맺음말:</strong><br>
         인생은 완벽해서 아름다운 것이 아니라, 당신이라는 소중한 흔적이 남기에 아름답습니다. 이 기록은 당신이 남기는 마지막 선물인 동시에, 지금의 당신을 안아주는 따뜻한 시간이 될 것입니다.</p>
 
         <div class="contact-box">
-            <strong>[프로그램 문의] 웰다잉통합예술교육협회</strong><br>
-            전화: 010-5635-7989 | 이메일: wia-edu@naver.com<br>
-            궁금하신 사항은 위 연락처로 편하게 문의해 주시면 정성을 다해 답변드리겠습니다.
+            <div style="font-size:1.1rem; font-weight:bold; color:var(--point-color); margin-bottom:10px;">웰다잉통합예술교육협회</div>
+            <div style="font-style:italic; margin-bottom:15px;">"존엄은 우연히 주어지지 않습니다. 준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다."</div>
+            
+            <div class="association-info">
+                <strong>프로그램 문의:</strong> 010-5635-7989 | wia-edu@naver.com<br>
+                <strong>홈페이지:</strong> <a href="http://wia-edu.org" class="link-text" target="_blank">wia-edu.org</a><br>
+                <strong>블로그:</strong> <a href="http://blog.naver.com/say2sky" class="link-text" target="_blank">blog.naver.com/say2sky</a>
+            </div>
         </div>
     </div>
 </div>
