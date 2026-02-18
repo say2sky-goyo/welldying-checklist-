@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 돌봄 계획서</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --bg-lavender: #f6f4f9;
+            --main-purple: #8e7caf;
+            --soft-purple: #f0ecf5;
+            --deep-text: #2d2933;
+            --border-color: #dcd6e5;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background-color: var(--bg-lavender);
+            color: var(--deep-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            word-break: keep-all;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #ffffff;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+        }
+
+        .exclude-from-pdf { display: block; }
+        .top-warning {
+            background-color: #fff;
+            border: 1px solid var(--main-purple);
+            color: var(--main-purple);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .btn-area {
+            position: sticky;
+            top: 20px;
+            text-align: right;
+            margin-bottom: 20px;
+            z-index: 100;
+        }
+
+        button {
+            background-color: var(--main-purple);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(142, 124, 175, 0.4);
+        }
+
+        header { text-align: center; margin-bottom: 40px; }
+        .main-title { font-size: 2.2rem; color: var(--main-purple); font-weight: 800; margin-bottom: 5px; }
+        .sub-title { font-size: 1.1rem; color: #999; }
+
+        /* 섹션 설정 - 첫 섹션은 잘림방지 해제하여 첫페이지에 붙게 함 */
+        section { margin-bottom: 35px; }
+        .avoid-break { page-break-inside: avoid; }
+
+        h2 { 
+            font-size: 1.4rem; 
+            color: var(--main-purple); 
+            border-bottom: 2px solid var(--soft-purple);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+        h3 { font-size: 1.15rem; color: #4a4452; margin-top: 25px; margin-bottom: 12px; }
+
+        .philosophy-text {
+            background: var(--soft-purple);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .check-item { 
+            display: flex; 
+            align-items: flex-start; 
+            margin-bottom: 10px; 
+            cursor: pointer;
+        }
+        .check-item input[type="checkbox"], .check-item input[type="radio"] { 
+            width: 18px; height: 18px; margin-right: 10px; margin-top: 4px; accent-color: var(--main-purple);
+        }
+
+        .input-line {
+            border: none; border-bottom: 1px solid var(--main-purple);
+            padding: 2px 5px; font-size: 1rem; outline: none; background: transparent; text-align: center;
+        }
+        textarea {
+            width: 100%; min-height: 100px; border: 1px solid var(--border-color); border-radius: 10px;
+            padding: 15px; font-size: 1rem; font-family: inherit; resize: none; box-sizing: border-box;
+            margin-top: 10px; background: #fafafa;
+        }
+
+        .agency-box {
+            margin-top: 50px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            background-color: #fdfcff;
+            page-break-inside: avoid;
+        }
+        .agency-title { font-size: 1.2rem; font-weight: bold; color: var(--main-purple); margin-bottom: 8px; }
+
+        @media print {
+            .exclude-from-pdf { display: none !important; }
+            .container { box-shadow: none; padding: 10px; width: 100%; }
+            body { background-color: #fff; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="careplan-content">
+    
+    <div class="exclude-from-pdf">
+        <div class="top-warning">
+            ⚠️ 주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니 PDF로 보관하세요.
+        </div>
+        <div class="btn-area">
+            <button onclick="savePDF()">📄 PDF 다운로드</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="main-title">나의 돌봄 계획서</div>
+        <div class="sub-title">My Advanced Care & Life Integration Plan</div>
+    </header>
+
+    <section>
+        <h2>Ⅰ. 나의 돌봄 철학 및 가치 선언(Philosophical Foundation)</h2>
+        <div class="philosophy-text">
+            나는 질병이나 기능 저하로 규정되기 이전에 하나의 고유한 삶을 살아온 존재임을 밝힙니다.<br>
+            이 문서는 향후 의사결정 능력이 약화될 상황을 대비하여, 현재의 내가 충분한 숙고 끝에 작성하는 책임 있는 삶의 마지막 이정표입니다.
+        </div>
+
+        <h3>1. 내가 삶에서 우선하는 가치</h3>
+        <p>아래 항목 중 내가 끝까지 지키고 싶은 가치의 우선순위를 정합니다.<br>
+        ( 1순위: <input type="text" class="input-line" style="width:80px"> / 2순위: <input type="text" class="input-line" style="width:80px"> / 3순위: <input type="text" class="input-line" style="width:80px"> )</p>
+        
+        <div class="check-list">
+            <label class="check-item"><input type="checkbox"> • [ ] 고통의 최소화:신체적·심리적 고통으로부터 자유로운 상태</label>
+            <label class="check-item"><input type="checkbox"> • [ ] 존엄의 유지:타인에게 의존하더라도 인간으로서의 품위를 잃지 않는 것</label>
+            <label class="check-item"><input type="checkbox"> • [ ] 관계의 지속:사랑하는 이들과 단절되지 않고 정서적으로 교감하는 것</label>
+            <label class="check-item"><input type="checkbox"> • [ ] 자율성의 보장:나의 의사가 존중받고 사소한 선택권이라도 유지하는 것</label>
+            <label class="check-item"><input type="checkbox"> • [ ] 일상의 영위:익숙한 습관, 음식, 음악 등 평소의 삶의 양식을 유지하는 것</label>
+            <label class="check-item"><input type="checkbox"> • [ ] 영적 평온:종교적 신념이나 내면의 평화를 지키며 마무리하는 것a</label>
+        </div>
+
+        <h3>2. 돌봄에 대한 나의 기본 입장</h3>
+        <p>• 나는 연대하는 생명으로서 단순한 생명 연장보다는 삶의 질과 존엄성을 더 중요하게 여깁니다.<br>
+        • 나를 돌보는 이들의 삶 또한 소중하기에, 가족의 희생을 최소화하는 방향의 결정을 지지합니다.<br>
+        • 나의 인지 능력이 흐려지더라도, 이 문서에 담긴 나의 <b>'평소 의지'</b>가 그 순간의 '본능적 반응'보다 우선하여 존중되기를 바랍니다.</p>
+    </section>
+
+    <section class="avoid-break">
+        <h2>Ⅱ. 단계별 돌봄 의향 (Care Transitions Checklist)</h2>
+        <p>질병의 진행은 연속선상에 있으나, 돌봄의 결정은 상황에 따라 달라진다고 이해합니다.</p>
+
+        <h3>1단계: 자립적 돌봄기 (부분적 도움 필요 및 초기 치매 단계 포함)</h3>
+        <strong>1) 생활환경</strong>
+        <div class="check-list">
+            <label class="check-item"><input type="radio" name="step1_1"> □ 가능한 한 가정 중심 돌봄을 원합니다.</label>
+            <label class="check-item"><input type="radio" name="step1_1"> □ 필요 시 시설 입소를 고려합니다.</label>
+            <label class="check-item"><input type="radio" name="step1_1"> □ 의료기관 중심 관리를 선호합니다.</label>
+        </div>
+        <strong>2) 활동과 자율성</strong>
+        <div class="check-list">
+            <label class="check-item"><input type="radio" name="step1_2"> □ 익숙한 일상 활동을 유지하기를 원합니다.</label>
+            <label class="check-item"><input type="radio" name="step1_2"> □ 일정한 위험을 감수하더라도 자율성을 유지하기를 원합니다.</label>
+            <label class="check-item"><input type="radio" name="step1_2"> □ 안전을 위해 활동을 제한하는 것을 우선합니다.</label>
+        </div>
+    </section>
+
+    <section class="avoid-break">
+        <strong>3) 사회적 관계</strong>
+        <div class="check-list">
+            <label class="check-item"><input type="radio" name="step1_3"> □ 지역사회 및 문화·종교 활동을 지속하기를 원합니다.</label>
+            <label class="check-item"><input type="radio" name="step1_3"> □ 가족 중심의 관계를 유지하기를 원합니다.</label>
+            <label class="check-item"><input type="radio" name="step1_3"> □ 교류를 최소화하고 안정된 환경을 원합니다.</label>
+        </div>
+        <strong>4) 판단이 모호해질 경우의 원칙</strong>
+        <div class="check-list">
+            <label class="check-item"><input type="checkbox"> 기존에 밝힌 가치관을 우선 반영하기를 원합니다.</label>
+            <label class="check-item"><input type="checkbox"> 감정적 안정과 평온을 우선하기를 원합니다.</label>
+        </div>
+    </section>
+
+    <section class="avoid-break">
+        <h3>2단계: 의존적 돌봄기 (전적 도움 필요 및 중증 치매 단계 포함)</h3>
+        <strong>1) 대리의사결정자</strong><br>
+        1차 대리인: <input type="text" class="input-line" style="width:120px"> (관계: <input type="text" class="input-line" style="width:80px">)<br>
+        2차 대리인: <input type="text" class="input-line" style="width:120px"> (관계: <input type="text" class="input-line" style="width:80px">)<br><br>
+        <strong>대리인의 판단 기준을 다음과 같이 정합니다.</strong>
+        <div class="check-list">
+            <label class="check-item"><input type="checkbox"> □ 본 계획서의 내용을 최우선으로 반영합니다.</label>
+            <label class="check-item"><input type="checkbox"> □ 가족 협의를 존중합니다.</label>
+            <label class="check-item"><input type="checkbox"> □ 의료진의 전문적 판단을 존중합니다.</label>
+        </div>
+    </section>
+
+    <section class="avoid-break">
+        <strong>2) 돌봄의 우선 방향</strong>
+        <div class="check-list">
+            <label class="check-item"><input type="radio" name="step2_2"> □ 정서적 안정을 최우선으로 합니다.</label>
+            <label class="check-item"><input type="radio" name="step2_2"> □ 생명 유지를 최우선으로 합니다.</label>
+            <label class="check-item"><input type="radio" name="step2_2"> □ 고통 완화를 중심으로 합니다.</label>
+            <label class="check-item"><input type="radio" name="step2_2"> □ 관계 유지를 중심으로 합니다.</label>
+        </div>
+        <strong>3) 의료적 개입에 대한 입장</strong><br>
+        반복적 입원 치료: 
+        <label><input type="radio" name="med_1"> □ 희망합니다.</label>
+        <label><input type="radio" name="med_1"> □ 제한적 허용</label>
+        <label><input type="radio" name="med_1"> □ 원치 않음</label><br>
+        인공영양 또는 위관 삽입: 
+        <label><input type="radio" name="med_2"> □ 희망합니다.</label>
+        <label><input type="radio" name="med_2"> □ 일정 기간 허용</label>
+        <label><input type="radio" name="med_2"> □ 원치 않음</label>
+    </section>
+
+    <section class="avoid-break">
+        <h3>3단계: 임종기 (생애말 돌봄 단계)</h3>
+        <p>임종은 삶의 실패가 아니라 하나의 완결 과정이라고 이해합니다.</p>
+        <strong>1) 연명의료</strong>
+        <div class="check-list">
+            <label class="check-item"><input type="checkbox"> □ 심폐소생술을 원하지 않습니다.</label>
+            <label class="check-item"><input type="checkbox"> □ 인공호흡기 사용을 원하지 않습니다.</label>
+            <label class="check-item"><input type="checkbox"> □ 적극적 치료를 원합니다.</label>
+            <label class="check-item"><input type="checkbox"> □ 상황에 따라 판단하기를 원합니다.</label>
+        </div>
+    </section>
+
+    <section class="avoid-break">
+        <strong>2) 완화의료</strong>
+        <div class="check-list">
+            <label class="check-item"><input type="checkbox"> □ 통증 조절을 최우선으로 합니다.</label>
+            <label class="check-item"><input type="checkbox"> □ 의식 저하를 감수하더라도 고통 완화를 선택합니다.</label>
+            <label class="check-item"><input type="checkbox"> □ 가능한 한 의식을 유지하기를 원합니다.</label>
+        </div>
+        <strong>3) 임종 장소</strong>
+        <div class="check-list">
+            <label class="check-item"><input type="radio" name="step3_3"> □ 가정을 원합니다.</label>
+            <label class="check-item"><input type="radio" name="step3_3"> □ 호스피스 기관을 원합니다.</label>
+            <label class="check-item"><input type="radio" name="step3_3"> □ 병원을 원합니다.</label>
+            <label class="check-item"><input type="radio" name="step3_3"> □ 상황에 따라 결정하기를 원합니다.</label>
+        </div>
+    </section>
+
+    <section class="avoid-break">
+        <h2>Ⅲ. 마지막 당부 (Final Requests)</h2>
+        <strong>1. 의료진에게</strong><br>
+        <textarea placeholder="작성자를 질병의 증상으로만 보지 마시고, 한 시대를 성실히 살아낸 인간으로 대해 주십시오..."></textarea>
+        
+        <strong style="display:block; margin-top:15px;">2. 사랑하는 이들에게 전하는 말</strong>
+        <textarea placeholder="이 문서에 담긴 결정은 온전한 나의 결정으로 적성합니다..."></textarea>
+    </section>
+
+    <div style="text-align: right; margin-top: 40px; line-height: 2; page-break-inside: avoid;">
+        본 계획서는 충분한 숙고와 자발적 의지에 따라 작성하였음을 확인합니다.<br>
+        작성일: <input type="text" class="input-line" style="width:60px">년 <input type="text" class="input-line" style="width:40px">월 <input type="text" class="input-line" style="width:40px">일<br>
+        작성자: <input type="text" class="input-line" style="width:120px"> (서명)
+    </div>
+
+    <p style="margin-top: 40px; font-size: 0.9rem; color: #888; border-top: 1px solid #eee; padding-top: 15px;">
+        본 문서는 법적 강제력을 가진 서류는 아니나, 나의 인격적 가치와 돌봄의 방향을 명시한 안내 지침입니다.
+    </p>
+
+    <div class="agency-box">
+        <div class="agency-title">웰다잉통합예술교육협회</div>
+        <div style="font-size: 0.9rem; color: #666;">
+            존엄은 우연히 주어지지 않습니다. 준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.<br>
+            <strong>홈페이지:</strong> http://wia-edu.org | <strong>블로그:</strong> blog.naver.com/say2sky<br>
+            <strong>프로그램문의:</strong> 010-5635-7989
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function savePDF() {
+        const element = document.getElementById('careplan-content');
+        const exclude = document.querySelector('.exclude-from-pdf');
+        exclude.style.display = 'none';
+
+        const opt = {
+            margin: [10, 10, 10, 10], // 여백을 약간 줄여서 쏠림 방지
+            filename: '나의_돌봄_계획서.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            exclude.style.display = 'block';
+        });
+    }
+</script>
+
+</body>
+</html>
