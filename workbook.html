@@ -23,22 +23,27 @@
             word-break: keep-all;
         }
 
+        /* 웹 화면용 컨테이너 패딩 */
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 50px 25px;
+            padding: 40px 25px;
             background: white;
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
-        /* 경고 안내 박스 */
+        /* PDF 저장 시 제거할 영역 */
+        .exclude-from-pdf {
+            display: block;
+        }
+
         .top-warning {
             background-color: #fff4f4;
             border: 1px solid #f5c6cb;
             color: #721c24;
             padding: 15px;
             border-radius: 8px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-size: 0.9rem;
             text-align: center;
         }
@@ -47,7 +52,7 @@
             position: sticky;
             top: 20px;
             text-align: right;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             z-index: 100;
         }
 
@@ -65,17 +70,18 @@
 
         header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
+            padding-top: 10px; /* 제목 상단 여백 */
         }
 
-        .main-title { font-size: 2rem; color: #4a5a4c; margin-bottom: 10px; }
+        .main-title { font-size: 2.2rem; color: #4a5a4c; margin-bottom: 10px; font-weight: bold; }
         .sub-title { font-size: 1.2rem; color: #7a8a99; margin-bottom: 5px; }
         .disclaimer { font-size: 0.9rem; color: #999; }
 
         h2 { color: var(--point-color); border-bottom: 2px solid var(--point-color); padding-bottom: 5px; margin-top: 50px; }
         h3 { color: #555; margin-top: 30px; border-left: 4px solid var(--point-color); padding-left: 10px; }
         
-        .content-section { margin-bottom: 40px; white-space: pre-wrap; }
+        .content-section { margin-bottom: 30px; white-space: pre-wrap; }
         
         .input-box {
             margin: 15px 0 25px 0;
@@ -83,6 +89,7 @@
             padding: 20px;
             border-radius: 10px;
             border: 1px solid var(--border-color);
+            page-break-inside: avoid; /* 질문과 입력칸이 페이지 중간에서 잘리지 않게 함 */
         }
 
         label { display: block; font-weight: bold; margin-bottom: 10px; color: #444; }
@@ -133,22 +140,28 @@
         .association-info { margin-top: 15px; line-height: 1.6; }
         .link-text { color: var(--point-color); text-decoration: none; font-weight: bold; }
 
-        @media print { .btn-area, .top-warning { display: none; } }
+        /* PDF 출력 시 레이아웃 조정 */
+        @media print {
+            .exclude-from-pdf { display: none !important; }
+            .container { box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; }
+            header { padding-top: 0; margin-top: 0; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container" id="workbook-pdf">
-    <div class="top-warning">
-        ⚠️ <strong>주의:</strong> 본 페이지는 개인정보 보호를 위해 작성 내용을 서버에 저장하지 않습니다.<br>
-        창을 닫거나 새로고침하면 내용이 삭제되니, <strong>작성 후 반드시 하단의 PDF 저장 버튼</strong>을 이용해 주세요.
+    <div class="exclude-from-pdf">
+        <div class="top-warning">
+            ⚠️ <strong>주의:</strong> 본 페이지는 작성 내용을 서버에 저장하지 않습니다.<br>
+            새로고침 시 내용이 삭제되니, <strong>작성 후 반드시 아래 버튼</strong>을 눌러 PDF를 보관하세요.
+        </div>
+        <div class="btn-area">
+            <button onclick="savePDF()">📄 PDF로 저장 및 전송</button>
+        </div>
     </div>
 
-    <div class="btn-area">
-        <button onclick="savePDF()">📄 PDF로 저장 및 전송</button>
-    </div>
-
-    <header>
+    <header id="pdf-header">
         <div class="main-title">📘 그대에게 닿을 나의 이야기</div>
         <div class="sub-title">부제: 삶의 갈무리와 사랑하는 이들을 위한 기록</div>
         <div class="disclaimer">(비상업적 용도의 무료 배포를 권장합니다)</div>
@@ -309,38 +322,37 @@
 </div>
 
 <script>
-    // 1. 텍스트 박스 자동 높이 조절
     function autoResize(textarea) {
         textarea.style.height = 'auto';
         textarea.style.height = textarea.scrollHeight + 'px';
     }
 
-    // 2. 이탈 방지 경고창 기능
     window.onbeforeunload = function() {
-        return "작성 중인 내용이 저장되지 않고 사라질 수 있습니다. 정말 나가시겠습니까?";
+        return "작성 중인 내용이 저장되지 않습니다. 정말 나가시겠습니까?";
     };
 
-    // 3. PDF 저장 기능
     function savePDF() {
         const element = document.getElementById('workbook-pdf');
+        const exclude = document.querySelector('.exclude-from-pdf');
+        
+        // PDF 생성 시 버튼과 경고창을 아예 DOM에서 일시적으로 숨김
+        exclude.style.display = 'none';
+
         const opt = {
-            margin: [10, 10, 10, 10],
+            margin: [15, 15, 15, 15],
             filename: '그대에게_닿을_나의_이야기.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true,
+                scrollY: 0 // 스크롤 위치에 상관없이 맨 위부터 캡처
+            },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        const btn = document.querySelector('.btn-area');
-        const warning = document.querySelector('.top-warning');
-        
-        // 저장 시 불필요한 부분 숨기기
-        btn.style.display = 'none';
-        warning.style.display = 'none';
-
         html2pdf().set(opt).from(element).save().then(() => {
-            btn.style.display = 'block';
-            warning.style.display = 'block';
+            // 저장 완료 후 다시 버튼 표시
+            exclude.style.display = 'block';
         });
     }
 </script>
