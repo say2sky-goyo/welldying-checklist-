@@ -1,305 +1,782 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>부재의 자리에서 다시 서다 - 웰다잉 체크리스트</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #fdf2f4;
-            --accent-color: #d4a5a5;
-            --text-main: #222222;
-            --footer-bg: #f2e1e4; /* 수정된 하단 박스 배경: 차분한 인디핑크 톤 */
-            --footer-text: #5d4037; /* 하단 박스 글자색: 진한 갈색톤 */
-            --white: #ffffff;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>부재의 자리에서 다시 서다 - 웰다잉 체크리스트</title>
 
-        * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+  <!-- 웹폰트 최적화: preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        body {
-            margin: 0; padding: 0;
-            background-color: var(--bg-color);
-            font-family: 'Noto Sans KR', sans-serif;
-            color: var(--text-main);
-            line-height: 1.8;
-            word-break: keep-all;
-        }
+  <!-- 잡지 톤: 본문(산세리프) + 제목(명조) -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700&family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 850px;
-            margin: 40px auto;
-            background: var(--white);
-            padding: 60px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border-radius: 24px;
-        }
+  <style>
+    :root{
+      /* Indigo Pink System (차분한 애도 톤) */
+      --bg0: #fdf2f4;
+      --bg1: #f7e9ec;
 
-        @media print {
-            body { background: none; }
-            .container { box-shadow: none; margin: 0; width: 100%; max-width: none; padding: 30px; }
-            .no-print { display: none; }
-            section { page-break-inside: avoid; margin-bottom: 30px; }
-            h2, h3 { page-break-after: avoid; }
-        }
+      --accent: #d4a5a5;
+      --accent-2: #c88f9a;
+      --deep: #2a1f22;
+      --ink: rgba(34,34,34,0.92);
 
-        .warning-banner {
-            background-color: #fff5f5;
-            border-left: 4px solid #ff8787;
-            padding: 15px;
-            margin-bottom: 30px;
-            font-size: 0.9em;
-            color: #c92a2a;
-        }
+      --paper: rgba(255,255,255,0.84);
+      --paper-solid: #ffffff;
 
-        header { text-align: center; margin-bottom: 50px; }
-        .title-symbol { font-size: 2.2rem; display: block; margin-bottom: 8px; }
-        h1 { font-size: 2.4rem; font-weight: 700; margin: 0; color: #333; letter-spacing: -1.5px; }
-        .subtitle { font-size: 1.15rem; color: var(--accent-color); margin-top: 12px; font-weight: 300; }
+      --line: rgba(212,165,165,0.22);
+      --line-strong: rgba(212,165,165,0.34);
 
-        .intro-box {
-            background: #fcf8f9;
-            padding: 28px;
-            border-radius: 16px;
-            margin-bottom: 40px;
-            font-size: 0.98rem;
-            border: 1px solid #f2e6e8;
-        }
+      --shadow-soft: 0 18px 54px rgba(38, 20, 26, 0.10);
+      --shadow-card: 0 14px 36px rgba(38, 20, 26, 0.12);
 
-        .safety-note {
-            background-color: #fff9db;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            color: #856404;
-            margin-bottom: 25px;
-        }
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
 
-        h2 {
-            font-size: 1.6rem;
-            border-bottom: 2px solid #f8e1e5;
-            padding-bottom: 12px;
-            margin-top: 55px;
-            color: #111;
-        }
+      --ease: cubic-bezier(.2,.9,.2,1);
+    }
 
-        .checklist-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 18px;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 10px;
-        }
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
 
-        .checklist-item input[type="checkbox"] {
-            width: 22px; height: 22px;
-            margin-right: 15px; margin-top: 4px;
-            accent-color: var(--accent-color);
-            cursor: pointer; flex-shrink: 0;
-        }
+    body{
+      margin: 0;
+      padding: 0;
+      font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--ink);
+      line-height: 1.85;
+      word-break: keep-all;
 
-        .time-badge {
-            font-size: 0.85rem;
-            background: #fce4ec;
-            padding: 3px 12px;
-            border-radius: 15px;
-            font-weight: 600;
-            color: #d81b60;
-            margin-left: 10px;
-        }
+      /* 섬세한 배경: 파스텔이 ‘숨 쉬듯’ 번지는 레이어 */
+      background:
+        radial-gradient(1100px 720px at 12% 10%, rgba(212,165,165,0.18), transparent 58%),
+        radial-gradient(900px 620px at 88% 18%, rgba(200,143,154,0.14), transparent 58%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
 
-        .supplies {
-            display: block;
-            background: #fff;
-            border: 1px dashed var(--accent-color);
-            padding: 15px 20px;
-            border-radius: 12px;
-            color: #666;
-            margin-bottom: 30px;
-        }
+    /* 반응형 여백: 커질수록 ‘예술적으로’ 숨 쉬는 공간 */
+    .container{
+      width: min(980px, calc(100% - 32px));
+      margin: clamp(18px, 4vw, 54px) auto;
+      padding: clamp(22px, 4.6vw, 74px);
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #eee;
-        }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
-        th { background-color: #fdf2f4; color: #884d4d; }
+      background: var(--paper);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255,255,255,0.60);
 
-        /* 수정된 하단 박스 디자인 */
-        .info-box {
-            margin-top: 70px;
-            padding: 35px;
-            background: var(--footer-bg);
-            color: var(--footer-text);
-            border-radius: 20px;
-            font-size: 0.95rem;
-            border: 1px solid #ead0d4;
-        }
-        .info-box h3 { color: #884d4d; margin-top: 0; font-size: 1.2rem; }
-        .info-box p { margin: 8px 0; opacity: 0.9; }
-        .info-box a { color: #b07a7a; text-decoration: none; font-weight: bold; }
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
 
-        .btn-print {
-            position: fixed;
-            bottom: 30px; right: 30px;
-            background: #d4a5a5;
-            color: white; border: none;
-            padding: 16px 28px; border-radius: 35px;
-            font-weight: bold; cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-        }
-    </style>
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 종이 결 + 은은한 광 */
+    .container::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(900px 520px at 22% 0%, rgba(255,255,255,0.62), transparent 60%),
+        radial-gradient(820px 520px at 100% 30%, rgba(255,255,255,0.46), transparent 56%),
+        linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+      opacity: .78;
+      pointer-events:none;
+    }
+
+    .content{ position: relative; z-index: 1; }
+
+    /* 상단 경고 배너(카드형) */
+    .warning-banner{
+      background: linear-gradient(135deg, rgba(255,135,135,0.10), rgba(212,165,165,0.10));
+      border: 1px solid rgba(255,135,135,0.22);
+      border-left: 5px solid #ff8787;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 26px;
+      font-size: 0.92rem;
+      color: rgba(201,42,42,0.92);
+      font-weight: 700;
+    }
+
+    header{
+      text-align: center;
+      margin: 10px 0 36px;
+    }
+
+    .title-symbol{
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: 6px;
+      filter: saturate(0.95);
+    }
+
+    h1{
+      margin: 0;
+      font-family: "Nanum Myeongjo", serif;
+      font-size: clamp(2.0rem, 3.8vw, 2.55rem);
+      letter-spacing: -1.2px;
+      color: rgba(42,31,34,0.96);
+      line-height: 1.22;
+    }
+
+    .subtitle{
+      font-size: 1.08rem;
+      color: rgba(212,165,165,0.98);
+      margin-top: 12px;
+      font-weight: 400;
+    }
+
+    /* 섹션 카드뉴스 스타일 */
+    section.card{
+      position: relative;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: clamp(16px, 3.2vw, 28px);
+      margin: 18px 0 22px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    /* Hover 시 파스텔이 번지는 효과(정교한 그라데이션 + 블러) */
+    section.card::before{
+      content:"";
+      position:absolute;
+      inset:-42%;
+      background:
+        radial-gradient(closest-side at 30% 30%, rgba(212,165,165,0.26), transparent 62%),
+        radial-gradient(closest-side at 78% 18%, rgba(200,143,154,0.20), transparent 58%),
+        radial-gradient(closest-side at 55% 82%, rgba(212,165,165,0.12), transparent 62%);
+      filter: blur(18px);
+      opacity: 0;
+      transform: translate3d(-1%, 0, 0) scale(0.98);
+      transition: opacity .55s var(--ease), transform .65s var(--ease);
+      pointer-events:none;
+    }
+    section.card:hover::before{
+      opacity: 1;
+      transform: translate3d(0, -1%, 0) scale(1);
+    }
+    section.card > *{ position: relative; z-index: 1; }
+
+    /* 인트로/주의/준비물도 ‘카드’로 맞춤 */
+    .intro-box{
+      background: rgba(255,255,255,0.72);
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(212,165,165,0.18);
+      box-shadow: 0 10px 22px rgba(38,20,26,0.06);
+      font-size: 0.98rem;
+      color: rgba(42,31,34,0.86);
+    }
+
+    .safety-note{
+      background: rgba(255, 249, 219, 0.76);
+      border: 1px solid rgba(133, 100, 4, 0.18);
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 0.92rem;
+      color: #856404;
+      margin: 18px 0 18px;
+    }
+
+    .supplies{
+      display: block;
+      background: rgba(255,255,255,0.80);
+      border: 1px dashed rgba(212,165,165,0.60);
+      padding: 14px 16px;
+      border-radius: 16px;
+      color: rgba(42,31,34,0.72);
+      margin: 0 0 18px;
+      box-shadow: 0 10px 22px rgba(38,20,26,0.06);
+    }
+
+    /* 섹션 제목 */
+    h2{
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 1.12rem;
+      letter-spacing: -0.2px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 18px rgba(212,165,165,0.18);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    /* 시간 배지(더 정돈된 칩) */
+    .time-badge{
+      font-size: 0.86rem;
+      background: rgba(255,255,255,0.26);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.94);
+      border: 1px solid rgba(255,255,255,0.22);
+      white-space: nowrap;
+    }
+
+    /* =========================
+       체크리스트: 커스텀 체크박스
+       - 체크 표시가 “그려지는” 애니메이션
+       - 항목 hover 시 파스텔이 번짐
+       ========================= */
+    .checklist{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 6px 0 0;
+    }
+
+    .check-item{
+      position: relative;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      align-items: start;
+
+      cursor: pointer;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(212,165,165,0.18);
+      background: rgba(255,255,255,0.62);
+      transition: transform .22s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+      overflow: hidden;
+    }
+
+    .check-item::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(closest-side at 30% 50%, rgba(212,165,165,0.22), transparent 62%),
+        radial-gradient(closest-side at 80% 30%, rgba(200,143,154,0.16), transparent 60%);
+      filter: blur(16px);
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity .5s var(--ease), transform .6s var(--ease);
+      pointer-events:none;
+    }
+
+    .check-item:hover{
+      transform: translateY(-1px);
+      border-color: rgba(212,165,165,0.30);
+      background: rgba(255,255,255,0.84);
+    }
+
+    .check-item:hover::before{
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .cb-input{
+      position:absolute;
+      opacity:0;
+      width:1px; height:1px;
+      overflow:hidden;
+    }
+
+    .cb-ui{
+      width: 20px;
+      height: 20px;
+      border-radius: 7px;
+      border: 2px solid rgba(212,165,165,0.42);
+      background: rgba(255,255,255,0.92);
+      display: grid;
+      place-items:center;
+      box-shadow: 0 8px 16px rgba(38,20,26,0.10);
+      transition: transform .18s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+      position: relative;
+      z-index: 1;
+      margin-top: 2px;
+    }
+
+    .cb-ui svg{ width: 16px; height: 16px; color: white; }
+    .cb-ui path{
+      stroke-dasharray: 34;
+      stroke-dashoffset: 34;
+      transition: stroke-dashoffset .42s var(--ease);
+    }
+
+    .cb-input:focus-visible + .cb-ui{
+      box-shadow: 0 0 0 4px rgba(212,165,165,0.18), 0 10px 18px rgba(38,20,26,0.14);
+    }
+
+    .cb-input:checked + .cb-ui{
+      border-color: rgba(212,165,165,0);
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 22px rgba(212,165,165,0.22);
+      transform: translateY(-0.5px) scale(1.02);
+    }
+    .cb-input:checked + .cb-ui path{ stroke-dashoffset: 0; }
+
+    .check-text{
+      position: relative;
+      z-index: 1;
+      font-size: 0.98rem;
+      color: rgba(34,34,34,0.88);
+      line-height: 1.65;
+    }
+
+    /* 테이블: 카드 톤 + 모바일 안전 */
+    .table-wrap{
+      border: 1px solid rgba(212,165,165,0.18);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.74);
+      box-shadow: 0 10px 22px rgba(38,20,26,0.06);
+    }
+
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 560px;
+    }
+    th, td{
+      padding: 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(212,165,165,0.14);
+      font-size: 0.95rem;
+      vertical-align: top;
+    }
+    th{
+      background: rgba(212,165,165,0.10);
+      color: rgba(136,77,77,0.92);
+      font-weight: 900;
+    }
+
+    /* 하단 박스(원본 톤 유지 + 질감만 정돈) */
+    .info-box{
+      margin-top: 26px;
+      padding: 22px;
+      background: rgba(242,225,228,0.88);
+      color: #5d4037;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      border: 1px solid rgba(234,208,212,0.95);
+      box-shadow: 0 14px 28px rgba(38,20,26,0.10);
+    }
+
+    .info-box h3{
+      color: #884d4d;
+      margin-top: 0;
+      font-size: 1.15rem;
+      letter-spacing: -0.1px;
+    }
+    .info-box p{ margin: 8px 0; opacity: 0.95; }
+    .info-box a{
+      color: #b07a7a;
+      text-decoration: none;
+      font-weight: 900;
+    }
+    .info-box a:hover{ text-decoration: underline; }
+
+    /* 버튼 */
+    .btn-print{
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      border: none;
+      padding: 14px 26px;
+      border-radius: 999px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 16px 34px rgba(38,20,26,0.18);
+      transition: transform .2s var(--ease), box-shadow .25s var(--ease), filter .25s var(--ease);
+    }
+    .btn-print:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(38,20,26,0.22);
+      filter: saturate(1.03);
+    }
+
+    .no-print{}
+
+    /* 움직임 최소화 선호 */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; animation:none !important; }
+    }
+
+    /* =========================
+       Professional PDF Rendering
+       - 캡처 방식(html2pdf.js) 배제
+       - 브라우저 인쇄 엔진(window.print) 최적화
+       ========================= */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm;
+    }
+
+    @media print{
+      html, body{
+        background: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .no-print{ display:none !important; }
+
+      .container{
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+      }
+      .container::before{ display:none !important; }
+
+      section.card{
+        background: #fff !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(212,165,165,0.22) !important;
+        page-break-inside: avoid;
+      }
+      section.card::before{ display:none !important; }
+
+      .intro-box, .safety-note, .supplies, .table-wrap, .info-box{
+        background: #fff !important;
+        box-shadow: none !important;
+      }
+
+      h2, h3{ page-break-after: avoid; }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="container">
+    <div class="content">
 
-<div class="container">
-    <div class="no-print warning-banner">
+      <div class="no-print warning-banner">
         ⚠️ 주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.
-    </div>
+      </div>
 
-    <header>
+      <header>
         <span class="title-symbol">🕯️</span>
         <h1>부재의 자리에서 다시 서다</h1>
         <p class="subtitle">사랑하는 이를 떠나보낸 후, 삶의 결에 슬픔을 새기는 애도</p>
-    </header>
+      </header>
 
-    <div class="intro-box">
-        이 의례는 상실 후 일정 시간이 지난 뒤, 고인을 내면의 자리로 옮겨두고자 하는 이들을 위한 개인 의식이다. 급성기 상실 직후에는 권하지 않는다.
-        <br><br>
-        <strong>🕯️ 의례를 설계한 관점</strong><br>
-        애도는 관계의 종료가 아니다. 고인을 내면의 안전한 자리로 옮겨두는 고귀한 작업이다. 
-        이 프로그램은 워든의 4과업, 이원과정모델(DPM), 의미재구성 이론, 지속유대 이론을 통합한 구조 위에 놓여 있다.
-        <br><br>
-        <span style="color: #b07a7a;">※ 안내된 소요 시간은 권장 사항이며, 개인의 사정과 감정 상태에 따라 충분히 유연하게 조절하여 진행하셔도 좋습니다.</span>
-    </div>
+      <section class="card">
+        <h2>
+          <span>서문</span>
+          <span class="time-badge">읽기 3~5분</span>
+        </h2>
 
-    <div class="safety-note">
-        ⚠️ <b>안전 주의:</b> 초를 켤 때는 주변에 타기 쉬운 물건이 없는지 확인하고, 의례가 끝난 후에는 반드시 불이 완전히 꺼졌는지 다시 한번 점검해 주세요.
-    </div>
+        <div class="intro-box">
+          이 의례는 상실 후 일정 시간이 지난 뒤, 고인을 내면의 자리로 옮겨두고자 하는 이들을 위한 개인 의식이다. 급성기 상실 직후에는 권하지 않는다.
+          <br><br>
+          <strong>🕯️ 의례를 설계한 관점</strong><br>
+          애도는 관계의 종료가 아니다. 고인을 내면의 안전한 자리로 옮겨두는 고귀한 작업이다.
+          이 프로그램은 워든의 4과업, 이원과정모델(DPM), 의미재구성 이론, 지속유대 이론을 통합한 구조 위에 놓여 있다.
+          <br><br>
+          <span style="color: rgba(176,122,122,0.98); font-weight:700;">
+            ※ 안내된 소요 시간은 권장 사항이며, 개인의 사정과 감정 상태에 따라 충분히 유연하게 조절하여 진행하셔도 좋습니다.
+          </span>
+        </div>
 
-    <span class="supplies">📍 준비물: 사진 3장 이상 · 초 · 노트와 펜 · 작은 상자 · 음악 · 차 한 잔</span>
+        <div class="safety-note">
+          ⚠️ <b>안전 주의:</b> 초를 켤 때는 주변에 타기 쉬운 물건이 없는지 확인하고, 의례가 끝난 후에는 반드시 불이 완전히 꺼졌는지 다시 한번 점검해 주세요.
+        </div>
 
-    <section>
-        <h2>1부. 준비하기 <span class="time-badge">약 30분</span></h2>
-        <div class="checklist-item">
-            <input type="checkbox" id="c1-1">
-            <label for="c1-1"><strong>공간 전환(10분)</strong> 사진을 놓고 초를 켠다. 조명을 낮춰 일상의 공간을 의례의 공간으로 전환한다. 형식은 감정을 안전하게 담는 그릇이다.</label>
-        </div>
-        <div class="checklist-item">
-            <input type="checkbox" id="c1-2">
-            <label for="c1-2"><strong>신체 인식(10분)</strong> 눈을 감고 천천히 호흡한다. 몸에서 가장 무겁게 느껴지는 부위를 찾아 손을 얹고 머문다. 슬픔은 신체를 통과할 때 통합된다.</label>
-        </div>
-        <div class="checklist-item">
-            <input type="checkbox" id="c1-3">
-            <label for="c1-3"><strong>존재 선언(10분)</strong> 사진을 바라보며 소리 내어 말한다. "당신은 나의 삶에 분명히 존재했습니다. 오늘 나는 당신을 기억합니다."</label>
-        </div>
-    </section>
+        <span class="supplies">📍 준비물: 사진 3장 이상 · 초 · 노트와 펜 · 작은 상자 · 음악 · 차 한 잔</span>
+      </section>
 
-    <section>
-        <h2>2부. 기억하기 <span class="time-badge">약 60분</span></h2>
-        <div class="checklist-item">
-            <input type="checkbox" id="c2-1">
-            <label for="c2-1"><strong>일상 장면 쓰기(20분)</strong> 가장 평범했던 하루를 묘사한다. 사소한 습관, 자주 짓던 표정, 반복되던 말투까지.</label>
-        </div>
-        <div class="checklist-item">
-            <input type="checkbox" id="c2-2">
-            <label for="c2-2"><strong>사진의 감각 기록(20분)</strong> 사진 속 날씨, 표정, 그날의 소리와 온도를 구체화한다.</label>
-        </div>
-        <div class="checklist-item">
-            <input type="checkbox" id="c2-3">
-            <label for="c2-3"><strong>감각 목록 만들기(20분)</strong> 목소리의 결, 손의 감촉, 자주 쓰던 표현, 특유의 냄새 등 다섯 가지를 적는다.</label>
-        </div>
-    </section>
+      <section class="card">
+        <h2>
+          <span>1부. 준비하기</span>
+          <span class="time-badge">약 30분</span>
+        </h2>
 
-    <section>
-        <h2>3부. 감정 통합 <span class="time-badge">약 50분</span></h2>
-        <div class="checklist-item">
-            <input type="checkbox" id="c3-1">
-            <label for="c3-1"><strong>감정 명명(15분)</strong> "나는 지금 ___해서 ___하다." 형식으로 쓴다. 감정을 명명하는 행위만으로도 정서적 과잉 반응이 완화된다.</label>
-        </div>
-        <div class="checklist-item">
-            <input type="checkbox" id="c3-2">
-            <label for="c3-2"><strong>후회 재서술(20분)</strong> "그때 더 ___했더라면" 아래에 "그럼에도 우리는 ___을 나누었다"를 반드시 덧붙인다.</label>
-        </div>
-        <div class="checklist-item">
-            <input type="checkbox" id="c3-3">
-            <label for="c3-3"><strong>침묵 머묾(15분)</strong> 감정을 억누르지 않고 흐르게 둔다. 그냥 함께 있는다.</label>
-        </div>
-    </section>
+        <div class="checklist">
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c1-1">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>공간 전환(10분)</strong> 사진을 놓고 초를 켠다. 조명을 낮춰 일상의 공간을 의례의 공간으로 전환한다. 형식은 감정을 안전하게 담는 그릇이다.</span>
+          </label>
 
-    <section>
-        <h2>4부. 관계 재배치 <span class="time-badge">약 30분</span></h2>
-        <div class="checklist-item">
-            <input type="checkbox" id="c4-1">
-            <label for="c4-1"><strong>역할 전환 편지(15분)</strong> 고인의 시선에서 나에게 답장을 쓴다. 그가 지금 내게 건네고 싶은 말을.</label>
-        </div>
-        <div class="checklist-item">
-            <input type="checkbox" id="c4-2">
-            <label for="c4-2"><strong>가치 선택(15분)</strong> 고인의 삶에서 이어가고 싶은 태도 한 가지를 정한다. 관계는 종료되지 않고 다른 자리로 옮겨진다.</label>
-        </div>
-    </section>
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c1-2">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>신체 인식(10분)</strong> 눈을 감고 천천히 호흡한다. 몸에서 가장 무겁게 느껴지는 부위를 찾아 손을 얹고 머문다. 슬픔은 신체를 통과할 때 통합된다.</span>
+          </label>
 
-    <section>
-        <h2>5부. 닫기 의식 <span class="time-badge">약 10분</span></h2>
-        <div class="checklist-item">
-            <input type="checkbox" id="c5-1">
-            <label for="c5-1">기록물을 기억 상자에 넣으며 말한다. "나는 당신을 기억합니다. 그리고 나는 나의 생을 살아갑니다."</label>
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c1-3">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>존재 선언(10분)</strong> 사진을 바라보며 소리 내어 말한다. "당신은 나의 삶에 분명히 존재했습니다. 오늘 나는 당신을 기억합니다."</span>
+          </label>
         </div>
-        <div class="checklist-item">
-            <input type="checkbox" id="c5-2">
-            <label for="c5-2">초를 끄고 조명을 되돌린다. 의례를 명확히 닫는 것은 일상을 보호하는 행위다.</label>
+      </section>
+
+      <section class="card">
+        <h2>
+          <span>2부. 기억하기</span>
+          <span class="time-badge">약 60분</span>
+        </h2>
+
+        <div class="checklist">
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c2-1">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>일상 장면 쓰기(20분)</strong> 가장 평범했던 하루를 묘사한다. 사소한 습관, 자주 짓던 표정, 반복되던 말투까지.</span>
+          </label>
+
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c2-2">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>사진의 감각 기록(20분)</strong> 사진 속 날씨, 표정, 그날의 소리와 온도를 구체화한다.</span>
+          </label>
+
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c2-3">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>감각 목록 만들기(20분)</strong> 목소리의 결, 손의 감촉, 자주 쓰던 표현, 특유의 냄새 등 다섯 가지를 적는다.</span>
+          </label>
         </div>
-    </section>
+      </section>
 
-    <section>
-        <h2>일상 속 애도 실천</h2>
-        <div class="checklist-item"><input type="checkbox" id="d1"> <label for="d1"><strong>애도 일기:</strong> 주 2~3회, 10분간 감각어로 적고 "그래도 나는 오늘 ___을 했다"로 닫습니다.</label></div>
-        <div class="checklist-item"><input type="checkbox" id="d2"> <label for="d2"><strong>부치지 않는 편지:</strong> 기념일에 쓰거나 고인의 시선에서 답장을 써봅니다.</label></div>
-        <div class="checklist-item"><input type="checkbox" id="d3"> <label for="d3"><strong>5분 애도 명상:</strong> 호흡과 감정 허용을 통해 현재로 복귀하는 훈련을 합니다.</label></div>
-        <div class="checklist-item"><input type="checkbox" id="d4"> <label for="d4"><strong>기억의 날:</strong> 월 1회 의도적인 추모 시간을 가집니다.</label></div>
-        <div class="checklist-item"><input type="checkbox" id="d5"> <label for="d5"><strong>가치 이어가기:</strong> 고인의 태도 한 가지를 나의 실천으로 옮깁니다.</label></div>
-    </section>
+      <section class="card">
+        <h2>
+          <span>3부. 감정 통합</span>
+          <span class="time-badge">약 50분</span>
+        </h2>
 
-    <section>
-        <h2>주간 루틴 예시</h2>
-        <table>
+        <div class="checklist">
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c3-1">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>감정 명명(15분)</strong> "나는 지금 ___해서 ___하다." 형식으로 쓴다. 감정을 명명하는 행위만으로도 정서적 과잉 반응이 완화된다.</span>
+          </label>
+
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c3-2">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>후회 재서술(20분)</strong> "그때 더 ___했더라면" 아래에 "그럼에도 우리는 ___을 나누었다"를 반드시 덧붙인다.</span>
+          </label>
+
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c3-3">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>침묵 머묾(15분)</strong> 감정을 억누르지 않고 흐르게 둔다. 그냥 함께 있는다.</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>
+          <span>4부. 관계 재배치</span>
+          <span class="time-badge">약 30분</span>
+        </h2>
+
+        <div class="checklist">
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c4-1">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>역할 전환 편지(15분)</strong> 고인의 시선에서 나에게 답장을 쓴다. 그가 지금 내게 건네고 싶은 말을.</span>
+          </label>
+
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c4-2">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>가치 선택(15분)</strong> 고인의 삶에서 이어가고 싶은 태도 한 가지를 정한다. 관계는 종료되지 않고 다른 자리로 옮겨진다.</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>
+          <span>5부. 닫기 의식</span>
+          <span class="time-badge">약 10분</span>
+        </h2>
+
+        <div class="checklist">
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c5-1">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text">기록물을 기억 상자에 넣으며 말한다. "나는 당신을 기억합니다. 그리고 나는 나의 생을 살아갑니다."</span>
+          </label>
+
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="c5-2">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text">초를 끄고 조명을 되돌린다. 의례를 명확히 닫는 것은 일상을 보호하는 행위다.</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>
+          <span>일상 속 애도 실천</span>
+          <span class="time-badge">루틴</span>
+        </h2>
+
+        <div class="checklist">
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="d1">
+            <span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text"><strong>애도 일기:</strong> 주 2~3회, 10분간 감각어로 적고 "그래도 나는 오늘 ___을 했다"로 닫습니다.</span>
+          </label>
+
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="d2">
+            <span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text"><strong>부치지 않는 편지:</strong> 기념일에 쓰거나 고인의 시선에서 답장을 써봅니다.</span>
+          </label>
+
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="d3">
+            <span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text"><strong>5분 애도 명상:</strong> 호흡과 감정 허용을 통해 현재로 복귀하는 훈련을 합니다.</span>
+          </label>
+
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="d4">
+            <span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text"><strong>기억의 날:</strong> 월 1회 의도적인 추모 시간을 가집니다.</span>
+          </label>
+
+          <label class="check-item">
+            <input class="cb-input" type="checkbox" id="d5">
+            <span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text"><strong>가치 이어가기:</strong> 고인의 태도 한 가지를 나의 실천으로 옮깁니다.</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>
+          <span>주간 루틴 예시</span>
+          <span class="time-badge">예시</span>
+        </h2>
+
+        <div class="table-wrap" style="overflow:auto;">
+          <table>
             <thead>
-                <tr><th>요일</th><th>실천</th></tr>
+              <tr><th>요일</th><th>실천</th></tr>
             </thead>
             <tbody>
-                <tr><td>월~금</td><td>취침 전 5분 애도 일기 또는 짧은 기도</td></tr>
-                <tr><td>수요일</td><td>고인이 좋아하던 음악 · 향기 · 몸 돌봄</td></tr>
-                <tr><td>주말</td><td>사진 정리, 추모 산책, 기억 상자 열기</td></tr>
+              <tr><td>월~금</td><td>취침 전 5분 애도 일기 또는 짧은 기도</td></tr>
+              <tr><td>수요일</td><td>고인이 좋아하던 음악 · 향기 · 몸 돌봄</td></tr>
+              <tr><td>주말</td><td>사진 정리, 추모 산책, 기억 상자 열기</td></tr>
             </tbody>
-        </table>
-    </section>
+          </table>
+        </div>
+      </section>
 
-    <section style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 30px;">
-        <p><strong>알아두어야 할 것</strong><br>
-        슬픔에 침잠하는 날과 일상을 살아내는 날 사이를 오가는 것은 지극히 건강한 반응입니다. 웃음이 나는 날에 죄책감을 가질 필요가 없습니다.<br>
-        다만 <b>장기간 동안</b> 일상 기능이 마비되거나, 자해 사고, 극심한 죄책감, 현실 부정이 지속된다면 반드시 전문가의 도움을 받아야 합니다.</p>
-        <p style="text-align: center; margin: 40px 0; font-weight: bold; font-size: 1.1rem;">
-            존엄은 우연히 주어지지 않습니다.<br>
-            준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
+      <section class="card">
+        <h2>
+          <span>알아두어야 할 것</span>
+          <span class="time-badge">중요</span>
+        </h2>
+
+        <p style="margin:0; color: rgba(34,34,34,0.86);">
+          <strong>알아두어야 할 것</strong><br>
+          슬픔에 침잠하는 날과 일상을 살아내는 날 사이를 오가는 것은 지극히 건강한 반응입니다. 웃음이 나는 날에 죄책감을 가질 필요가 없습니다.<br>
+          다만 <b>장기간 동안</b> 일상 기능이 마비되거나, 자해 사고, 극심한 죄책감, 현실 부정이 지속된다면 반드시 전문가의 도움을 받아야 합니다.
         </p>
-    </section>
 
-    <footer class="info-box">
+        <p style="text-align:center; margin: 22px 0 0; font-weight: 900; font-size: 1.05rem; color: rgba(42,31,34,0.92);">
+          존엄은 우연히 주어지지 않습니다.<br>
+          준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
+        </p>
+      </section>
+
+      <footer class="info-box">
         <h3>웰다잉통합예술교육협회</h3>
         <p>삶을 빚는 예술, 죽음을 품는 인문학. 삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
-        <hr style="border: 0; border-top: 1px solid #ead0d4; margin: 20px 0;">
+        <hr style="border: 0; border-top: 1px solid rgba(234,208,212,0.95); margin: 18px 0;">
         <p>홈페이지: <a href="http://wia-edu.org" target="_blank">http://wia-edu.org</a></p>
         <p>블로그: <a href="https://blog.naver.com/say2sky" target="_blank">blog.naver.com/say2sky</a></p>
         <p>프로그램문의: 010-5635-7989</p>
-    </footer>
-</div>
+      </footer>
 
-<button class="btn-print no-print" onclick="window.print()">PDF 다운로드 보관하기</button>
+    </div>
+  </div>
 
+  <button id="btnPrint" class="btn-print no-print" type="button">고화질 PDF로 보관하기</button>
+
+  <script>
+    // PDF 품질의 숨은 변수: 웹폰트 로딩 완료 후 인쇄(대체 폰트 출력 사고 감소)
+    const btn = document.getElementById('btnPrint');
+    btn.addEventListener('click', async () => {
+      try {
+        if (document.fonts && document.fonts.ready) {
+          btn.textContent = 'PDF 준비 중...';
+          btn.disabled = true;
+          await document.fonts.ready;
+        }
+      } finally {
+        btn.textContent = '고화질 PDF로 보관하기';
+        btn.disabled = false;
+        window.print();
+      }
+    });
+  </script>
 </body>
 </html>
