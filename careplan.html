@@ -1,331 +1,754 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>나의 돌봄 계획서</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-pastel-purple: #f8f4ff; /* 연보라 파스텔 배경 */
-            --accent-purple: #9b59b6;    /* 포인트 보라 */
-            --deep-purple: #4b0082;      /* 진한 글자색 */
-            --white: #ffffff;
-            --box-bg: #fdfbff;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>나의 돌봄 계획서</title>
 
-        * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+  <!-- 폰트 로딩 최적화: preconnect + display=swap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        body {
-            margin: 0; padding: 0;
-            background-color: var(--bg-pastel-purple);
-            font-family: 'Noto Sans KR', sans-serif;
-            color: #2c3e50;
-            line-height: 1.8;
-            word-break: keep-all;
-        }
+  <!-- 잡지 느낌을 위해: 본문 산세리프 + 제목용 세리프(선택) -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700&family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 850px;
-            margin: 40px auto;
-            background: var(--white);
-            padding: 60px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-            border-radius: 24px;
-        }
+  <style>
+    :root{
+      /* Pastel System */
+      --bg0: #fbf8ff;
+      --bg1: #f7f1ff;
+      --paper: rgba(255,255,255,0.82);
+      --paper-solid: #ffffff;
 
-        /* PDF 출력 최적화 */
-        @media print {
-            body { background: none; }
-            .container { box-shadow: none; margin: 0; width: 100%; padding: 40px; }
-            .no-print { display: none; }
-            section { page-break-inside: avoid; margin-bottom: 40px; }
-            h2, h3 { page-break-after: avoid; }
-        }
+      --accent: #9b59b6;
+      --accent-2: #6f5cff;
+      --deep: #2b1b3a;
+      --ink: #2c3e50;
 
-        .warning-banner {
-            background-color: #f3ebff;
-            border-left: 4px solid var(--accent-purple);
-            padding: 15px;
-            margin-bottom: 30px;
-            font-size: 0.92em;
-            color: #7d3c98;
-            font-weight: 500;
-        }
+      --line: rgba(155, 89, 182, 0.18);
+      --line-strong: rgba(155, 89, 182, 0.32);
 
-        header { text-align: center; margin-bottom: 60px; }
-        h1 { font-size: 2.3rem; font-weight: 700; margin: 0; letter-spacing: -1.5px; color: var(--deep-purple); }
-        .sub-h1 { font-size: 1.1rem; color: var(--accent-purple); margin-top: 10px; font-weight: 300; }
+      --shadow-soft: 0 18px 50px rgba(31, 10, 57, 0.08);
+      --shadow-card: 0 14px 36px rgba(31, 10, 57, 0.10);
 
-        .intro-box {
-            background: var(--box-bg);
-            padding: 30px;
-            border-radius: 16px;
-            margin-bottom: 40px;
-            border: 1px solid #e8daef;
-            text-align: center;
-            font-size: 1rem;
-            color: #555;
-        }
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
 
-        h2 {
-            font-size: 1.5rem;
-            color: var(--white);
-            background-color: var(--accent-purple);
-            padding: 12px 25px;
-            border-radius: 10px;
-            margin-top: 50px;
-        }
+      --ease: cubic-bezier(.2,.9,.2,1);
+    }
 
-        h3 {
-            font-size: 1.25rem;
-            border-left: 5px solid var(--accent-purple);
-            padding-left: 15px;
-            margin-top: 35px;
-            color: var(--deep-purple);
-        }
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
 
-        .input-field {
-            border: none;
-            border-bottom: 2px solid #e0e0e0;
-            padding: 5px 10px;
-            font-family: inherit;
-            font-size: 1rem;
-            color: var(--deep-purple);
-            background: transparent;
-            transition: border-bottom 0.3s;
-        }
-        .input-field:focus { outline: none; border-bottom: 2px solid var(--accent-purple); }
+    body{
+      margin: 0;
+      padding: 0;
+      font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--ink);
+      line-height: 1.85;
+      word-break: keep-all;
 
-        .checklist-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 20px 0;
-        }
+      /* 섬세한 배경 그라데이션 */
+      background:
+        radial-gradient(1200px 700px at 12% 8%, rgba(155,89,182,0.14), transparent 55%),
+        radial-gradient(900px 600px at 88% 18%, rgba(111,92,255,0.10), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
 
-        .checklist-item {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            padding: 10px 18px;
-            background: #f9f4ff;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            transition: 0.2s;
-        }
-        .checklist-item:hover { background: #f2e6ff; }
-        .checklist-item input[type="checkbox"] {
-            margin-right: 12px;
-            width: 19px; height: 19px;
-            accent-color: var(--accent-purple);
-            cursor: pointer;
-        }
+    /* 페이지 여백을 "예술적으로" : clamp + 넉넉한 breathing space */
+    .container{
+      width: min(980px, calc(100% - 32px));
+      margin: clamp(18px, 4vw, 52px) auto;
+      padding: clamp(22px, 4.6vw, 72px);
 
-        .text-area {
-            width: 100%; height: 120px;
-            border: 1px solid #e8daef; border-radius: 12px;
-            padding: 20px; margin-top: 15px;
-            resize: none; font-family: inherit; font-size: 1rem;
-            background: #fdfbff;
-        }
+      background: var(--paper);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
 
-        /* 하단 기관 정보 박스 */
-        .info-box {
-            margin-top: 70px;
-            padding: 35px;
-            background: #f8f4ff; 
-            border: 1px solid #e8daef;
-            border-radius: 20px;
-            color: #34495e;
-            line-height: 1.6;
-        }
-        .info-box h3 { 
-            margin-top: 0; margin-bottom: 12px; font-size: 1.3rem; 
-            color: var(--deep-purple); font-weight: 700; border: none; padding: 0;
-        }
-        .info-box p { margin: 6px 0; font-size: 0.95rem; display: flex; align-items: center; }
-        .info-box a { color: var(--accent-purple); text-decoration: none; font-weight: 500; margin-left: 5px; }
-        .info-box a:hover { text-decoration: underline; }
+      border: 1px solid rgba(255,255,255,0.65);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
 
-        .info-divider { border: 0; border-top: 1px solid #e8daef; margin: 18px 0; }
+    /* 은은한 종이 결(카드뉴스 질감) */
+    .container::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(900px 500px at 20% 0%, rgba(255,255,255,0.65), transparent 60%),
+        radial-gradient(800px 520px at 100% 30%, rgba(255,255,255,0.50), transparent 55%),
+        linear-gradient(90deg, rgba(255,255,255,0.20), rgba(255,255,255,0.05));
+      pointer-events:none;
+      opacity: .75;
+    }
 
-        .btn-print {
-            position: fixed;
-            bottom: 30px; right: 30px;
-            background: var(--accent-purple);
-            color: white; border: none;
-            padding: 16px 35px; border-radius: 50px;
-            font-weight: bold; font-size: 1rem; cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
-        }
-        .btn-print:hover { transform: scale(1.05); }
-    </style>
+    .content{
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 상단 경고 배너 - 카드뉴스 톤 */
+    .warning-banner{
+      background:
+        linear-gradient(135deg, rgba(155,89,182,0.14), rgba(111,92,255,0.10));
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--accent);
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 26px;
+      font-size: 0.92rem;
+      color: rgba(75, 0, 130, 0.78);
+      font-weight: 600;
+    }
+
+    header{
+      text-align:center;
+      margin: 10px 0 38px;
+    }
+    h1{
+      margin: 0;
+      font-family: "Nanum Myeongjo", serif;
+      font-size: clamp(1.95rem, 3.6vw, 2.55rem);
+      letter-spacing: -1.2px;
+      color: var(--deep);
+      line-height: 1.25;
+    }
+    .sub-h1{
+      margin: 10px 0 0;
+      font-size: 1.02rem;
+      color: rgba(155,89,182,0.95);
+      font-weight: 400;
+    }
+
+    /* 카드 뉴스 스타일: 섹션 자체를 카드화 */
+    section.card{
+      position: relative;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: clamp(16px, 3.2vw, 28px);
+      margin: 18px 0 22px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    /* Hover 시 파스텔이 번지는 듯한 그라데이션(섬세한 시각 효과) */
+    section.card::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(closest-side at 30% 30%, rgba(155,89,182,0.22), transparent 62%),
+        radial-gradient(closest-side at 70% 20%, rgba(111,92,255,0.18), transparent 58%),
+        radial-gradient(closest-side at 60% 80%, rgba(155,89,182,0.12), transparent 62%);
+      filter: blur(18px);
+      opacity: 0;
+      transition: opacity .55s var(--ease), transform .65s var(--ease);
+      transform: translate3d(-1%, 0, 0) scale(0.98);
+      pointer-events:none;
+    }
+
+    section.card:hover::before{
+      opacity: 1;
+      transform: translate3d(0, -1%, 0) scale(1);
+    }
+
+    section.card > * { position: relative; z-index: 1; }
+
+    .intro-box{
+      background: rgba(253, 251, 255, 0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px 18px;
+      margin: 10px 0 18px;
+      text-align: center;
+      color: rgba(44,62,80,0.85);
+      box-shadow: 0 10px 22px rgba(31, 10, 57, 0.06);
+    }
+
+    h2{
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 1.16rem;
+      letter-spacing: -0.2px;
+
+      /* 리치한 타이틀 바 */
+      background:
+        linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 18px rgba(155,89,182,0.22);
+    }
+
+    h3{
+      margin: 22px 0 10px;
+      font-size: 1.12rem;
+      color: var(--deep);
+      padding-left: 12px;
+      border-left: 5px solid rgba(155, 89, 182, 0.75);
+    }
+
+    /* 입력 인터랙션: 밑줄이 은은하게 “살아나는” 느낌 */
+    .input-field{
+      border: none;
+      border-bottom: 2px solid rgba(44,62,80,0.18);
+      padding: 6px 10px;
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--deep);
+      background:
+        linear-gradient(90deg, rgba(155,89,182,0.0), rgba(155,89,182,0.0)) 0 100% / 0% 2px no-repeat;
+      transition: background-size .45s var(--ease), border-color .45s var(--ease);
+      border-radius: 8px;
+    }
+    .input-field:focus{
+      outline: none;
+      border-bottom-color: rgba(155,89,182,0.0);
+      background-size: 100% 2px;
+    }
+    .input-field:focus-visible{
+      box-shadow: 0 0 0 4px rgba(155,89,182,0.14);
+    }
+
+    .checklist-group{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 12px 0 14px;
+    }
+
+    /* 체크리스트: label 자체를 카드화 + hover 그라데이션 */
+    .checklist-item{
+      position: relative;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      align-items: center;
+
+      cursor: pointer;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(155,89,182,0.14);
+      background: rgba(249,244,255,0.72);
+      transition: transform .22s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+      overflow: hidden;
+    }
+
+    .checklist-item::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(closest-side at 30% 50%, rgba(155,89,182,0.20), transparent 62%),
+        radial-gradient(closest-side at 80% 30%, rgba(111,92,255,0.16), transparent 60%);
+      filter: blur(16px);
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity .5s var(--ease), transform .6s var(--ease);
+      pointer-events:none;
+    }
+
+    .checklist-item:hover{
+      transform: translateY(-1px);
+      border-color: rgba(155,89,182,0.28);
+      background: rgba(249,244,255,0.92);
+    }
+    .checklist-item:hover::before{
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* 접근성: 실제 체크박스는 숨기되 포커스 가능 */
+    .cb-input{
+      position:absolute;
+      opacity:0;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+
+    /* 커스텀 체크 UI */
+    .cb-ui{
+      width: 20px;
+      height: 20px;
+      border-radius: 7px;
+      border: 2px solid rgba(155,89,182,0.35);
+      background: rgba(255,255,255,0.92);
+      display: grid;
+      place-items:center;
+      box-shadow: 0 8px 16px rgba(31,10,57,0.08);
+      transition: transform .18s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 체크 표시 “그려지는” 애니메이션(SVG stroke) */
+    .cb-ui svg{
+      width: 16px;
+      height: 16px;
+      color: white;
+    }
+    .cb-ui path{
+      stroke-dasharray: 34;
+      stroke-dashoffset: 34;
+      transition: stroke-dashoffset .42s var(--ease);
+    }
+
+    .cb-input:focus-visible + .cb-ui{
+      box-shadow: 0 0 0 4px rgba(155,89,182,0.18), 0 10px 18px rgba(31,10,57,0.12);
+    }
+
+    .cb-input:checked + .cb-ui{
+      border-color: rgba(155,89,182,0.0);
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 22px rgba(155,89,182,0.28);
+      transform: translateY(-0.5px) scale(1.02);
+    }
+    .cb-input:checked + .cb-ui path{
+      stroke-dashoffset: 0;
+    }
+
+    .check-text{
+      position: relative;
+      z-index: 1;
+      font-size: 0.96rem;
+      color: rgba(44,62,80,0.92);
+    }
+
+    .text-area{
+      width:100%;
+      height: 120px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 16px 16px;
+      margin-top: 12px;
+      resize: none;
+      font-family: inherit;
+      font-size: 1rem;
+      background: rgba(253, 251, 255, 0.92);
+      transition: box-shadow .25s var(--ease), border-color .25s var(--ease);
+    }
+    .text-area:focus{
+      outline:none;
+      border-color: rgba(155,89,182,0.30);
+      box-shadow: 0 0 0 5px rgba(155,89,182,0.12);
+    }
+
+    /* 하단 기관 정보 박스 */
+    footer.info-box{
+      margin-top: 26px;
+      padding: 22px;
+      background: rgba(248,244,255,0.85);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      color: #34495e;
+      line-height: 1.65;
+    }
+    footer.info-box h3{
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      color: var(--deep);
+      font-weight: 700;
+      border: none;
+      padding: 0;
+    }
+    footer.info-box p{
+      margin: 6px 0;
+      font-size: 0.95rem;
+      display:flex;
+      align-items:center;
+      gap: 6px;
+    }
+    footer.info-box a{
+      color: rgba(155,89,182,0.95);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    footer.info-box a:hover{ text-decoration: underline; }
+    .info-divider{
+      border:0;
+      border-top: 1px solid rgba(155,89,182,0.18);
+      margin: 14px 0;
+    }
+
+    /* 버튼: 떠 있는 pill + hover */
+    .btn-print{
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      border: none;
+      padding: 14px 26px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(31,10,57,0.18);
+      transition: transform .2s var(--ease), box-shadow .25s var(--ease), filter .25s var(--ease);
+    }
+    .btn-print:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(31,10,57,0.22);
+      filter: saturate(1.05);
+    }
+
+    /* 움직임 최소화 선호 */
+    @media (prefers-reduced-motion: reduce){
+      * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+    }
+
+    /* =========================
+       PDF 출력 품질(벡터 렌더링)
+       - 캡처 방식(html2canvas) 제거
+       - 브라우저 인쇄 엔진 사용
+       - @page + 색상 유지
+       ========================= */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm;
+    }
+
+    @media print{
+      html, body{
+        background: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .no-print{ display:none !important; }
+
+      .container{
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+      }
+      .container::before{ display:none !important; }
+
+      .content{
+        padding: 0 !important;
+      }
+
+      section.card{
+        background: #fff !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(155,89,182,0.22) !important;
+        page-break-inside: avoid;
+      }
+      section.card::before{ display:none !important; }
+
+      h2, h3{ page-break-after: avoid; }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="container">
+    <div class="content">
 
-<div class="container">
-    <div class="no-print warning-banner">
+      <div class="no-print warning-banner">
         ⚠️ 주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.
-    </div>
+      </div>
 
-    <header>
+      <header>
         <h1>나의 돌봄 계획서</h1>
-        <p class="sub-h1">My Advanced Care & Life Integration Plan</p>
-    </header>
+        <p class="sub-h1">My Advanced Care &amp; Life Integration Plan</p>
+      </header>
 
-    <section>
+      <section class="card">
         <h2>Ⅰ. 나의 돌봄 철학 및 가치 선언(Philosophical Foundation)</h2>
+
         <div class="intro-box">
-            나는 질병이나 기능 저하로 규정되기 이전에 하나의 고유한 삶을 살아온 존재임을 밝힙니다.<br>
-            이 문서는 향후 의사결정 능력이 약화될 상황을 대비하여, 현재의 내가 충분한 숙고 끝에 작성하는 책임 있는 삶의 마지막 이정표입니다.
+          나는 질병이나 기능 저하로 규정되기 이전에 하나의 고유한 삶을 살아온 존재임을 밝힙니다.<br>
+          이 문서는 향후 의사결정 능력이 약화될 상황을 대비하여, 현재의 내가 충분한 숙고 끝에 작성하는 책임 있는 삶의 마지막 이정표입니다.
         </div>
-        
+
         <h3>1. 내가 삶에서 우선하는 가치</h3>
         <p>아래 항목 중 내가 끝까지 지키고 싶은 가치의 우선순위를 정합니다.</p>
         <p>( 1순위: <input type="text" class="input-field" style="width: 80px;"> / 2순위: <input type="text" class="input-field" style="width: 80px;"> / 3순위: <input type="text" class="input-field" style="width: 80px;"> )</p>
-        
+
         <div class="checklist-group">
-            <label class="checklist-item"><input type="checkbox"> <strong>고통의 최소화:</strong> 신체적·심리적 고통으로부터 자유로운 상태</label>
-            <label class="checklist-item"><input type="checkbox"> <strong>존엄의 유지:</strong> 타인에게 의존하더라도 인간으로서의 품위를 잃지 않는 것</label>
-            <label class="checklist-item"><input type="checkbox"> <strong>관계의 지속:</strong> 사랑하는 이들과 단절되지 않고 정서적으로 교감하는 것</label>
-            <label class="checklist-item"><input type="checkbox"> <strong>자율성의 보장:</strong> 나의 의사가 존중받고 사소한 선택권이라도 유지하는 것</label>
-            <label class="checklist-item"><input type="checkbox"> <strong>일상의 영위:</strong> 익숙한 습관, 음식, 음악 등 평소의 삶의 양식을 유지하는 것</label>
-            <label class="checklist-item"><input type="checkbox"> <strong>영적 평온:</strong> 종교적 신념이나 내면의 평화를 지키며 마무리하는 것</label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>고통의 최소화:</strong> 신체적·심리적 고통으로부터 자유로운 상태</span>
+          </label>
+
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>존엄의 유지:</strong> 타인에게 의존하더라도 인간으로서의 품위를 잃지 않는 것</span>
+          </label>
+
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>관계의 지속:</strong> 사랑하는 이들과 단절되지 않고 정서적으로 교감하는 것</span>
+          </label>
+
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>자율성의 보장:</strong> 나의 의사가 존중받고 사소한 선택권이라도 유지하는 것</span>
+          </label>
+
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>일상의 영위:</strong> 익숙한 습관, 음식, 음악 등 평소의 삶의 양식을 유지하는 것</span>
+          </label>
+
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>영적 평온:</strong> 종교적 신념이나 내면의 평화를 지키며 마무리하는 것</span>
+          </label>
         </div>
 
         <h3>2. 돌봄에 대한 나의 기본 입장</h3>
         <ul style="padding-left: 20px;">
-            <li>나는 연대하는 생명으로서 단순한 생명 연장보다는 삶의 질과 존엄성을 더 중요하게 여깁니다.</li>
-            <li>나를 돌보는 이들의 삶 또한 소중하기에, 가족의 희생을 최소화하는 방향의 결정을 지지합니다.</li>
-            <li>나의 인지 능력이 흐려지더라도, 이 문서에 담긴 나의 <strong>'평소 의지'</strong>가 그 순간의 '본능적 반응'보다 우선하여 존중되기를 바랍니다.</li>
+          <li>나는 연대하는 생명으로서 단순한 생명 연장보다는 삶의 질과 존엄성을 더 중요하게 여깁니다.</li>
+          <li>나를 돌보는 이들의 삶 또한 소중하기에, 가족의 희생을 최소화하는 방향의 결정을 지지합니다.</li>
+          <li>나의 인지 능력이 흐려지더라도, 이 문서에 담긴 나의 <strong>'평소 의지'</strong>가 그 순간의 '본능적 반응'보다 우선하여 존중되기를 바랍니다.</li>
         </ul>
-    </section>
+      </section>
 
-    <section>
+      <section class="card">
         <h2>Ⅱ. 단계별 돌봄 의향 (Care Transitions Checklist)</h2>
-        <p style="font-size: 0.95rem; color: #666;">질병의 진행은 연속선상에 있으나, 돌봄의 결정은 상황에 따라 달라진다고 이해합니다.</p>
-        
+        <p style="font-size: 0.95rem; color: rgba(44,62,80,0.70); margin-top: 4px;">
+          질병의 진행은 연속선상에 있으나, 돌봄의 결정은 상황에 따라 달라진다고 이해합니다.
+        </p>
+
         <h3>1단계: 자립적 돌봄기 (부분적 도움 필요 및 초기 치매 단계 포함)</h3>
+
         <p><strong>1) 생활환경</strong></p>
         <div class="checklist-group">
-            <label class="checklist-item"><input type="checkbox"> 가능한 한 가정 중심 돌봄을 원합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 필요 시 시설 입소를 고려합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 의료기관 중심 관리를 선호합니다.</label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">가능한 한 가정 중심 돌봄을 원합니다.</span>
+          </label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">필요 시 시설 입소를 고려합니다.</span>
+          </label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">의료기관 중심 관리를 선호합니다.</span>
+          </label>
         </div>
+
         <p><strong>2) 활동과 자율성</strong></p>
         <div class="checklist-group">
-            <label class="checklist-item"><input type="checkbox"> 익숙한 일상 활동을 유지하기를 원합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 일정한 위험을 감수하더라도 자율성을 유지하기를 원합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 안전을 위해 활동을 제한하는 것을 우선합니다.</label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">익숙한 일상 활동을 유지하기를 원합니다.</span>
+          </label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">일정한 위험을 감수하더라도 자율성을 유지하기를 원합니다.</span>
+          </label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">안전을 위해 활동을 제한하는 것을 우선합니다.</span>
+          </label>
         </div>
+
         <p><strong>3) 사회적 관계</strong></p>
         <div class="checklist-group">
-            <label class="checklist-item"><input type="checkbox"> 지역사회 및 문화·종교 활동을 지속하기를 원합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 가족 중심의 관계를 유지하기를 원합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 교류를 최소화하고 안정된 환경을 원합니다.</label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">지역사회 및 문화·종교 활동을 지속하기를 원합니다.</span>
+          </label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">가족 중심의 관계를 유지하기를 원합니다.</span>
+          </label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">교류를 최소화하고 안정된 환경을 원합니다.</span>
+          </label>
         </div>
+
         <p><strong>4) 판단이 모호해질 경우의 원칙</strong></p>
         <div class="checklist-group">
-            <label class="checklist-item"><input type="checkbox"> 기존에 밝힌 가치관을 우선 반영하기를 원합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 감정적 안정과 평온을 우선하기를 원합니다.</label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">기존에 밝힌 가치관을 우선 반영하기를 원합니다.</span>
+          </label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">감정적 안정과 평온을 우선하기를 원합니다.</span>
+          </label>
         </div>
 
         <h3>2단계: 의존적 돌봄기 (전적 도움 필요 및 중증 치매 단계 포함)</h3>
         <p><strong>1) 대리의사결정자</strong></p>
         <p>1차 대리인: <input type="text" class="input-field" style="width: 150px;"> (관계: <input type="text" class="input-field" style="width: 100px;">)</p>
         <p>2차 대리인: <input type="text" class="input-field" style="width: 150px;"> (관계: <input type="text" class="input-field" style="width: 100px;">)</p>
+
         <p><strong>대리인의 판단 기준:</strong></p>
         <div class="checklist-group">
-            <label class="checklist-item"><input type="checkbox"> 본 계획서의 내용을 최우선으로 반영합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 가족 협의를 존중합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 의료진의 전문적 판단을 존중합니다.</label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">본 계획서의 내용을 최우선으로 반영합니다.</span>
+          </label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">가족 협의를 존중합니다.</span>
+          </label>
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span class="check-text">의료진의 전문적 판단을 존중합니다.</span>
+          </label>
         </div>
+
         <p><strong>2) 돌봄의 우선 방향</strong></p>
-        <div class="checklist-group" style="flex-direction: row; flex-wrap: wrap; gap: 10px;">
-            <label class="checklist-item"><input type="checkbox"> 정서적 안정</label>
-            <label class="checklist-item"><input type="checkbox"> 생명 유지</label>
-            <label class="checklist-item"><input type="checkbox"> 고통 완화</label>
-            <label class="checklist-item"><input type="checkbox"> 관계 유지</label>
+        <div class="checklist-group" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px;">
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">정서적 안정</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">생명 유지</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">고통 완화</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">관계 유지</span></label>
         </div>
+
         <p><strong>3) 의료적 개입에 대한 입장</strong></p>
-        <p>• 반복적 입원 치료: 
-            <label style="margin-right: 15px;"><input type="checkbox"> 희망</label>
-            <label style="margin-right: 15px;"><input type="checkbox"> 제한적 허용</label>
-            <label><input type="checkbox"> 원하지 않음</label>
+        <p>• 반복적 입원 치료:
+          <label style="margin-right: 14px;"><input type="checkbox"> 희망</label>
+          <label style="margin-right: 14px;"><input type="checkbox"> 제한적 허용</label>
+          <label><input type="checkbox"> 원하지 않음</label>
         </p>
-        <p>• 인공영양 또는 위관 삽입: 
-            <label style="margin-right: 15px;"><input type="checkbox"> 희망</label>
-            <label style="margin-right: 15px;"><input type="checkbox"> 일정 기간만 허용</label>
-            <label><input type="checkbox"> 원하지 않음</label>
+        <p>• 인공영양 또는 위관 삽입:
+          <label style="margin-right: 14px;"><input type="checkbox"> 희망</label>
+          <label style="margin-right: 14px;"><input type="checkbox"> 일정 기간만 허용</label>
+          <label><input type="checkbox"> 원하지 않음</label>
         </p>
 
         <h3>3단계: 임종기 (생애말 돌봄 단계)</h3>
-        <div class="intro-box" style="padding: 15px; font-size: 0.9rem;">
-            임종은 삶의 실패가 아니라 하나의 완결 과정이라고 이해합니다.<br>
-            연명의료에 관한 결정은 사전연명의료의향서 서식과 연계하여 별도로 작성합니다.
+        <div class="intro-box" style="padding: 14px; font-size: 0.92rem;">
+          임종은 삶의 실패가 아니라 하나의 완결 과정이라고 이해합니다.<br>
+          연명의료에 관한 결정은 사전연명의료의향서 서식과 연계하여 별도로 작성합니다.
         </div>
+
         <p><strong>1) 연명의료</strong></p>
         <div class="checklist-group">
-            <label class="checklist-item"><input type="checkbox"> 심폐소생술을 원하지 않습니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 인공호흡기 사용을 원하지 않습니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 적극적 치료를 원합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 상황에 따라 판단하기를 원합니다.</label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">심폐소생술을 원하지 않습니다.</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">인공호흡기 사용을 원하지 않습니다.</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">적극적 치료를 원합니다.</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">상황에 따라 판단하기를 원합니다.</span></label>
         </div>
+
         <p><strong>2) 완화의료</strong></p>
         <div class="checklist-group">
-            <label class="checklist-item"><input type="checkbox"> 통증 조절을 최우선으로 합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 의식 저하를 감수하더라도 고통 완화를 선택합니다.</label>
-            <label class="checklist-item"><input type="checkbox"> 가능한 한 의식을 유지하기를 원합니다.</label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">통증 조절을 최우선으로 합니다.</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">의식 저하를 감수하더라도 고통 완화를 선택합니다.</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">가능한 한 의식을 유지하기를 원합니다.</span></label>
         </div>
-        <p><strong>3) 임종 장소</strong></p>
-        <div class="checklist-group" style="flex-direction: row; flex-wrap: wrap; gap: 10px;">
-            <label class="checklist-item"><input type="checkbox"> 가정</label>
-            <label class="checklist-item"><input type="checkbox"> 호스피스 기관</label>
-            <label class="checklist-item"><input type="checkbox"> 병원</label>
-            <label class="checklist-item"><input type="checkbox"> 상황에 따른 결정</label>
-        </div>
-    </section>
 
-    <section>
+        <p><strong>3) 임종 장소</strong></p>
+        <div class="checklist-group" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px;">
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">가정</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">호스피스 기관</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">병원</span></label>
+          <label class="checklist-item"><input class="cb-input" type="checkbox"><span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="check-text">상황에 따른 결정</span></label>
+        </div>
+      </section>
+
+      <section class="card">
         <h2>Ⅲ. 마지막 당부 (Final Requests)</h2>
+
         <h3>1. 의료진에게</h3>
         <p>작성자를 질병의 증상으로만 보지 마시고, 한 시대를 성실히 살아낸 인간으로 대해 주십시오. 치료의 가능성이 희박해질 때, 저에게 필요한 것은 기술적 처치가 아니라 인간적인 배려와 고통의 경감입니다.</p>
-        
+
         <h3>2. 사랑하는 이들에게 전하는 말</h3>
         <p>이 문서에 담긴 결정은 온전한 나의 결정으로 작성합니다. 어떤 선택을 하더라도 그것이 나의 뜻임을 기억해 주기를 바랍니다. 죄책감보다 우리가 함께 했던 시간의 의미를 간직해 주기를 바랍니다.</p>
-        
-        <div style="margin: 40px 0; border: 1px dashed var(--accent-purple); padding: 30px; border-radius: 12px; text-align: center;">
-            <p><strong>본 계획서는 충분한 숙고와 자발적 의지에 따라 작성하였음을 확인합니다.</strong></p>
-            <p style="margin-top: 20px;">
-                작성일: <input type="text" class="input-field" style="width: 60px;">년 <input type="text" class="input-field" style="width: 40px;">월 <input type="text" class="input-field" style="width: 40px;">일
-            </p>
-            <p style="margin-top: 15px;">작성자: <input type="text" class="input-field" style="width: 150px;"> (서명)</p>
-        </div>
-    </section>
 
-    <div style="font-size: 0.88rem; color: #7f8c8d; text-align: center; margin-top: 40px;">
+        <div style="margin: 18px 0 0; border: 1px dashed rgba(155,89,182,0.55); padding: 18px; border-radius: 14px; text-align: center; background: rgba(253,251,255,0.7);">
+          <p style="margin:0;"><strong>본 계획서는 충분한 숙고와 자발적 의지에 따라 작성하였음을 확인합니다.</strong></p>
+          <p style="margin: 14px 0 0;">
+            작성일: <input type="text" class="input-field" style="width: 60px;">년
+            <input type="text" class="input-field" style="width: 40px;">월
+            <input type="text" class="input-field" style="width: 40px;">일
+          </p>
+          <p style="margin: 12px 0 0;">작성자: <input type="text" class="input-field" style="width: 150px;"> (서명)</p>
+        </div>
+      </section>
+
+      <div style="font-size: 0.9rem; color: rgba(44,62,80,0.62); text-align: center; margin-top: 18px;">
         본 문서는 법적 강제력을 가진 서류는 아니나, 나의 인격적 가치와 돌봄의 방향을 명시한 안내 지침입니다.<br>
         나는 이 문서를 통해 미래의 선택에 대한 기준을 제시하며, 사랑하는 이들이 어려운 결정을 내려야 할 순간에 참고가 되기를 바랍니다.
-    </div>
+      </div>
 
-    <p style="text-align: center; font-weight: bold; margin: 40px 0; font-size: 1.1rem; color: var(--deep-purple);">
+      <p style="text-align: center; font-weight: 800; margin: 18px 0 2px; font-size: 1.1rem; color: var(--deep);">
         존엄은 우연히 주어지지 않습니다.<br>
         준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
-    </p>
+      </p>
 
-    <footer class="info-box">
+      <footer class="info-box">
         <h3>웰다잉통합예술교육협회</h3>
         <p>삶을 빚는 예술, 죽음을 품는 인문학. 삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
         <div class="info-divider"></div>
         <p>🌐 <b>홈페이지:</b> <a href="http://wia-edu.org" target="_blank">http://wia-edu.org</a></p>
         <p>📝 <b>블로그:</b> <a href="https://blog.naver.com/say2sky" target="_blank">https://blog.naver.com/say2sky</a></p>
         <p>📞 <b>프로그램 문의:</b> 010-5635-7989</p>
-    </footer>
-</div>
+      </footer>
 
-<button class="btn-print no-print" onclick="window.print()">PDF로 보관하기</button>
+    </div>
+  </div>
 
+  <button id="btnPrint" class="btn-print no-print" type="button">고화질 PDF로 보관하기</button>
+
+  <script>
+    // 폰트가 다 로딩되기 전에 print를 걸면, PDF에서 폰트가 흔들리거나 대체 폰트가 찍힐 수 있습니다.
+    // 그래서 "폰트 준비 완료 후 인쇄"로 고정합니다.
+    const btn = document.getElementById('btnPrint');
+
+    btn.addEventListener('click', async () => {
+      try{
+        // fonts API 지원 브라우저에서 가장 안정적
+        if (document.fonts && document.fonts.ready) {
+          btn.textContent = 'PDF 준비 중...';
+          btn.disabled = true;
+          await document.fonts.ready;
+        }
+      } finally {
+        btn.textContent = '고화질 PDF로 보관하기';
+        btn.disabled = false;
+        window.print();
+      }
+    });
+  </script>
 </body>
 </html>
