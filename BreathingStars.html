@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반려동물 애도 의례: Breathing Stars</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-pastel-green: #f4f9f4; /* 연한 그린 파스텔 */
+            --accent-green: #5a8266;    /* 세련된 올리브 그린 */
+            --deep-green: #1b3022;      /* 진한 글자색 */
+            --white: #ffffff;
+            --border-soft: #dceada;
+        }
+
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-pastel-green);
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--deep-green);
+            line-height: 1.8;
+            word-break: keep-all;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            background: var(--white);
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-radius: 24px;
+        }
+
+        /* PDF 출력 최적화 */
+        @media print {
+            body { background: none; }
+            .container { box-shadow: none; margin: 0; width: 100%; padding: 40px; }
+            .no-print { display: none; }
+            section { page-break-inside: avoid; margin-bottom: 40px; }
+            h2, h3 { page-break-after: avoid; }
+            input, textarea { border: none !important; background: transparent !important; }
+        }
+
+        .warning-banner {
+            background-color: #eaf2ea;
+            border-left: 4px solid var(--accent-green);
+            padding: 15px;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+            color: #44634e;
+        }
+
+        header { text-align: center; margin-bottom: 60px; }
+        .main-title { 
+            font-family: 'Nanum Myeongjo', serif;
+            font-size: 2.1rem; 
+            color: var(--accent-green); 
+            margin-bottom: 10px;
+        }
+        .sub-title { font-size: 1.2rem; font-weight: 300; color: #666; }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--white);
+            background-color: var(--accent-green);
+            padding: 12px 25px;
+            border-radius: 12px;
+            margin-top: 50px;
+            letter-spacing: -0.5px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent-green);
+            border-left: 5px solid var(--accent-green);
+            padding-left: 15px;
+            margin-top: 40px;
+            margin-bottom: 15px;
+        }
+
+        .intro-text {
+            background: #fdfdfd;
+            border: 1px solid var(--border-soft);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            font-size: 1.05rem;
+            color: #444;
+            text-align: justify;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: #fcfdfc;
+        }
+        th, td {
+            border: 1px solid var(--border-soft);
+            padding: 15px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        th { background: #f0f5f0; color: var(--accent-green); font-weight: 700; }
+
+        .input-underline {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            padding: 2px 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--deep-green);
+            width: 100%;
+        }
+        .input-underline:focus { outline: none; border-bottom: 2px solid var(--accent-green); }
+
+        .program-box {
+            background: #f9fbf9;
+            border: 1px solid var(--border-soft);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+
+        .key-point {
+            display: inline-block;
+            background: #eef4ee;
+            color: var(--accent-green);
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+        .checklist-item input[type="checkbox"] {
+            width: 19px; height: 19px;
+            margin-right: 12px; margin-top: 4px;
+            accent-color: var(--accent-green);
+        }
+
+        .textarea-box {
+            width: 100%; height: 100px;
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            padding: 15px; margin-top: 10px;
+            font-family: inherit; font-size: 1rem;
+            resize: none; background: #fff;
+        }
+
+        /* 하단 박스 디자인 */
+        .info-box {
+            margin-top: 70px;
+            padding: 35px;
+            background: #f1f7f1;
+            border: 1px solid #dceada;
+            border-radius: 20px;
+            color: #34495e;
+        }
+        .info-box h3 { border: none; padding: 0; margin-top: 0; font-size: 1.3rem; }
+        .info-box p { margin: 6px 0; font-size: 0.95rem; }
+        .info-box a { color: var(--accent-green); text-decoration: none; font-weight: 500; }
+
+        .btn-print {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            background: var(--accent-green);
+            color: white; border: none;
+            padding: 15px 30px; border-radius: 50px;
+            font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+
+        .closing-quote {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin: 50px 0;
+            color: var(--accent-green);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="no-print warning-banner">
+        ⚠️ 주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.
+    </div>
+
+    <header>
+        <p class="sub-title">반려동물 애도 의례- 관계를 다시 놓는 시간</p>
+        <h1 class="main-title">🕯 [Home Program] 다시 만날 너에게</h1>
+        <p style="font-size: 1.05rem; color: #555;">"상실을 존엄한 의례로, 기억을 삶의 문장으로 치환하는 시간"</p>
+    </header>
+
+    <section>
+        <h2>Ⅰ. 서문: 집, 가장 고유하고 고요한 성소</h2>
+        <div class="intro-text">
+            반려동물과의 이별은 내 일상을 지탱하던 '애착의 세계'가 해체되는 사건입니다. 심리학자 존 볼비(John Bowlby)는 안정 애착 대상의 상실이 신체적 통증과 유사한 고통을 일으킨다고 말합니다. 특히 반려동물의 죽음은 사회적으로 슬퍼할 권리를 충분히 인정받지 못하는 '인정받지 못한 애도(Disenfranchised Grief)'가 되기 쉬워, 그 슬픔은 종종 마음 깊은 곳에 지하수처럼 고여 머물게 됩니다.<br><br>
+            하지만 우리가 온기를 나누던 이 ‘집’은 사실 가장 강력한 치유의 성소입니다. 본 프로그램은 막연한 고통을 물리적인 형체와 언어로 바꾸어, 당신이 슬픔의 주도권을 회복하도록 돕는 데 목적이 있습니다.<br><br>
+            애도는 잊는 과정이 아니라 관계를 지속하는 형식을 바꾸는 과정입니다. 이제 아이의 이름을 나직이 부르며, 이별이 아닌 '다른 방식의 동행'을 준비해 보시기 바랍니다.
+        </div>
+    </section>
+
+    <section>
+        <h2>Ⅱ. 5단계 애도 로드맵</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th width="25%">단계</th>
+                    <th width="35%">핵심 목표</th>
+                    <th width="40%">주요 활동</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1. 존재의 마주함</td><td>슬픔을 환대하기</td><td>추모 공간 마련 및 이름 부르기</td></tr>
+                <tr><td>2. 감각의 구체화</td><td>기억을 물성으로 바꾸기</td><td>사진 기록 및 일상 서사 리스트 작성</td></tr>
+                <tr><td>3. 내면의 표출</td><td>감정의 정체 확인하기</td><td>마음 추상화 및 감정 언어화</td></tr>
+                <tr><td>4. 서사의 재구성</td><td>관점을 사랑으로 이동하기</td><td>'덕분에' 쓰기 및 역할 바꾸기 편지</td></tr>
+                <tr><td>5. 관계의 전환</td><td>새로운 연결 약속하기</td><td>기억 상자 제작 및 빛의 의례</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Ⅲ. 세부 프로그램 가이드</h2>
+
+        <div class="program-box">
+            <h3>[1단계] 존재의 마주함: 슬픔을 환대하기 (20분)</h3>
+            <p>텅 빈 자리를 외면하는 대신, 그 자리에 아이를 위한 작은 섬을 만듭니다.</p>
+            <ul>
+                <li><strong>추모의 자리:</strong> 아이가 좋아하던 장소에 사진, 유품, 간식을 두고 양초를 켭니다.</li>
+                <li><strong>선언적 부름:</strong> 빈칸을 채워 소리 내어 말해봅니다.</li>
+            </ul>
+            <p>“<input type="text" class="input-underline" style="width: 80px;">야, 너는 나에게 <input type="text" class="input-underline" style="width: 120px;">이었고, 너와 함께한 시간은 나에게 <input type="text" class="input-underline" style="width: 150px;">이었어.”</p>
+            <div class="key-point">Key Point: 감정의 정리가 아니라 상실이라는 실재를 온전히 마주하는 것입니다.</div>
+        </div>
+
+        <div class="program-box">
+            <h3>[2단계] 기억의 감각화: 물성으로 기록하기 (40분)</h3>
+            <p>감각은 기억을 안전하게 붙잡아 주는 닻이 됩니다.</p>
+            <p><strong>• 세 장면 기록:</strong> (첫 만남, 행복했던 날, 마지막 순간)</p>
+            <p>그날의 날씨와 공기: <input type="text" class="input-underline"></p>
+            <p>나와 아이의 표정/행동: <input type="text" class="input-underline"></p>
+            <p>그때 마음 한 문장: <input type="text" class="input-underline"></p>
+            <p><strong>• 일상의 감각 목록:</strong> 5가지를 적어봅니다. (예: 꼬릿한 발 냄새 등)</p>
+            <textarea class="textarea-box" placeholder="1. &#10;2. &#10;3. &#10;4. &#10;5."></textarea>
+            <div class="key-point">Key Point: 막연한 '상실'을 구체적인 '그리움'의 서사로 전환하는 작업입니다.</div>
+        </div>
+
+        <div class="program-box">
+            <h3>[3단계] 감정의 가시화: 내면의 풍경 그리기 (30분)</h3>
+            <p>정의되지 않은 혼란스러운 감정에 이름표를 붙여줍니다.</p>
+            <p><strong>• 마음 추상화:</strong> 기분을 선, 면, 색으로만 표현해 봅니다. (별도 종이 활용 가능)</p>
+            <p><strong>• 감정의 구조화:</strong> 아래 문장을 완성합니다.</p>
+            <p>“나는 지금 <input type="text" class="input-underline" style="width: 120px;">해서 <input type="text" class="input-underline" style="width: 120px;">하다. 내 슬픔은 <input type="text" class="input-underline" style="width: 150px;">의 모습과 닮아 있다.”</p>
+            <div class="key-point">Key Point: 감정은 이름 붙여질 때 비로소 다룰 수 있는 대상이 됩니다.</div>
+        </div>
+
+        <div class="program-box">
+            <h3>[4단계] 서사의 재구성: 관점을 사랑으로 이동하기 (40분)</h3>
+            <p><strong>• ‘덕분에’로 치환하기:</strong> 죄책감을 감사의 문장으로 바꿉니다.</p>
+            <p>(후) "네가 <input type="text" class="input-underline" style="width: 150px;">해준 덕분에 나는 <input type="text" class="input-underline" style="width: 150px;">을 배웠어"</p>
+            <p><strong>• 역할 바꾸기 편지:</strong> 아이의 시선에서 나에게 편지를 씁니다.</p>
+            <textarea class="textarea-box" placeholder="“엄마/아빠, 나랑 살면서 [ ]이 가장 좋았어. 난 지금 괜찮아. 그러니 너도 [ ]해도 좋아.”"></textarea>
+        </div>
+
+        <div class="program-box">
+            <h3>[5단계] 관계의 전환: 새로운 연결의 약속 (50분)</h3>
+            <p><strong>• 기억 상자(Memory Box):</strong> 유품과 오늘 쓴 기록물을 담아 '정서적 안전장치'를 만듭니다.</p>
+            <p><strong>• 빛의 의례:</strong> 초를 바라보며 마지막 한 문장을 건네고 불을 끕니다.</p>
+            <p>“너의 존재에 감사한다. 우리는 다른 방식으로 계속 연결되어 있다.”</p>
+            <p><strong>• 가치의 확장(선택):</strong> 아이의 이름으로 행할 작은 선행(기부, 봉사 등)을 정해봅니다.</p>
+            <input type="text" class="input-underline" placeholder="나의 실천 계획: ">
+        </div>
+    </section>
+
+    <section>
+        <h2>Ⅳ. 동행을 위한 자기 돌봄 (Self-Care)</h2>
+        <div class="checklist-group">
+            <label class="checklist-item"><input type="checkbox"> <strong>가족 활동:</strong> 전지에 사진을 모아 '기억의 축제'를 열거나, '기억의 조약돌' 활동하기</label>
+            <label class="checklist-item"><input type="checkbox"> <strong>감정의 파도:</strong> 의례 후 슬픔이 다시 찾아오는 것은 정상이니 스스로를 다그치지 말기</label>
+            <label class="checklist-item"><input type="checkbox"> <strong>어린이를 위한 배려:</strong> 슬픔을 억누르지 않도록 충분히 표현하게 돕고 경청하기</label>
+            <label class="checklist-item"><input type="checkbox"> <strong>전문가의 도움:</strong> 일상이 불가능할 정도라면 상담 전문가의 도움 받기 (용기 있는 선택)</label>
+        </div>
+    </section>
+
+    <div class="closing-quote">
+        존엄은 우연히 주어지지 않습니다.<br>
+        준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
+    </div>
+
+    <footer class="info-box">
+        <h3>웰다잉통합예술교육협회</h3>
+        <p>삶을 빚는 예술, 죽음을 품는 인문학. 삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
+        <hr style="border:0; border-top: 1px solid #dceada; margin: 15px 0;">
+        <p>🌐 홈페이지: <a href="http://wia-edu.org" target="_blank">http://wia-edu.org</a></p>
+        <p>📝 블로그: <a href="https://blog.naver.com/say2sky" target="_blank">https://blog.naver.com/say2sky</a></p>
+        <p>📞 프로그램문의: 010-5635-7989</p>
+    </footer>
+</div>
+
+<button class="btn-print no-print" onclick="window.print()">PDF로 보관하기</button>
+
+</body>
+</html>
