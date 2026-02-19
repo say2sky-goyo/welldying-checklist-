@@ -1,256 +1,614 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>그대에게 닿을 나의 이야기 - 워크북</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #fff0f5; /* 진분홍 파스텔 배경 */
-            --main-pink: #d63384; /* 포인트 핑크 */
-            --deep-text: #4a1a2c; /* 진한 글자색 */
-            --white: #ffffff;
-            --accent-pink: #f8bbd0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>그대에게 닿을 나의 이야기 - 워크북</title>
 
-        * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+  <!-- 웹폰트 로딩 최적화 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-        body {
-            margin: 0; padding: 0;
-            background-color: var(--bg-color);
-            font-family: 'Noto Sans KR', sans-serif;
-            color: var(--deep-text);
-            line-height: 1.8;
-            word-break: keep-all;
-        }
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: var(--white);
-            padding: 60px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border-radius: 30px;
-        }
+  <style>
+    :root{
+      /* Pink Pastel System */
+      --bg0: #fff0f5;
+      --bg1: #ffe8f1;
 
-        /* PDF 출력 최적화 */
-        @media print {
-            body { background: none; }
-            .container { box-shadow: none; margin: 0; width: 100%; max-width: none; padding: 40px; border-radius: 0; }
-            .no-print { display: none; }
-            section { page-break-inside: avoid; margin-bottom: 30px; border: none; }
-            h1, h2, h3 { page-break-after: avoid; }
-        }
+      --accent: #d63384;
+      --accent-2: #ff6aa9;
 
-        .warning-banner {
-            background-color: #ffdce5;
-            border-left: 5px solid var(--main-pink);
-            padding: 15px 20px;
-            margin-bottom: 30px;
-            font-size: 0.9rem;
-            border-radius: 8px;
-            font-weight: 700;
-        }
+      --deep: #4a1a2c;
+      --ink: rgba(74, 26, 44, 0.92);
 
-        header { text-align: center; margin-bottom: 60px; }
-        h1 { 
-            font-family: 'Nanum Myeongjo', serif; 
-            font-size: 2.8rem; 
-            margin: 0; 
-            color: var(--main-pink);
-            font-weight: 800;
-        }
-        .subtitle { font-size: 1.3rem; color: #7d4d5e; margin-top: 15px; font-weight: 300; }
+      --paper: rgba(255,255,255,0.84);
+      --paper-solid: #ffffff;
 
-        h2 {
-            font-family: 'Nanum Myeongjo', serif;
-            font-size: 1.8rem;
-            color: var(--white);
-            background-color: var(--main-pink);
-            display: inline-block;
-            padding: 5px 25px;
-            border-radius: 50px;
-            margin-top: 50px;
-            margin-bottom: 20px;
-        }
+      --line: rgba(214, 51, 132, 0.18);
+      --line-strong: rgba(214, 51, 132, 0.30);
 
-        h3 {
-            font-size: 1.4rem;
-            color: var(--main-pink);
-            border-bottom: 2px solid var(--accent-pink);
-            padding-bottom: 5px;
-            margin-top: 35px;
-        }
+      --shadow-soft: 0 18px 54px rgba(56, 18, 34, 0.10);
+      --shadow-card: 0 14px 36px rgba(56, 18, 34, 0.12);
 
-        .content-box {
-            background: #fff9fa;
-            border: 1px solid #fce4ec;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
+      --radius-xl: 30px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
 
-        .checklist-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 10px;
-            transition: background 0.2s;
-        }
-        .checklist-item:hover { background: #fff0f3; }
-        .checklist-item input[type="checkbox"] {
-            width: 22px; height: 22px;
-            margin-right: 15px; margin-top: 4px;
-            accent-color: var(--main-pink);
-            cursor: pointer;
-        }
+      --ease: cubic-bezier(.2,.9,.2,1);
+    }
 
-        .input-line {
-            width: 100%;
-            border: none;
-            border-bottom: 1px solid #d8a7b1;
-            padding: 10px 5px;
-            font-family: inherit;
-            font-size: 1.1rem;
-            background: transparent;
-            margin-bottom: 15px;
-            outline: none;
-            color: var(--deep-text);
-        }
-        .input-line:focus { border-bottom: 2px solid var(--main-pink); }
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
 
-        .textarea-box {
-            width: 100%;
-            height: 120px;
-            border: 1px solid #f8bbd0;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            font-family: inherit;
-            font-size: 1rem;
-            resize: none;
-            background-color: #fff;
-        }
+    body{
+      margin: 0;
+      padding: 0;
+      font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--ink);
+      line-height: 1.85;
+      word-break: keep-all;
+      text-rendering: optimizeLegibility;
 
-        /* 기관 정보 박스 */
-        .info-box {
-            margin-top: 80px;
-            padding: 40px;
-            background: #fff0f5;
-            border: 2px solid #f8bbd0;
-            border-radius: 20px;
-            text-align: center;
-        }
-        .info-box h4 { margin-top: 0; font-size: 1.4rem; color: var(--main-pink); }
-        .info-box p { margin: 5px 0; font-size: 1rem; color: #555; }
-        .info-box a { color: var(--main-pink); text-decoration: none; font-weight: bold; }
+      /* 섬세한 배경: 파스텔이 “숨 쉬듯” 번지는 레이어 */
+      background:
+        radial-gradient(1100px 720px at 12% 10%, rgba(214,51,132,0.14), transparent 58%),
+        radial-gradient(900px 620px at 88% 18%, rgba(255,106,169,0.10), transparent 58%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
 
-        .btn-print {
-            position: fixed;
-            bottom: 30px; right: 30px;
-            background: var(--main-pink);
-            color: white; border: none;
-            padding: 18px 35px; border-radius: 50px;
-            font-weight: bold; font-size: 1.1rem; cursor: pointer;
-            box-shadow: 0 5px 20px rgba(214, 51, 132, 0.3);
-            transition: transform 0.2s;
-            z-index: 1000;
-        }
-        .btn-print:hover { transform: scale(1.05); }
+    .container{
+      width: min(1040px, calc(100% - 32px));
+      margin: clamp(18px, 4vw, 54px) auto;
+      padding: clamp(22px, 4.8vw, 78px);
 
-        .target-goal {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .goal-card {
-            background: #fff;
-            border: 1px solid #fce4ec;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-        }
-        .goal-card strong { color: var(--main-pink); display: block; margin-bottom: 10px; font-size: 1.1rem; }
+      background: var(--paper);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255,255,255,0.60);
 
-        .chapter-title {
-            font-family: 'Nanum Myeongjo', serif;
-            font-size: 1.5rem;
-            color: #b01a5a;
-            border-left: 5px solid var(--main-pink);
-            padding-left: 15px;
-            margin-top: 40px;
-        }
-    </style>
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 종이 결 + 은은한 광 */
+    .container::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(900px 520px at 22% 0%, rgba(255,255,255,0.62), transparent 60%),
+        radial-gradient(820px 520px at 100% 30%, rgba(255,255,255,0.46), transparent 56%),
+        linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+      opacity: .78;
+      pointer-events:none;
+    }
+
+    .content{ position: relative; z-index: 1; }
+
+    .warning-banner{
+      background: linear-gradient(135deg, rgba(214,51,132,0.12), rgba(255,106,169,0.10));
+      border: 1px solid rgba(214,51,132,0.18);
+      border-left: 5px solid var(--accent);
+      padding: 14px 16px;
+      margin-bottom: 22px;
+      border-radius: 14px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: rgba(74,26,44,0.78);
+    }
+
+    header{
+      text-align: center;
+      margin: 10px 0 30px;
+    }
+
+    h1{
+      font-family: "Nanum Myeongjo", serif;
+      font-size: clamp(2.15rem, 4.2vw, 2.85rem);
+      margin: 0;
+      color: rgba(214,51,132,0.98);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.22;
+    }
+
+    .subtitle{
+      font-size: 1.15rem;
+      color: rgba(125,77,94,0.92);
+      margin-top: 12px;
+      font-weight: 400;
+    }
+
+    .meta-note{
+      font-size: 0.9rem;
+      color: rgba(74,26,44,0.50);
+      margin-top: 6px;
+    }
+
+    /* 카드 뉴스 스타일: section을 입체 카드로 */
+    section.card{
+      position: relative;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: clamp(16px, 3.2vw, 28px);
+      margin: 18px 0 22px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    /* Hover 시 파스텔이 은은히 번지는 고급 효과 */
+    section.card::before{
+      content:"";
+      position:absolute;
+      inset:-42%;
+      background:
+        radial-gradient(closest-side at 30% 30%, rgba(214,51,132,0.22), transparent 62%),
+        radial-gradient(closest-side at 78% 18%, rgba(255,106,169,0.16), transparent 58%),
+        radial-gradient(closest-side at 55% 82%, rgba(214,51,132,0.10), transparent 62%);
+      filter: blur(18px);
+      opacity: 0;
+      transform: translate3d(-1%, 0, 0) scale(0.98);
+      transition: opacity .55s var(--ease), transform .65s var(--ease);
+      pointer-events:none;
+    }
+
+    section.card:hover::before{
+      opacity: 1;
+      transform: translate3d(0, -1%, 0) scale(1);
+    }
+
+    section.card > *{ position: relative; z-index: 1; }
+
+    h2{
+      font-family: "Nanum Myeongjo", serif;
+      font-size: 1.25rem;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 999px;
+      margin: 0 0 14px;
+      box-shadow: 0 10px 18px rgba(214,51,132,0.18);
+      letter-spacing: -0.2px;
+    }
+
+    h3{
+      font-size: 1.08rem;
+      color: rgba(214,51,132,0.98);
+      border-left: 5px solid rgba(214,51,132,0.72);
+      padding-left: 12px;
+      margin: 22px 0 10px;
+      letter-spacing: -0.2px;
+    }
+
+    /* 정보/설명 박스도 “소카드”로 통일 */
+    .content-box{
+      position: relative;
+      background: rgba(255,249,250,0.78);
+      border: 1px solid rgba(214,51,132,0.14);
+      padding: 16px;
+      border-radius: 18px;
+      margin: 12px 0 12px;
+      box-shadow: 0 10px 22px rgba(56,18,34,0.06);
+      overflow: hidden;
+    }
+
+    .content-box::before{
+      content:"";
+      position:absolute;
+      inset:-50%;
+      background:
+        radial-gradient(closest-side at 25% 35%, rgba(214,51,132,0.16), transparent 62%),
+        radial-gradient(closest-side at 78% 18%, rgba(255,106,169,0.12), transparent 58%);
+      filter: blur(18px);
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity .55s var(--ease), transform .65s var(--ease);
+      pointer-events:none;
+    }
+
+    .content-box:hover::before{
+      opacity: 1;
+      transform: scale(1);
+    }
+    .content-box > *{ position: relative; z-index: 1; }
+
+    /* 목표 카드 그리드 */
+    .target-goal{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .goal-card{
+      position: relative;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(214,51,132,0.14);
+      padding: 14px;
+      border-radius: 18px;
+      text-align: left;
+      box-shadow: 0 10px 22px rgba(56,18,34,0.08);
+      overflow: hidden;
+      transition: transform .22s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+    }
+
+    .goal-card::before{
+      content:"";
+      position:absolute;
+      inset:-45%;
+      background:
+        radial-gradient(closest-side at 30% 50%, rgba(214,51,132,0.18), transparent 62%),
+        radial-gradient(closest-side at 80% 30%, rgba(255,106,169,0.14), transparent 60%);
+      filter: blur(16px);
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity .5s var(--ease), transform .6s var(--ease);
+      pointer-events:none;
+    }
+
+    .goal-card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(214,51,132,0.26);
+      background: rgba(255,255,255,0.90);
+    }
+    .goal-card:hover::before{
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .goal-card strong{
+      color: rgba(214,51,132,0.98);
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1.02rem;
+      font-weight: 900;
+      letter-spacing: -0.1px;
+      position: relative;
+      z-index: 1;
+    }
+    .goal-card div, .goal-card{ color: rgba(74,26,44,0.80); }
+    .goal-card > *{ position: relative; z-index: 1; }
+
+    /* 챕터 제목(기록장 느낌) */
+    .chapter-title{
+      font-family: "Nanum Myeongjo", serif;
+      font-size: 1.12rem;
+      color: rgba(176,26,90,0.98);
+      border-left: 5px solid rgba(214,51,132,0.84);
+      padding-left: 12px;
+      margin-top: 22px;
+    }
+
+    /* 입력: 밑줄이 살아나는 스타일(타이포 고급감) */
+    .input-line{
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid rgba(216,167,177,0.70);
+      padding: 8px 10px;
+      font-family: inherit;
+      font-size: 1.05rem;
+      background:
+        linear-gradient(90deg, rgba(214,51,132,0.0), rgba(214,51,132,0.0)) 0 100% / 0% 2px no-repeat;
+      outline: none;
+      color: var(--deep);
+      border-radius: 8px;
+      transition: background-size .45s var(--ease), box-shadow .25s var(--ease);
+    }
+    .input-line:focus{
+      background-size: 100% 2px;
+      box-shadow: 0 0 0 4px rgba(214,51,132,0.12);
+    }
+
+    /* 텍스트 영역 */
+    .textarea-box{
+      width: 100%;
+      height: 120px;
+      border: 1px solid rgba(248,187,208,0.95);
+      border-radius: 14px;
+      padding: 14px;
+      margin: 10px 0 6px;
+      font-family: inherit;
+      font-size: 1rem;
+      resize: none;
+      background: rgba(255,255,255,0.92);
+      transition: box-shadow .25s var(--ease), border-color .25s var(--ease);
+    }
+    .textarea-box:focus{
+      outline:none;
+      border-color: rgba(214,51,132,0.30);
+      box-shadow: 0 0 0 5px rgba(214,51,132,0.12);
+    }
+
+    /* =========================
+       체크리스트: 커스텀 체크박스(그려지는 애니메이션)
+       ========================= */
+    .checklist{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 10px 0 0;
+    }
+
+    .check-item{
+      position: relative;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      align-items: start;
+
+      cursor: pointer;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(214,51,132,0.14);
+      background: rgba(255,240,243,0.64);
+      transition: transform .22s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+      overflow: hidden;
+    }
+
+    .check-item::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(closest-side at 30% 50%, rgba(214,51,132,0.18), transparent 62%),
+        radial-gradient(closest-side at 80% 30%, rgba(255,106,169,0.14), transparent 60%);
+      filter: blur(16px);
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity .5s var(--ease), transform .6s var(--ease);
+      pointer-events:none;
+    }
+
+    .check-item:hover{
+      transform: translateY(-1px);
+      border-color: rgba(214,51,132,0.26);
+      background: rgba(255,240,243,0.88);
+    }
+    .check-item:hover::before{
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .cb-input{
+      position:absolute;
+      opacity:0;
+      width:1px; height:1px;
+      overflow:hidden;
+    }
+
+    .cb-ui{
+      width: 20px;
+      height: 20px;
+      border-radius: 7px;
+      border: 2px solid rgba(214,51,132,0.34);
+      background: rgba(255,255,255,0.92);
+      display: grid;
+      place-items:center;
+      box-shadow: 0 8px 16px rgba(56,18,34,0.10);
+      transition: transform .18s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+      position: relative;
+      z-index: 1;
+      margin-top: 2px;
+    }
+
+    .cb-ui svg{ width: 16px; height: 16px; color: white; }
+    .cb-ui path{
+      stroke-dasharray: 34;
+      stroke-dashoffset: 34;
+      transition: stroke-dashoffset .42s var(--ease);
+    }
+
+    .cb-input:focus-visible + .cb-ui{
+      box-shadow: 0 0 0 4px rgba(214,51,132,0.16), 0 10px 18px rgba(56,18,34,0.14);
+    }
+
+    .cb-input:checked + .cb-ui{
+      border-color: rgba(214,51,132,0);
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 22px rgba(214,51,132,0.22);
+      transform: translateY(-0.5px) scale(1.02);
+    }
+    .cb-input:checked + .cb-ui path{ stroke-dashoffset: 0; }
+
+    .check-text{
+      position: relative;
+      z-index: 1;
+      font-size: 0.98rem;
+      color: rgba(74,26,44,0.90);
+      line-height: 1.65;
+    }
+
+    /* 기관 정보 박스 */
+    .info-box{
+      margin-top: 26px;
+      padding: 22px;
+      background: rgba(255,240,245,0.88);
+      border: 1px solid rgba(248,187,208,0.95);
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 14px 28px rgba(56,18,34,0.10);
+    }
+    .info-box h4{
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      color: rgba(214,51,132,0.98);
+      font-weight: 900;
+      letter-spacing: -0.1px;
+    }
+    .info-box p{
+      margin: 6px 0;
+      font-size: 0.98rem;
+      color: rgba(74,26,44,0.70);
+    }
+    .info-box a{
+      color: rgba(214,51,132,0.98);
+      text-decoration: none;
+      font-weight: 900;
+      border-bottom: 1px solid rgba(214,51,132,0.22);
+    }
+    .info-box a:hover{ border-bottom-color: rgba(214,51,132,0.44); }
+
+    /* 버튼 */
+    .btn-print{
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      border: none;
+      padding: 14px 26px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 16px 34px rgba(56,18,34,0.18);
+      transition: transform .2s var(--ease), box-shadow .25s var(--ease), filter .25s var(--ease);
+      z-index: 1000;
+    }
+    .btn-print:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(56,18,34,0.22);
+      filter: saturate(1.03);
+    }
+
+    .no-print{}
+
+    /* 움직임 최소화 선호 */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; animation:none !important; scroll-behavior: auto !important; }
+    }
+
+    /* =========================
+       Professional PDF Rendering
+       - html2pdf.js 캡처 대신
+       - window.print() (텍스트 벡터 유지) 최적화
+       ========================= */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm;
+    }
+
+    @media print{
+      html, body{
+        background: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .no-print{ display:none !important; }
+
+      .container{
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+      }
+      .container::before{ display:none !important; }
+
+      section.card{
+        background: #fff !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(214,51,132,0.18) !important;
+        page-break-inside: avoid;
+      }
+      section.card::before{ display:none !important; }
+
+      .content-box, .goal-card, .info-box{
+        background: #fff !important;
+        box-shadow: none !important;
+      }
+
+      textarea, input{
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+
+      h1, h2, h3{ page-break-after: avoid; }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="container">
+    <div class="content">
 
-<div class="container">
-    <div class="no-print warning-banner">
+      <div class="no-print warning-banner">
         ⚠️ 주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.
-    </div>
+      </div>
 
-    <header>
+      <header>
         <h1>📘 그대에게 닿을 나의 이야기</h1>
         <p class="subtitle">부제: 석양에 머문 문장들, 사랑하는 이에게 남기는 빛</p>
-        <p style="font-size: 0.9rem; color: #999;">(비상업적 용도의 무료 배포를 권장합니다)</p>
-    </header>
+        <p class="meta-note">(비상업적 용도의 무료 배포를 권장합니다)</p>
+      </header>
 
-    <section>
+      <section class="card">
         <div class="content-box">
-            본 워크북은 존엄치료(Dignity Therapy)의 철학을 바탕으로, 삶의 궤적을 정리하고 사랑하는 이들에게 정서적 유산을 남기고자 하는 분들을 위해 제작되었습니다.
+          본 워크북은 존엄치료(Dignity Therapy)의 철학을 바탕으로, 삶의 궤적을 정리하고 사랑하는 이들에게 정서적 유산을 남기고자 하는 분들을 위해 제작되었습니다.
         </div>
-        
+
         <h2>Ⅰ. 시작하며: 존엄의 가치</h2>
         <p>인간은 신체적으로 약해질지라도, 자신의 삶을 반추하고 목소리를 낼 수 있을 때 진정한 존엄을 유지합니다. 이 워크북은 하비 맥스 초치노프 박사의 '존엄 모델'을 기반으로 설계되었으며, 당신을 단순한 '환자'가 아닌 '풍성한 역사를 지닌 고유한 인격체'로 조명합니다.</p>
-        
+
         <h3>🎯 핵심 목표</h3>
         <div class="target-goal">
-            <div class="goal-card"><strong>고통의 완화</strong>삶의 의미를 재발견함으로써 허무함과 존재적 불안을 줄입니다.</div>
-            <div class="goal-card"><strong>자아의 통합</strong>과거와 현재를 연결하여 '나'라는 존재의 연속성을 회복합니다.</div>
-            <div class="goal-card"><strong>정서적 유대</strong>사랑하는 이들과의 관계 속에서 자신의 위치를 다시 확인합니다.</div>
+          <div class="goal-card"><strong>고통의 완화</strong>삶의 의미를 재발견함으로써 허무함과 존재적 불안을 줄입니다.</div>
+          <div class="goal-card"><strong>자아의 통합</strong>과거와 현재를 연결하여 '나'라는 존재의 연속성을 회복합니다.</div>
+          <div class="goal-card"><strong>정서적 유대</strong>사랑하는 이들과의 관계 속에서 자신의 위치를 다시 확인합니다.</div>
         </div>
 
         <h3>🎁 기록의 의미: 유산 문서(Legacy Document)</h3>
         <p>이 워크북을 통해 완성될 기록은 단순히 과거를 적은 종이가 아니라, 세상에 남길 당신의 소중한 유산입니다.</p>
         <ul>
-            <li><strong>나에게 주는 선물:</strong> 흩어진 삶의 조각들을 하나로 모아 평온하게 매듭짓는 '삶의 통합'</li>
-            <li><strong>가족에게 주는 선물:</strong> 당신의 목소리가 담긴 기록을 통해 슬픔을 극복할 힘을 얻는 '치유의 자원'</li>
+          <li><strong>나에게 주는 선물:</strong> 흩어진 삶의 조각들을 하나로 모아 평온하게 매듭짓는 '삶의 통합'</li>
+          <li><strong>가족에게 주는 선물:</strong> 당신의 목소리가 담긴 기록을 통해 슬픔을 극복할 힘을 얻는 '치유의 자원'</li>
         </ul>
-    </section>
+      </section>
 
-    <section>
+      <section class="card">
         <h2>Ⅱ. 마음지기(진행자) 가이드</h2>
+
         <h3>- 기본 원칙 (3No)</h3>
         <p>작성자의 심리적 안전을 위해 다음의 3No 원칙을 반드시 지켜주세요.</p>
+
         <div class="content-box">
-            <p><strong>1. No Correction (교정 금지):</strong> 조언이나 비판 없이 있는 그대로 수용하기.</p>
-            <p><strong>2. No Hurrying (침묵 존중):</strong> 눈물과 침묵도 대화의 일부입니다. 충분히 기다려 주기.</p>
-            <p><strong>3. No Pressure (강요 금지):</strong> 답변하기 힘든 질문은 언제든 건너뛰기.</p>
+          <p><strong>1. No Correction (교정 금지):</strong> 조언이나 비판 없이 있는 그대로 수용하기.</p>
+          <p><strong>2. No Hurrying (침묵 존중):</strong> 눈물과 침묵도 대화의 일부입니다. 충분히 기다려 주기.</p>
+          <p><strong>3. No Pressure (강요 금지):</strong> 답변하기 힘든 질문은 언제든 건너뛰기.</p>
         </div>
 
         <h3>- 상황별 대응 및 전문가 연계</h3>
         <ul>
-            <li><strong>감정의 동요:</strong> "괜찮습니다, 천천히 하셔도 됩니다"라며 안심시켜 드립니다.</li>
-            <li><strong>죄책감 표현:</strong> "그 당시 상황에서 최선을 다하신 것임을 압니다"라고 공감합니다.</li>
-            <li><strong>중단 신호:</strong> 자살 암시, 극심한 공황, 현실 판단 저하가 나타나면 즉시 중단하고 전문가의 도움을 요청하십시오.</li>
+          <li><strong>감정의 동요:</strong> "괜찮습니다, 천천히 하셔도 됩니다"라며 안심시켜 드립니다.</li>
+          <li><strong>죄책감 표현:</strong> "그 당시 상황에서 최선을 다하신 것임을 압니다"라고 공감합니다.</li>
+          <li><strong>중단 신호:</strong> 자살 암시, 극심한 공황, 현실 판단 저하가 나타나면 즉시 중단하고 전문가의 도움을 요청하십시오.</li>
         </ul>
-    </section>
+      </section>
 
-    <section>
+      <section class="card">
         <h2>Ⅲ. [워크북] 나의 삶, 나의 목소리</h2>
-        
+
         <div class="chapter-title">제1장. 눈부신 기억의 조각 (에너지 회복)</div>
         <p>• 당신의 인생에서 가장 빛나던 시절은 언제였으며, 그때 당신은 어떤 모습이었나요?</p>
         <textarea class="textarea-box"></textarea>
         <p>• 떠올리기만 해도 미소가 지어지는 소중한 장소나 순간은 어디인가요?</p>
         <textarea class="textarea-box"></textarea>
-        <p style="color: #888; font-size: 0.95rem;">[심화 질문]: 그 시절의 냄새나 소리가 기억나시나요? 어린 날 꿈꾸던 당신의 모습은 어땠나요?</p>
-        <div class="content-box" style="border: 1px dashed var(--main-pink); text-align: center;">
-            [활동]: 리즈 시절 사진 붙이기 또는 행복했던 장면 그리기
+        <p style="color: rgba(74,26,44,0.55); font-size: 0.95rem;">[심화 질문]: 그 시절의 냄새나 소리가 기억나시나요? 어린 날 꿈꾸던 당신의 모습은 어땠나요?</p>
+
+        <div class="content-box" style="border-style:dashed; text-align:center; font-weight:700;">
+          [활동]: 리즈 시절 사진 붙이기 또는 행복했던 장면 그리기
         </div>
 
         <div class="chapter-title">제2장. 삶을 일군 긍지와 성취 (자존감 회복)</div>
@@ -258,9 +616,10 @@
         <textarea class="textarea-box"></textarea>
         <p>• 모진 풍파 속에서도 당신을 일으켜 세운 신념이나 사람은 누구인가요?</p>
         <textarea class="textarea-box"></textarea>
-        <p>✍️ 나의 정의: “나는 <input type="text" class="input-line" style="width: 300px; display: inline-block;"> 한 사람이었다.”</p>
-        <div class="content-box" style="border: 1px dashed var(--main-pink); text-align: center;">
-            [활동]: 나에게 수여하는 ‘인생 공로상’ 작성하기
+        <p>✍️ 나의 정의: “나는 <input type="text" class="input-line" style="width:min(420px, 100%); display:inline-block;"> 한 사람이었다.”</p>
+
+        <div class="content-box" style="border-style:dashed; text-align:center; font-weight:700;">
+          [활동]: 나에게 수여하는 ‘인생 공로상’ 작성하기
         </div>
 
         <div class="chapter-title">제3장. 사랑하는 이들에게 띄우는 편지 (관계의 완성)</div>
@@ -268,62 +627,112 @@
         <textarea class="textarea-box" style="height: 200px;"></textarea>
         <p>• 마음에 담아두었던 응어리나, 이제는 편안히 놓고 싶은 기억이 있나요?</p>
         <textarea class="textarea-box"></textarea>
-        <p style="color: #888; font-size: 0.95rem;">[심화 질문]: 가족에게 꼭 물려주고 싶은 나만의 손맛(레시피)이나 습관이 있나요?</p>
-    </section>
+        <p style="color: rgba(74,26,44,0.55); font-size: 0.95rem;">[심화 질문]: 가족에게 꼭 물려주고 싶은 나만의 손맛(레시피)이나 습관이 있나요?</p>
+      </section>
 
-    <section>
+      <section class="card">
         <div class="chapter-title">제4장. 세상에 남기는 지혜 (유산의 영속성)</div>
         <p>• 후손들이 인생의 비바람을 만났을 때 길을 잃지 않도록 해줄 조언은 무엇인가요?</p>
         <textarea class="textarea-box"></textarea>
         <p>• 다음 세대가 이것만은 꼭 지키며 살길 바라는 가치가 있나요?</p>
         <textarea class="textarea-box"></textarea>
-        <p>✍️ 마지막 문장: “나의 삶은 <input type="text" class="input-line" style="width: 400px; display: inline-block;"> 였다.”</p>
-    </section>
+        <p>✍️ 마지막 문장: “나의 삶은 <input type="text" class="input-line" style="width:min(520px, 100%); display:inline-block;"> 였다.”</p>
+      </section>
 
-    <section>
+      <section class="card">
         <h2>Ⅳ. 유산 문서(Legacy Document) 활용</h2>
-        <div class="content-box">
-            <p>1. 보관: 정돈된 글과 함께 당시의 대화 음성(USB/QR)을 함께 보관하면 감동이 배가됩니다.</p>
-            <p>2. 전달 방식 (본인 선택):</p>
-            <label class="checklist-item"><input type="checkbox"> 지금 가족과 함께 읽으며 온기를 나누기</label>
-            <label class="checklist-item"><input type="checkbox"> 특정 기념일(생일, 결혼기념일 등)에 전달하기</label>
-            <label class="checklist-item"><input type="checkbox"> 사후 유품으로 전달하여 마지막 위로 전하기</label>
-        </div>
-    </section>
 
-    <section>
+        <div class="content-box">
+          <p>1. 보관: 정돈된 글과 함께 당시의 대화 음성(USB/QR)을 함께 보관하면 감동이 배가됩니다.</p>
+          <p>2. 전달 방식 (본인 선택):</p>
+
+          <!-- 기존 체크박스를 “그려지는 체크”로 교체 -->
+          <div class="checklist">
+            <label class="check-item">
+              <input class="cb-input" type="checkbox">
+              <span class="cb-ui" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </span>
+              <span class="check-text">지금 가족과 함께 읽으며 온기를 나누기</span>
+            </label>
+
+            <label class="check-item">
+              <input class="cb-input" type="checkbox">
+              <span class="cb-ui" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </span>
+              <span class="check-text">특정 기념일(생일, 결혼기념일 등)에 전달하기</span>
+            </label>
+
+            <label class="check-item">
+              <input class="cb-input" type="checkbox">
+              <span class="cb-ui" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </span>
+              <span class="check-text">사후 유품으로 전달하여 마지막 위로 전하기</span>
+            </label>
+          </div>
+        </div>
+
         <h3>💡 기록을 돕는 '말문 열기' 팁</h3>
         <ul>
-            <li><strong>오감을 자극하세요:</strong> "어땠나요?"보다 "그때 어떤 소리가 들렸고 어떤 냄새가 났나요?"라고 질문하면 기억이 더 선명해집니다.</li>
-            <li><strong>취향을 물어보세요:</strong> 사소한 취향(좋아하는 노래, 커피, 꽃)을 묻는 것이 큰 이야기의 시작이 될 수 있습니다.</li>
-            <li><strong>동행자가 되어주세요:</strong> 당신은 치료자가 아니라, 인생이라는 여행을 함께 돌아보는 동행자임을 잊지 마세요.</li>
+          <li><strong>오감을 자극하세요:</strong> "어땠나요?"보다 "그때 어떤 소리가 들렸고 어떤 냄새가 났나요?"라고 질문하면 기억이 더 선명해집니다.</li>
+          <li><strong>취향을 물어보세요:</strong> 사소한 취향(좋아하는 노래, 커피, 꽃)을 묻는 것이 큰 이야기의 시작이 될 수 있습니다.</li>
+          <li><strong>동행자가 되어주세요:</strong> 당신은 치료자가 아니라, 인생이라는 여행을 함께 돌아보는 동행자임을 잊지 마세요.</li>
         </ul>
-        <p style="font-size: 0.85rem; color: #888; margin-top: 30px;">⚖️ 저작권 안내: 본 자료는 비상업적 용도로 자유롭게 활용 가능하며, 재배포 시 출처를 명시해 주시기 바랍니다. (의료적 처방을 대체할 수는 없습니다.)</p>
-    </section>
 
-    <div class="closing-quote" style="text-align: center; margin-top: 60px; font-family: 'Nanum Myeongjo', serif; font-size: 1.3rem;">
-        🌿 맺음말:<br>
-        삶은 완벽해서 아름다운 것이 아니라, 당신이라는 소중한 흔적이 남기에 아름답습니다.<br>
-        이 기록은 당신이 남기는 마지막 선물인 동시에, 지금의 당신을 안아주는 따뜻한 시간이 될 것입니다.
+        <p style="font-size: 0.85rem; color: rgba(74,26,44,0.50); margin-top: 18px;">
+          ⚖️ 저작권 안내: 본 자료는 비상업적 용도로 자유롭게 활용 가능하며, 재배포 시 출처를 명시해 주시기 바랍니다. (의료적 처방을 대체할 수는 없습니다.)
+        </p>
+      </section>
+
+      <section class="card">
+        <div class="content-box" style="text-align:center;">
+          <div style="font-family:'Nanum Myeongjo', serif; font-size: 1.22rem; line-height: 1.7; color: rgba(74,26,44,0.88);">
+            🌿 맺음말:<br>
+            삶은 완벽해서 아름다운 것이 아니라, 당신이라는 소중한 흔적이 남기에 아름답습니다.<br>
+            이 기록은 당신이 남기는 마지막 선물인 동시에, 지금의 당신을 안아주는 따뜻한 시간이 될 것입니다.
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 14px; font-weight: 900; font-size: 1.05rem; color: rgba(214,51,132,0.98);">
+          존엄은 우연히 주어지지 않습니다.<br>
+          준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
+        </div>
+
+        <footer class="info-box">
+          <h4>웰다잉통합예술교육협회</h4>
+          <p>삶을 빚는 예술, 죽음을 품는 인문학.</p>
+          <p>삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
+          <hr style="border: 0; border-top: 1px solid rgba(248,187,208,0.95); margin: 16px auto; width: min(420px, 60%);">
+          <p>🌐 홈페이지: <a href="http://wia-edu.org" target="_blank">http://wia-edu.org</a></p>
+          <p>📝 블로그: <a href="https://blog.naver.com/say2sky" target="_blank">https://blog.naver.com/say2sky</a></p>
+          <p>📞 프로그램문의: 010-5635-7989</p>
+        </footer>
+      </section>
+
     </div>
+  </div>
 
-    <div style="text-align: center; margin-top: 40px; font-weight: bold; font-size: 1.1rem; color: var(--main-pink);">
-        존엄은 우연히 주어지지 않습니다.<br>
-        준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
-    </div>
+  <button id="btnPrint" class="btn-print no-print" type="button">고화질 PDF로 보관하기</button>
 
-    <footer class="info-box">
-        <h4>웰다잉통합예술교육협회</h4>
-        <p>삶을 빚는 예술, 죽음을 품는 인문학.</p>
-        <p>삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
-        <hr style="border: 0; border-top: 1px solid #f8bbd0; margin: 20px auto; width: 50%;">
-        <p>🌐 홈페이지: <a href="http://wia-edu.org" target="_blank">http://wia-edu.org</a></p>
-        <p>📝 블로그: <a href="https://blog.naver.com/say2sky" target="_blank">https://blog.naver.com/say2sky</a></p>
-        <p>📞 프로그램문의: 010-5635-7989</p>
-    </footer>
-</div>
+  <script>
+    // PDF 품질의 숨은 변수: 웹폰트 로딩 완료 후 인쇄(대체 폰트로 찍히는 사고 감소)
+    const btn = document.getElementById('btnPrint');
 
-<button class="btn-print no-print" onclick="window.print()">PDF로 보관하기</button>
-
+    btn.addEventListener('click', async () => {
+      try {
+        if (document.fonts && document.fonts.ready) {
+          btn.textContent = 'PDF 준비 중...';
+          btn.disabled = true;
+          await document.fonts.ready;
+        }
+      } finally {
+        btn.textContent = '고화질 PDF로 보관하기';
+        btn.disabled = false;
+        window.print();
+      }
+    });
+  </script>
 </body>
 </html>
