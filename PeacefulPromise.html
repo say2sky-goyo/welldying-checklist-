@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 반려동물을 위한 돌봄 의향서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-pastel-green: #f2f8f2; /* 연한 그린 파스텔 */
+            --accent-green: #6b8e23;    /* 올리브 그린 포인트 */
+            --deep-green: #1b3022;      /* 진한 글자색 */
+            --white: #ffffff;
+            --box-bg: #f9fdf9;
+        }
+
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-pastel-green);
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--deep-green);
+            line-height: 1.8;
+            word-break: keep-all;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            background: var(--white);
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-radius: 24px;
+        }
+
+        /* PDF 출력 최적화 */
+        @media print {
+            body { background: none; }
+            .container { box-shadow: none; margin: 0; width: 100%; padding: 40px; }
+            .no-print { display: none; }
+            section { page-break-inside: avoid; margin-bottom: 40px; }
+            h2, h3 { page-break-after: avoid; }
+            .textarea-box { border: 1px solid #eee !important; }
+        }
+
+        .warning-banner {
+            background-color: #edf5ed;
+            border-left: 4px solid var(--accent-green);
+            padding: 15px;
+            margin-bottom: 30px;
+            font-size: 0.92em;
+            color: #4a6741;
+            font-weight: 500;
+        }
+
+        header { text-align: center; margin-bottom: 60px; }
+        h1 { font-size: 2.2rem; font-weight: 700; margin: 0; letter-spacing: -1px; color: var(--accent-green); }
+        .sub-h1 { font-size: 1.1rem; color: #555; margin-top: 10px; font-weight: 400; }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--white);
+            background-color: var(--accent-green);
+            padding: 12px 25px;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            border-left: 5px solid var(--accent-green);
+            padding-left: 15px;
+            margin-top: 35px;
+            color: var(--deep-green);
+        }
+
+        .input-field {
+            border: none;
+            border-bottom: 2px solid #e0e0e0;
+            padding: 5px 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--deep-green);
+            background: transparent;
+            transition: border-bottom 0.3s;
+        }
+        .input-field:focus { outline: none; border-bottom: 2px solid var(--accent-green); }
+
+        .checklist-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 15px;
+            background: #f4f9f4;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+        .checklist-item:hover { background: #e8f2e8; }
+        .checklist-item input[type="checkbox"], .checklist-item input[type="radio"] {
+            margin-right: 8px;
+            width: 18px; height: 18px;
+            accent-color: var(--accent-green);
+            cursor: pointer;
+        }
+
+        .textarea-box {
+            width: 100%; height: 100px;
+            border: 1px solid #e2ece2; border-radius: 12px;
+            padding: 15px; margin-top: 10px;
+            resize: none; font-family: inherit; font-size: 1rem;
+            background: var(--box-bg);
+        }
+
+        /* 하단 기관 정보 박스 */
+        .info-box {
+            margin-top: 70px;
+            padding: 35px;
+            background: #f2f8f2; 
+            border: 1px solid #e2ece2;
+            border-radius: 20px;
+            color: #34495e;
+            line-height: 1.6;
+        }
+        .info-box h3 { 
+            margin-top: 0; margin-bottom: 12px; font-size: 1.3rem; 
+            color: var(--accent-green); font-weight: 700; border: none; padding: 0;
+        }
+        .info-box p { margin: 6px 0; font-size: 0.95rem; display: flex; align-items: center; }
+        .info-box a { color: var(--accent-green); text-decoration: none; font-weight: 500; margin-left: 5px; }
+        .info-box a:hover { text-decoration: underline; }
+
+        .info-divider { border: 0; border-top: 1px solid #e2ece2; margin: 18px 0; }
+
+        .btn-print {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            background: var(--accent-green);
+            color: white; border: none;
+            padding: 16px 35px; border-radius: 50px;
+            font-weight: bold; font-size: 1rem; cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+        .btn-print:hover { transform: scale(1.05); }
+
+        .sign-area {
+            margin: 40px 0;
+            padding: 30px;
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="no-print warning-banner">
+        ⚠️ 주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.
+    </div>
+
+    <header>
+        <h1>『나의 반려동물을 위한 돌봄 의향서』</h1>
+        <p class="sub-h1">: 나의 부재 시 반려동물의 안녕과 지속 가능한 돌봄을 위한 기록</p>
+    </header>
+
+    <section>
+        <h2>Ⅰ. 반려동물 기본 프로필 (Identity)</h2>
+        <p>이름: <input type="text" class="input-field" style="width: 200px;"> (종/품종: <input type="text" class="input-field" style="width: 200px;">)</p>
+        <p>나이/성별: <input type="text" class="input-field" style="width: 100px;"> / <input type="text" class="input-field" style="width: 100px;"> 
+            &nbsp;&nbsp;중성화 여부: 
+            <label class="checklist-item" style="display:inline-flex;"><input type="radio" name="neutral"> 예</label>
+            <label class="checklist-item" style="display:inline-flex;"><input type="radio" name="neutral"> 아니오</label>
+        </p>
+        <p>마이크로칩 등록번호: <input type="text" class="input-field" style="width: 400px;"></p>
+        <p>성격 특징:</p>
+        <textarea class="textarea-box" placeholder="예: 겁이 많음, 사람을 좋아함, 특정 소리에 민감함 등"></textarea>
+    </section>
+
+    <section>
+        <h2>Ⅱ. 돌봄 네트워크 (Care Network)</h2>
+        <h3>1. 보호 체계</h3>
+        <p>제1 보호자 (우선 인수): 성명 <input type="text" class="input-field" style="width: 120px;"> / 연락처 <input type="text" class="input-field" style="width: 150px;"> (관계: <input type="text" class="input-field" style="width: 100px;">)</p>
+        <p>인수 시점: 
+            <label class="checklist-item" style="display:inline-flex;"><input type="radio" name="timing"> 즉시</label>
+            <label class="checklist-item" style="display:inline-flex;"><input type="radio" name="timing"> 장례 이후</label>
+            <label class="checklist-item" style="display:inline-flex;"><input type="radio" name="timing"> 기타(<input type="text" class="input-field" style="width: 100px;">)</label>
+        </p>
+        <p>제2 보호자 (대안 처): 성명(기관) <input type="text" class="input-field" style="width: 150px;"> / 연락처 <input type="text" class="input-field" style="width: 150px;"></p>
+        <p>보호 형태: 
+            <label class="checklist-item" style="display:inline-flex;"><input type="radio" name="type"> 임시보호</label>
+            <label class="checklist-item" style="display:inline-flex;"><input type="radio" name="type"> 영구입양</label>
+            <label class="checklist-item" style="display:inline-flex;"><input type="radio" name="type"> 보호소 위탁</label>
+        </p>
+        
+        <h3>2. 긴급 대응 및 인계</h3>
+        <p>주거지 출입 방법: <input type="text" class="input-field" style="width: 80%;"></p>
+        <p>인계 품목:</p>
+        <div class="checklist-group">
+            <label class="checklist-item"><input type="checkbox"> 사료</label>
+            <label class="checklist-item"><input type="checkbox"> 평소 쓰던 식기</label>
+            <label class="checklist-item"><input type="checkbox"> 이동장</label>
+            <label class="checklist-item"><input type="checkbox"> 애착 침구</label>
+            <label class="checklist-item"><input type="checkbox"> 건강기록부</label>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ⅲ. 일상의 서사 (Daily Routine & Soul)</h2>
+        <h3>1. 식사 의례 및 습관</h3>
+        <p>식단: 사료 종류(<input type="text" class="input-field" style="width: 150px;">) / 급여량 및 시간(<input type="text" class="input-field" style="width: 150px;">)</p>
+        <p>급여 습관:</p>
+        <textarea class="textarea-box" placeholder="예: '기다려' 필수, 사료를 물에 불려줄 것, 손으로 줘야 먹음 등"></textarea>
+        <p>간식 및 알레르기: <input type="text" class="input-field" style="width: 80%;" placeholder="절대 금지 음식 포함"></p>
+
+        <h3>2. 안정의 상징과 언어</h3>
+        <p>불안 시 대처:</p>
+        <textarea class="textarea-box" placeholder="좋아하는 숨바꼭질 장소, 보호자 냄새가 밴 애착 물건 등"></textarea>
+        <p>교감 언어:</p>
+        <textarea class="textarea-box" placeholder="알아듣는 명령어, 칭찬 표현, 싫어하는 접촉 부위나 행동"></textarea>
+
+        <h3>3. 활동 및 환경</h3>
+        <p>산책/놀이:</p>
+        <textarea class="textarea-box" placeholder="선호 시간대, 산책 코스, 좋아하는 장난감 및 놀이 방식"></textarea>
+        <p>기피 상황: <input type="text" class="input-field" style="width: 80%;" placeholder="천둥, 큰 소리, 낯선 개, 오토바이 소리 등"></p>
+    </section>
+
+    <section>
+        <h2>Ⅳ. 의료 및 건강 아카이브 (Medical Care)</h2>
+        <p>전담 동물병원: 병원명 <input type="text" class="input-field" style="width: 150px;"> / 주치의 <input type="text" class="input-field" style="width: 100px;"> / 연락처 <input type="text" class="input-field" style="width: 150px;"></p>
+        <p>투약 및 관리:</p>
+        <textarea class="textarea-box" placeholder="현재 복용 약/영양제, 투약 요령, 지병 유무"></textarea>
+        <p>노령/중병 관리:</p>
+        <textarea class="textarea-box" placeholder="인지 저하, 관절 주의사항, 안락사 및 연명치료에 대한 나의 생각"></textarea>
+    </section>
+
+    <section>
+        <h2>Ⅴ. 재정적·법적 책임 (Support & Legal)</h2>
+        <div class="checklist-group">
+            경제적 지원:
+            <label class="checklist-item"><input type="radio" name="finance"> 별도 계좌</label>
+            <label class="checklist-item"><input type="radio" name="finance"> 유산 배정</label>
+            <label class="checklist-item"><input type="radio" name="finance"> 상조 가입</label>
+            <label class="checklist-item"><input type="radio" name="finance"> 기타(<input type="text" class="input-field" style="width: 80px;">)</label>
+        </div>
+        <div class="checklist-group">
+            소유권 이전:
+            <label class="checklist-item"><input type="radio" name="ownership"> 제1 보호자에게 이전</label>
+            <label class="checklist-item"><input type="radio" name="ownership"> 제2 보호자에게 이전</label>
+            <label class="checklist-item"><input type="radio" name="ownership"> 가족 판단 준용</label>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ⅵ. 마지막 배웅과 추모 (The Final Farewell)</h2>
+        <h3>1. 반려동물의 이별 예식 (반려동물이 먼저 떠날 경우)</h3>
+        <div class="checklist-group">
+            희망 방식: 
+            <label class="checklist-item"><input type="radio" name="farewell"> 화장</label>
+            <label class="checklist-item"><input type="radio" name="farewell"> 수목장</label>
+            <label class="checklist-item"><input type="radio" name="farewell"> 메모리얼 스톤</label>
+            <label class="checklist-item"><input type="radio" name="farewell"> 기타(<input type="text" class="input-field" style="width: 80px;">)</label>
+        </div>
+        <p>장례 시설: <input type="text" class="input-field" style="width: 80%;"></p>
+        <p>마지막 당부:</p>
+        <textarea class="textarea-box" placeholder="떠나는 아이에게 꼭 해주고 싶은 말이나 마지막 예우"></textarea>
+
+        <h3>2. 나의 장례식과 반려동물 (Option)</h3>
+        <div class="checklist-group" style="flex-direction: column;">
+            <label class="checklist-item"><input type="checkbox"> 나의 장례식 당일, 반려동물과의 마지막 대면(동반)을 희망함</label>
+            <label class="checklist-item"><input type="checkbox"> 나의 추모 공간(영정 사진 등)에 반려동물의 흔적을 함께 남겨주길 희망함</label>
+            <label class="checklist-item"><input type="checkbox"> 사후 나의 안식처에 반려동물의 물품 혹은 유골을 동반 안치하길 희망함</label>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ⅶ. 마지막 편지 (Final Message)</h2>
+        <textarea class="textarea-box" style="height: 200px;" placeholder="남겨질 아이에게, 혹은 새로운 보호자에게 전하고 싶은 진심을 남겨주세요."></textarea>
+    </section>
+
+    <section class="sign-area">
+        <p style="font-size: 0.95rem; line-height: 1.8;">
+            본 문서는 나의 부재 시 나의 가장 내밀한 동반자인 ( <input type="text" class="input-field" style="width: 100px; text-align: center;"> )의 삶이 고유한 결을 잃지 않기를 바라는 마음으로 작성되었습니다. 새로운 보호자께서는 이 지침을 단순히 정보의 전달이 아닌, 떠난 자가 남긴 생명에 대한 마지막 책임이자 간절한 약속으로 받아들여 주시길 부탁드립니다.
+        </p>
+        <div style="margin-top: 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+            <div>작성자: <input type="text" class="input-field" style="width: 150px;"> (서명)</div>
+            <div>공유 대상(대리인): <input type="text" class="input-field" style="width: 150px;"> (서명)</div>
+        </div>
+        <p style="margin-top: 20px;">작성일: 202<input type="text" class="input-field" style="width: 30px;">년 <input type="text" class="input-field" style="width: 30px;">월 <input type="text" class="input-field" style="width: 30px;">일</p>
+    </section>
+
+    <p style="text-align: center; font-weight: bold; margin: 40px 0; font-size: 1.1rem; color: var(--accent-green);">
+        존엄은 우연히 주어지지 않습니다.<br>
+        준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
+    </p>
+
+    <footer class="info-box">
+        <h3>웰다잉통합예술교육협회</h3>
+        <p>삶을 빚는 예술, 죽음을 품는 인문학. 삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
+        <div class="info-divider"></div>
+        <p>🌐 <b>홈페이지:</b> <a href="http://wia-edu.org" target="_blank">http://wia-edu.org</a></p>
+        <p>📝 <b>블로그:</b> <a href="https://blog.naver.com/say2sky" target="_blank">https://blog.naver.com/say2sky</a></p>
+        <p>📞 <b>프로그램 문의:</b> 010-5635-7989</p>
+    </footer>
+</div>
+
+<button class="btn-print no-print" onclick="window.print()">PDF로 보관하기</button>
+
+</body>
+</html>
