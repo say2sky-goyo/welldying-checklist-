@@ -7,11 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-pastel-blue: #eef4fb; /* 파스텔 블루 배경 */
+            --bg-pastel-blue: #eef4fb; /* 파란 파스텔톤 배경 */
             --accent-blue: #5d8aa8;    /* 포인트 블루 */
-            --deep-blue: #2c3e50;      /* 진한 글자색 */
+            --deep-blue: #1a2a3a;      /* 진한 글자색 */
             --white: #ffffff;
-            --box-bg: #f8fbff;         /* 박스 내부 배경 */
+            --box-bg: #f8fbff;
         }
 
         * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
@@ -34,14 +34,12 @@
             border-radius: 24px;
         }
 
-        /* PDF 출력 시 최적화 */
         @media print {
             body { background: none; }
             .container { box-shadow: none; margin: 0; width: 100%; padding: 40px; }
             .no-print { display: none; }
-            section { page-break-inside: avoid; margin-bottom: 40px; border-bottom: none !important; }
+            section { page-break-inside: avoid; margin-bottom: 40px; }
             h2, h3 { page-break-after: avoid; }
-            .input-field { border-bottom: 1px solid #333 !important; }
         }
 
         .warning-banner {
@@ -49,13 +47,14 @@
             border-left: 4px solid var(--accent-blue);
             padding: 15px;
             margin-bottom: 30px;
-            font-size: 0.9em;
+            font-size: 0.92em;
             color: #4a69bd;
+            font-weight: 500;
         }
 
         header { text-align: center; margin-bottom: 60px; }
-        h1 { font-size: 2.2rem; font-weight: 700; margin: 0; letter-spacing: -1px; }
-        .sub-h1 { font-size: 1.1rem; color: var(--accent-blue); margin-top: 10px; }
+        h1 { font-size: 2.3rem; font-weight: 700; margin: 0; letter-spacing: -1.5px; color: #333; }
+        .sub-h1 { font-size: 1.15rem; color: var(--accent-blue); margin-top: 12px; font-weight: 300; }
 
         .intro-box {
             background: var(--box-bg);
@@ -65,39 +64,43 @@
             border: 1px solid #d1e3f5;
             font-style: italic;
             text-align: center;
+            font-size: 1.05rem;
         }
 
         h2 {
             font-size: 1.5rem;
             color: var(--white);
             background-color: var(--accent-blue);
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 25px;
+            border-radius: 10px;
             margin-top: 50px;
+            box-shadow: 0 4px 10px rgba(93, 138, 168, 0.2);
         }
 
         h3 {
-            font-size: 1.2rem;
-            border-left: 4px solid var(--accent-blue);
-            padding-left: 12px;
-            margin-top: 30px;
-            color: var(--deep-blue);
+            font-size: 1.25rem;
+            border-left: 5px solid var(--accent-blue);
+            padding-left: 15px;
+            margin-top: 35px;
+            color: #2c3e50;
         }
 
         .input-field {
             border: none;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 2px solid #e0e0e0;
             padding: 5px 10px;
             font-family: inherit;
             font-size: 1rem;
             color: var(--deep-blue);
             background: transparent;
+            transition: border-bottom 0.3s;
         }
+        .input-field:focus { outline: none; border-bottom: 2px solid var(--accent-blue); }
 
         .checklist-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
             margin: 20px 0;
         }
 
@@ -105,51 +108,56 @@
             display: flex;
             align-items: center;
             cursor: pointer;
-            padding: 8px 15px;
+            padding: 10px 18px;
             background: #f1f6fb;
-            border-radius: 20px;
+            border-radius: 25px;
+            font-size: 0.95rem;
             transition: 0.2s;
         }
         .checklist-item:hover { background: #e2ecf7; }
         .checklist-item input[type="checkbox"] {
-            margin-right: 8px;
-            width: 18px; height: 18px;
+            margin-right: 10px;
+            width: 20px; height: 20px;
             accent-color: var(--accent-blue);
+            cursor: pointer;
         }
 
         .text-area {
             width: 100%;
-            height: 100px;
+            height: 120px;
             border: 1px solid #d1e3f5;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 10px;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
             resize: none;
             font-family: inherit;
+            font-size: 1rem;
+            background: #fafcfe;
         }
 
         .info-box {
             margin-top: 80px;
-            padding: 35px;
-            background: #eef4fb; /* 진한 파스텔 블루 */
+            padding: 40px;
+            background: #eef4fb; 
             color: #2c3e50;
-            border-radius: 20px;
+            border-radius: 24px;
             font-size: 0.95rem;
             border: 1px solid #d1e3f5;
         }
-        .info-box h3 { border: none; padding: 0; margin-bottom: 15px; color: var(--accent-blue); }
-        .info-box a { color: var(--accent-blue); text-decoration: none; font-weight: bold; }
+        .info-box h3 { border: none; padding: 0; margin-bottom: 15px; color: var(--accent-blue); background: none; box-shadow: none; font-size: 1.3rem; }
+        .info-box a { color: var(--accent-blue); text-decoration: none; font-weight: bold; border-bottom: 1px solid #d1e3f5; }
 
         .btn-print {
             position: fixed;
             bottom: 30px; right: 30px;
             background: var(--accent-blue);
             color: white; border: none;
-            padding: 15px 30px; border-radius: 50px;
-            font-weight: bold; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            z-index: 1000;
+            padding: 16px 35px; border-radius: 50px;
+            font-weight: bold; font-size: 1rem; cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
         }
+        .btn-print:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -162,7 +170,7 @@
     <header>
         <h1>『나의 안식과 배웅에 관한 기록』</h1>
         <p class="sub-h1">-존엄한 임종과 아름다운 이별을 위한 통합 의향서-</p>
-        <p style="font-size: 0.9rem; color: #666;">(임종 돌봄 · 장례 의례 · 공간 구성 · 추모 · 부고에 관한 나의 의향)</p>
+        <p style="font-size: 0.95rem; color: #555;">(임종 돌봄 · 장례 의례 · 공간 구성 · 추모 · 부고에 관한 나의 의향)</p>
     </header>
 
     <section>
@@ -170,7 +178,7 @@
         <div class="intro-box">
             “나는 삶의 끝에서도 고유한 인격체로서 존엄과 관계의 의미가 지켜지기를 바랍니다. 이 문서는 나의 마지막 소풍길을 안내하는 지도이자, 남겨진 이들에게 전하는 나의 가장 정중한 초대장입니다.”
         </div>
-        <div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 25px;">
             성명: <input type="text" class="input-field" style="width: 150px;">
             생년월일: <input type="text" class="input-field" style="width: 200px;">
             작성일: 202<input type="text" class="input-field" style="width: 30px;">년 <input type="text" class="input-field" style="width: 30px;">월 <input type="text" class="input-field" style="width: 30px;">일
@@ -187,34 +195,34 @@
 
     <section>
         <h2>Ⅱ. 임종 돌봄 의향 (Active Dying Care)</h2>
-        <p>삶의 빛이 잦아드는 순간, 나의 신체적 안녕과 평온을 위해 다음과 같이 요청합니다.</p>
+        <p>나의 신체적 안녕과 평온을 위해 다음과 같이 요청합니다.</p>
         
         <h3>1. 장소와 환경</h3>
-        <p>희망 장소: <input type="text" class="input-field" style="width: 300px;"> (자연의 기운과 빛이 느껴지는 안정된 공간)</p>
-        <p>분위기: 따뜻하고 부드러운 조명, 평소 좋아하던 음악(<input type="text" class="input-field" style="width: 200px;">)을 들려주세요.</p>
+        <p>희망 장소: <input type="text" class="input-field" style="width: 350px;"> (자연의 기운과 빛이 느껴지는 안정된 공간)</p>
+        <p>분위기: 따뜻하고 부드러운 조명, 평소 좋아하던 음악(<input type="text" class="input-field" style="width: 250px;">)을 들려주세요.</p>
 
         <h3>2. 의료적·신체적 돌봄</h3>
-        <p>연명치료결정: <input type="text" class="input-field" style="width: 100%;"> </p>
-        <p>통증 완화 요청: <input type="text" class="input-field" style="width: 100%;"> </p>
-        <p>외적 단정 및 품위 유지 요청: <input type="text" class="input-field" style="width: 100%;"> </p>
+        <p>연명치료결정: <input type="text" class="input-field" style="width: 80%;"> </p>
+        <p>통증 완화 요청: <input type="text" class="input-field" style="width: 80%;"> </p>
+        <p>외적 단정 및 품위 유지에 대한 요청: <input type="text" class="input-field" style="width: 100%;"> </p>
 
         <h3>3. 곁에 있기를 바라는 사람과 마지막 언어</h3>
-        <p>곁에 있을 사람: (<input type="text" class="input-field" style="width: 150px;">)가 내 손을 잡고 온기를 나눠주길 바랍니다.</p>
+        <p>곁에 있을 사람: (<input type="text" class="input-field" style="width: 180px;">)가 내 손을 잡고 온기를 나눠주길 바랍니다.</p>
         <p>작별의 언어: "고생했다"는 말보다 “함께여서 감사했다”, “사랑한다”, “이제 편히 가라”는 따뜻한 인사를 건네주세요.</p>
     </section>
 
     <section>
         <h2>Ⅲ. 임종 직후 및 장례 의례 (Funeral Custom)</h2>
         <p>내가 떠난 후, 남겨진 이들이 나의 뜻에 따라 평온하게 작별하기를 바랍니다.</p>
-        <p>임종 직후 예우: 숨이 멎은 후 (<input type="text" class="input-field" style="width: 40px;">)시간 정도는 서두르지 말고 조용히 머물며 인사해 주세요.</p>
-        <p>의복: 평소 편안하게 여기던 옷이나 미리 정해둔 (<input type="text" class="input-field" style="width: 150px;">)을 입혀주세요.</p>
+        <p><strong>임종 직후 예우:</strong> 숨이 멎은 후 (<input type="text" class="input-field" style="width: 80px; text-align:center;">)분 정도는 서두르지 말고 조용히 머물며 인사해 주세요.</p>
+        <p>의복: 평소 편안하게 여기던 옷이나 미리 정해둔 (<input type="text" class="input-field" style="width: 200px;">)을 입혀주세요.</p>
         
         <p><strong>장례 형식:</strong></p>
         <div class="checklist-group">
             <label class="checklist-item"><input type="checkbox"> 가족장</label>
             <label class="checklist-item"><input type="checkbox"> 일반 장례</label>
             <label class="checklist-item"><input type="checkbox"> 1일 추모식</label>
-            <label class="checklist-item"> 기타: <input type="text" class="input-field" style="width: 100px;"></label>
+            <label class="checklist-item"> 기타: <input type="text" class="input-field" style="width: 120px;"></label>
         </div>
 
         <p><strong>종교 예식:</strong></p>
@@ -232,7 +240,7 @@
             <label class="checklist-item"><input type="checkbox"> 해양장</label>
             <label class="checklist-item"><input type="checkbox"> 기증</label>
         </div>
-        <p>장소: <input type="text" class="input-field" style="width: 400px;"></p>
+        <p>장소: <input type="text" class="input-field" style="width: 450px;"></p>
     </section>
 
     <section>
@@ -240,27 +248,26 @@
         <p>이 의례는 상실을 확인하는 자리가 아니라, 나의 삶을 공동체 앞에 다시 한번 건네는 시간입니다.</p>
         
         <h3>1. 공간 연출: 존재의 궤적</h3>
-        <ul>
-            <li>입구: 나의 얼굴과 함께 “내가 지키고 싶었던 가치”를 한 문장으로 게시해 주세요.</li>
-            <li>인생 타임라인: 유년기부터 현재까지의 사진 8~12점 전시.</li>
-            <li>유품 큐레이션: 오래 쓴 노트, 애착 도서, 가방 등 손때 묻은 사물을 배치해 주세요.</li>
-        </ul>
+        <p>입구: 나의 얼굴과 함께 “내가 지키고 싶었던 가치”를 한 문장으로 게시해 주세요.</p>
+        <p>인생 타임라인: 유년기부터 현재까지의 사진 8~12점 전시.</p>
+        <p>유품 큐레이션: 오래 쓴 노트, 애착 도서, 가방, 취미 도구 등 손때 묻은 사물을 배치해 주세요.</p>
+        <p>미디어 존: 생전 인터뷰, 낭독 음성, 좋아하던 노래 영상을 상영해 주세요.</p>
 
         <h3>2. 관계 연출: 기억의 합창</h3>
         <p>참여형 기억 벽: 방명록 대신 “그가 나에게 남긴 한 문장”, “당신 덕분에 나는 ____”등의 질문에 답하는 포스트잇/추억 나무를 마련해 주세요.</p>
 
         <h3>3. 감각 연출: 공감각적 몰입</h3>
-        <p>드레스 코드: 어두운 옷 대신 밝고 단정한 옷, 혹은 내가 좋아하던 (<input type="text" class="input-field" style="width: 80px;">)색을 권해 주세요.</p>
-        <p>기억의 성찬: 내가 좋아하던 음식(<input type="text" class="input-field" style="width: 200px;">)을 나누며 즐겁게 대화해 주세요.</p>
+        <p>드레스 코드: 어두운 옷 대신 밝고 단정한 옷, 혹은 내가 좋아하던 (<input type="text" class="input-field" style="width: 100px;">)색을 권해 주세요.</p>
+        <p>기억의 성찬: 내가 좋아하던 음식(<input type="text" class="input-field" style="width: 250px;">)을 나누며 즐겁게 대화해 주세요.</p>
     </section>
 
     <section>
         <h2>Ⅴ. 부고 및 마지막 인사 (The Last Message)</h2>
         <h3>1. 미리 쓰는 부고장</h3>
-        <p style="font-size: 0.9rem; color: #666;">(단순한 사망 통지가 아닌, 정중한 삶의 마무리 인사)</p>
-        <textarea class="text-area" placeholder="내용을 작성해 주세요..."></textarea>
+        <p style="font-size: 0.95rem; color: #666;">(단순한 사망 통지가 아닌, 정중한 삶의 마무리 인사)</p>
+        <textarea class="text-area" placeholder="저의 마지막 소풍길에 함께해주셔서 감사합니다..."></textarea>
         
-        <h3>2. 추모 방식 제안</h3>
+        <h3 style="margin-top: 40px;">2. 추모 방식 제안</h3>
         <div class="checklist-group">
             조의금 대신 기억 쪽지: 
             <label class="checklist-item"><input type="checkbox"> 예</label>
@@ -272,9 +279,9 @@
     <section>
         <h2>Ⅵ. 가족과 방문객에게 전하는 당부</h2>
         <div class="intro-box" style="text-align: left; font-style: normal; font-size: 0.95rem;">
-            <strong>가족에게:</strong> "사랑하는 가족들아, 이 문서에 담긴 나의 결정은 너희를 향한 배려와 사랑의 마음으로 작성한 것이다. 어떤 선택을 하더라도 그것이 나의 뜻임을 믿고 죄책감 대신 우리가 함께 나눈 시간의 의미를 간직해다오."
+            <strong>가족에게:</strong> "사랑하는 가족들아, 이 문서에 담긴 나의 결정은 너희를 향한 배려와 사랑의 마음으로 작성한 것이다... 무엇보다 서로를 지키며 평온하게 살아가거라."
         </div>
-        <textarea class="text-area" placeholder="추가적인 당부 사항을 작성해 주세요..."></textarea>
+        <textarea class="text-area" placeholder="가족이나 방문객에게 전하고 싶은 진심 어린 한마디를 적어주세요."></textarea>
     </section>
 
     <section>
@@ -283,21 +290,22 @@
             <label class="checklist-item"><input type="checkbox"> 희망함</label>
             <label class="checklist-item"><input type="checkbox"> 가족 판단에 따름</label>
         </p>
-        <div style="margin: 40px 0; border-top: 1px solid #eee; padding-top: 20px; text-align: center;">
+        <div style="margin: 45px 0; border-top: 1px solid #eee; padding-top: 30px; text-align: center; font-weight: 500;">
             본 문서는 충분한 숙고와 자발적 의지에 따라 작성되었음을 확인합니다.
             <br><br>
-            작성자: __________________________ (서명) &nbsp;&nbsp; 공유 대상: __________________________ (서명)
+            작성자: __________________________ (서명) &nbsp;&nbsp; 공유 대상(대리인): __________________________ (서명)
         </div>
     </section>
 
-    <p style="font-size: 0.85rem; color: #7f8c8d; text-align: center;">
-        [안내] 본 문서는 법적 강제력은 없으나, 작성자의 인격적 가치와 삶의 방향을 명시한 강력한 윤리적 지침입니다.
-    </p>
+    <div style="font-size: 0.88rem; color: #7f8c8d; text-align: center; line-height: 1.6; padding-top: 20px;">
+        [안내] 본 문서는 법적 강제력은 없으나, 작성자의 인격적 가치와 삶의 방향을 명시한 강력한 윤리적 지침입니다.<br>
+        가족과 의료진, 장례 관계자분들의 존엄한 존중을 부탁드립니다.
+    </div>
 
     <footer class="info-box">
         <h3>웰다잉통합예술교육협회</h3>
         <p>삶을 빚는 예술, 죽음을 품는 인문학. 삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
-        <hr style="border: 0; border-top: 1px solid #d1e3f5; margin: 15px 0;">
+        <hr style="border: 0; border-top: 1px solid #d1e3f5; margin: 20px 0;">
         <p>홈페이지: <a href="http://wia-edu.org" target="_blank">http://wia-edu.org</a></p>
         <p>블로그: <a href="https://blog.naver.com/say2sky" target="_blank">blog.naver.com/say2sky</a></p>
         <p>프로그램문의: 010-5635-7989</p>
