@@ -8,25 +8,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            /* 배경색을 그라데이션용 변수로 설정 */
-            --bg-start: #E2E8E4; 
-            --bg-mid: #F2F4EF;
-            --bg-end: #E2E8E4;
-            
             --primary-color: #7A8E9B; 
-            --secondary-color: #DDE6ED;
             --accent-color: #829460;
-            --accent-hover: #6D7C50;
-            --text-color: #2D2D2D; 
+            --text-color: #2D2D2D;
             --white: #ffffff;
-            --border-subtle: rgba(0, 0, 0, 0.05);
+            --border-color: #DDE6ED;
         }
 
         body {
             font-family: 'Pretendard', sans-serif;
-            /* 배경 그라데이션 적용 */
-            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
-            background-attachment: fixed; /* 스크롤 시 배경 고정 */
+            /* 배경 그라데이션 설정 */
+            background: linear-gradient(135deg, #E9EFEC 0%, #F2F4EF 50%, #E2E8E4 100%);
+            background-attachment: fixed;
             color: var(--text-color);
             line-height: 1.8;
             margin: 0;
@@ -38,19 +31,17 @@
             max-width: 900px;
             margin: 50px auto;
             background: var(--white);
-            padding: 70px 90px;
-            /* 그라데이션 배경 위에서 더 돋보이도록 그림자 강화 */
-            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            padding: 60px 80px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
             border-radius: 12px;
-            position: relative;
         }
 
-        /* 이하 스타일은 기존 고급스러운 스타일을 유지하며 최적화 */
+        /* 주의 문구 */
         .warning-box {
             background-color: #FFF0F0;
             border-left: 5px solid #FF7675;
-            padding: 18px;
-            margin-bottom: 40px;
+            padding: 15px;
+            margin-bottom: 30px;
             font-size: 0.95em;
             color: #D63031;
             border-radius: 4px;
@@ -58,209 +49,114 @@
 
         header {
             text-align: center;
-            border-bottom: 1.5px solid var(--secondary-color);
-            padding-bottom: 40px;
-            margin-bottom: 50px;
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         h1 {
             color: var(--primary-color);
-            font-size: 2.5em;
-            margin: 15px 0;
+            font-size: 2.2em;
+            margin: 10px 0;
             font-weight: 800;
-            letter-spacing: -0.02em;
         }
 
         .subtitle {
-            font-size: 1.25em;
+            font-size: 1.2em;
             color: var(--accent-color);
             font-weight: 600;
-            letter-spacing: 0.05em;
         }
 
-        section {
-            margin-bottom: 50px;
-            page-break-inside: avoid;
-        }
+        section { margin-bottom: 40px; }
 
         h2 {
+            border-bottom: 2px solid var(--primary-color);
             display: inline-block;
-            border-bottom: 3px solid var(--primary-color);
-            color: var(--text-color);
-            font-size: 1.6em;
-            margin-bottom: 25px;
-            font-weight: 700;
+            font-size: 1.5em;
             padding-bottom: 5px;
+            margin-bottom: 20px;
         }
 
-        h3 {
-            color: var(--primary-color);
-            font-size: 1.2em;
-            margin-top: 35px;
-            font-weight: 700;
-        }
+        h3 { color: var(--primary-color); margin-top: 30px; }
 
         .content-box {
             background: #FAFBF9;
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid var(--border-subtle);
-            margin-bottom: 25px;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 20px;
         }
 
-        .workbook-section {
-            background-color: #FDFDFD;
-            border: 1px solid var(--secondary-color);
+        /* 워크북 스타일 */
+        .workbook-container {
+            border: 2px solid var(--border-color);
             padding: 40px;
             border-radius: 15px;
-            margin-top: 60px;
+            margin-top: 50px;
+            background-color: #fdfdfd;
         }
 
         .input-line {
             border: none;
-            border-bottom: 2px solid var(--secondary-color);
-            padding: 5px 12px;
-            font-size: 1em;
+            border-bottom: 1.5px solid #ccc;
             background: transparent;
-            color: #000;
+            padding: 2px 8px;
+            font-family: inherit;
+            font-size: 1em;
             font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .input-line:focus, .input-line:hover {
-            outline: none;
-            border-bottom-color: var(--accent-color);
-            background-color: rgba(130, 148, 96, 0.05);
         }
 
         textarea {
             width: 100%;
-            border: 1px solid var(--secondary-color);
-            border-radius: 8px;
-            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
             margin-top: 10px;
-            font-family: 'Pretendard', sans-serif;
-            font-size: 1em;
+            font-family: inherit;
             resize: none;
-            background-color: #ffffff;
-            transition: all 0.3s ease;
             box-sizing: border-box;
-        }
-
-        textarea:focus, textarea:hover {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 25px 0;
-            overflow: hidden;
-            border-radius: 8px;
-            border: 1px solid var(--secondary-color);
+            margin: 20px 0;
         }
 
         th, td {
-            border: 1px solid var(--secondary-color);
-            padding: 18px;
+            border: 1px solid #ddd;
+            padding: 12px;
             text-align: left;
         }
 
-        th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 700;
-            font-size: 1em;
-        }
+        th { background-color: #F4F6F2; color: var(--primary-color); }
 
-        .check-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            padding: 8px;
-            border-radius: 6px;
-            transition: background 0.2s ease;
-        }
-
-        .check-item:hover {
-            background-color: #f0f2ed;
-        }
-
-        .check-item input {
-            margin-right: 15px;
-            width: 20px;
-            height: 20px;
-            accent-color: var(--accent-color);
-            cursor: pointer;
-        }
-
-        .info-box {
-            background: #f7f8f5;
-            border: 1px solid var(--secondary-color);
-            padding: 35px;
-            margin-top: 80px;
-            border-radius: 12px;
+        .info-section {
             text-align: center;
-            position: relative;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.95em;
         }
 
-        .info-box::before {
-            content: "CONTACT";
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--white);
-            padding: 0 15px;
-            font-size: 0.8em;
-            font-weight: 800;
-            color: var(--primary-color);
-            letter-spacing: 0.2em;
-        }
-
-        .btn-container {
-            text-align: center;
-            margin: 60px 0;
-        }
+        .btn-container { text-align: center; margin: 40px 0; }
 
         .download-btn {
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 18px 50px;
-            font-size: 1.15em;
+            padding: 15px 40px;
+            font-size: 1.1em;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             font-weight: 700;
-            box-shadow: 0 10px 20px rgba(130, 148, 96, 0.2);
-        }
-
-        .download-btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(130, 148, 96, 0.3);
-        }
-
-        .footer-text {
-            text-align: center;
-            margin: 60px 0;
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 1.1em;
-            line-height: 1.6;
+            box-shadow: 0 4px 15px rgba(130, 148, 96, 0.3);
         }
 
         @media print {
             .no-print { display: none; }
-            .container { box-shadow: none; margin: 0; width: 100%; padding: 40px; }
             body { background: white !important; }
-            .workbook-section { border: 1px solid #eee; }
-            textarea { border: 1px solid #eee; }
+            .container { box-shadow: none; margin: 0; width: 100%; }
         }
     </style>
 </head>
@@ -268,92 +164,141 @@
 
 <div class="container" id="printable-area">
     <div class="warning-box no-print">
-        ⚠️ <strong>알림:</strong> 본 페이지는 개인정보를 서버에 저장하지 않습니다. 작성을 마친 후 하단의 버튼을 눌러 <strong>PDF로 저장</strong>해 주세요.
+        ⚠️ <strong>주의:</strong> 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.
     </div>
 
     <header>
-        <p style="color:var(--accent-color); font-weight:800; margin-bottom:5px; font-size: 1.1em;">정리정돈 실천 안내서</p>
         <h1>🌿 비움의 여백, 삶의 밀도로 채우다</h1>
-        <p class="subtitle">노년의 정리는 ‘존재를 재배치하는 인문학적 기술’이다</p>
+        <p class="subtitle">: 노년의 정리는 ‘존재를 재배치하는 인문학적 기술’이다</p>
     </header>
 
     <section>
-        <p style="font-size: 1.1em;"><strong>정리는 단순한 청소나 폐기가 아닙니다.</strong> 물건에 투사된 과거의 나와 작별하고, 지금 이 순간의 삶을 밀도 있게 재구성하는 실존적 행위입니다.</p>
+        <p><strong>정리는 단순한 청소나 폐기가 아닙니다.</strong> 그것은 물건에 투사된 과거의 나와 작별하고, 지금 이 순간의 삶을 밀도 있게 재구성하는 실존적 행위입니다.</p>
         
         <div class="content-box">
             <h3>1. 정리의 철학: ‘버림’에서 ‘놓음’으로</h3>
-            <ul>
-                <li><strong>언어의 전환:</strong> ‘버림’은 상실이지만, ‘놓음’은 순환과 해방입니다.</li>
-                <li><strong>자아의 재구성:</strong> 물건을 정리하는 것은 결국 ‘과거의 나’와의 관계를 정리하는 일입니다.</li>
-            </ul>
+            <p><strong>언어의 전환:</strong> ‘버림’이 상실과 결핍을 뜻한다면, ‘놓음’은 순환과 해방을 뜻합니다. 물건을 놓아주는 것은 외부에 흩어진 자아를 내면으로 회수하는 과정입니다.</p>
+            <p><strong>자아의 재구성:</strong> 물건은 자아의 일부입니다. 물건을 정리하는 것은 결국 ‘과거의 나’와의 관계를 정리하고, 더 선명한 ‘현재의 나’를 만나는 일입니다.</p>
 
             <h3>2. 삶의 질서를 세우는 프로세스</h3>
-            <ul>
-                <li><strong>정리 (Selection):</strong> 무엇을 남길까를 결정하는 가치의 선별 단계입니다.</li>
-                <li><strong>수납 (Placement):</strong> 물건에 가장 잘 어울리는 자리를 부여하는 존중의 단계입니다.</li>
-                <li><strong>정돈 (Order):</strong> 사용 후 제자리로 돌려보내는 리듬의 단계입니다.</li>
-            </ul>
+            <p><strong>정리 (Selection):</strong> “무엇을 버릴까”가 아닌 “무엇을 남길까”를 결정하는 가치의 선별 단계입니다. (자기결정권의 회복)</p>
+            <p><strong>수납 (Placement):</strong> 물건에 가장 잘 어울리는 ‘주소(자리)’를 부여하는 존중의 단계입니다. (공간 및 관계 윤리)</p>
+            <p><strong>정돈 (Order):</strong> 사용 후 제자리로 돌려보내는 리듬의 단계입니다. 무질서(엔트로피)에 저항하며 삶의 평온을 유지합니다.</p>
+
+            <h3>3. 삶을 가볍게 만드는 세 가지 기준</h3>
+            <p><strong>현재의 나:</strong> 과거의 취향에 매몰되지 않고, ‘지금’의 내 몸과 삶에 맞는 물건(자기돌봄)을 선택합니다.</p>
+            <p><strong>안전과 건강:</strong> 동선을 방해하는 가구나 유통기한 지난 약을 치우는 것은 존엄을 지키는 선제적 생존 전략입니다.</p>
+            <p><strong>기억의 밀도:</strong> 기억은 양이 아니라 해석입니다. 사진을 선별하고 서사를 언어화하여 삶의 정수(에센스)만 남깁니다.</p>
         </div>
     </section>
 
-    <div class="workbook-section">
-        <h2 style="display: block; text-align: center; border:none; padding:0; margin-bottom: 40px;">📔 정리정돈 실천 워크북</h2>
-        
-        <div style="text-align: center; margin-bottom: 50px; font-size: 1.1em;">
-            성함: <input type="text" class="input-line" style="width: 150px;"> &nbsp;&nbsp;&nbsp; 
-            시작일: 20<input type="text" class="input-line" style="width:40px;">년 <input type="text" class="input-line" style="width:30px;">월 <input type="text" class="input-line" style="width:30px;">일
-            <p style="margin-top:25px;"><strong>나의 정리 다짐:</strong> <input type="text" class="input-line" style="width:70%;" placeholder="예: 가벼운 마음으로 내 공간의 주인이 되겠습니다."></p>
+    <div class="workbook-container">
+        <h2 style="display:block; text-align:center; border:none;">📔 [워크북] 정리정돈 실천 안내서</h2>
+        <div style="text-align: center; margin-bottom: 30px;">
+            이름: <input type="text" class="input-line" style="width:150px;"> / 
+            시작 날짜: 20<input type="text" class="input-line" style="width:40px;">년 <input type="text" class="input-line" style="width:30px;">월 <input type="text" class="input-line" style="width:30px;">일
+            <p style="margin-top:20px;">나의 정리 다짐: <input type="text" class="input-line" style="width:70%;"></p>
         </div>
 
         <h3>1부. 나를 돌아보는 정리 성찰</h3>
-        <p>✦ <strong>정리가 어려운 진짜 이유는 무엇인가요?</strong></p>
-        <div style="margin: 20px 0;">
-            <label class="check-item"><input type="checkbox"> 기억이 사라질 것 같아서</label>
-            <label class="check-item"><input type="checkbox"> 죄책감과 낭비했다는 생각</label>
-            <label class="check-item"><input type="checkbox"> 이별이 슬퍼서</label>
-            <label class="check-item"><input type="checkbox"> 체력 부족</label>
+        <p>✦ <strong>정리가 어려운 진짜 이유는 무엇인가요? (가장 큰 이유 하나에 ★)</strong></p>
+        <div style="margin: 15px 0;">
+            <label><input type="checkbox"> 기억이 사라질 것 같아서</label> &nbsp;
+            <label><input type="checkbox"> 죄책감과 낭비했다는 생각</label> &nbsp;
+            <label><input type="checkbox"> 이별이 슬퍼서</label> &nbsp;
+            <label><input type="checkbox"> 체력 부족</label> &nbsp;
+            <label><input type="checkbox"> 기타(<input type="text" class="input-line" style="width:100px;">)</label>
         </div>
+        <p>✦ 나에게 정리란 ( <input type="text" class="input-line" style="width:120px;"> )이다. <br>왜냐하면 ( <input type="text" class="input-line" style="width:80%;"> )이기 때문이다.</p>
 
         <h3>2부. 정리의 3단계 실천표</h3>
+        <p style="font-size:0.9em; color:#666;">- 세부 항목을 좀 더 구체적으로 구분하여 사용하셔도 됩니다.</p>
         <table>
             <thead>
                 <tr>
-                    <th width="20%">단계</th>
-                    <th width="80%">나의 실천 기록</th>
+                    <th width="25%">단계</th>
+                    <th width="35%">핵심 질문 및 활동</th>
+                    <th width="40%">실천 기록</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>1. 정리</strong></td>
-                    <td><textarea rows="2" placeholder="오늘 비운 물건을 기록하세요."></textarea></td>
+                    <td><strong>1. 정리(비움)</strong></td>
+                    <td>"지금 나에게 맞는가?"</td>
+                    <td>오늘 비운 물건: <textarea rows="2"></textarea></td>
                 </tr>
                 <tr>
-                    <td><strong>2. 수납</strong></td>
-                    <td><textarea rows="2" placeholder="물건의 새로운 주소를 적어보세요."></textarea></td>
+                    <td><strong>2. 수납(배치)</strong></td>
+                    <td>"어디에 있어야 살아나는가?"</td>
+                    <td>물건의 주소(위치): <textarea rows="2"></textarea></td>
                 </tr>
                 <tr>
-                    <td><strong>3. 정돈</strong></td>
-                    <td><textarea rows="2" placeholder="유지를 위한 나만의 루틴을 적어보세요."></textarea></td>
+                    <td><strong>3. 정돈(유지)</strong></td>
+                    <td>"제자리로 돌아왔는가?"</td>
+                    <td>나만의 아침/저녁 루틴: <textarea rows="2"></textarea></td>
                 </tr>
             </tbody>
         </table>
 
-        <div class="content-box" style="margin-top: 50px; text-align: center; border: 2px solid var(--accent-color);">
-            <h3 style="margin-top:0; color:var(--accent-color);">나의 정리 선언문</h3>
+        <h3>3부. 물건과의 작별 의례 (Ritual)</h3>
+        <div class="content-box">
+            <p><strong>✦ 기억을 기리는 의례 (추억이 깊은 물건)</strong></p>
+            물건 이름: <input type="text" class="input-line" style="width:60%;"><br>
+            그 시절의 나에게 건네는 한마디: <textarea rows="2"></textarea>
+            <p style="font-size:0.9em; margin-top:10px;">※ 기억 저장: 사진을 찍어 보관하고 물건은 가볍게 놓아줍니다.</p>
+
+            <p style="margin-top:25px;"><strong>✦ 전환과 순환의 의례 (죄책감이 드는 물건: 감사 영수증)</strong></p>
+            구입 이유: <input type="text" class="input-line" style="width:30%;"> / 실제 쓰임: <input type="text" class="input-line" style="width:30%;"><br>
+            배운 점: "이 물건을 통해 나는 ( <input type="text" class="input-line" style="width:150px;"> )하다는 것을 알게 되었다. 수업료는 충분했다."<br>
+            선물화: 이 물건이 가장 잘 쓰일 사람에게 직접 전달하기.
+        </div>
+
+        <h3>4부. 존엄한 마무리: 사랑의 기록</h3>
+        <p><strong>✦ 나의 나눔 목록 (골든타임 잡기)</strong></p>
+        물건 [ <input type="text" class="input-line" style="width:120px;"> ] → 드릴 분 [ <input type="text" class="input-line" style="width:100px;"> ] → 날짜 [ <input type="text" class="input-line" style="width:80px;"> ]
+        
+        <p style="margin-top:25px;"><strong>✦ 비상시를 위한 배려 (관계적 책임)</strong></p>
+        주요 서류 위치: <input type="text" class="input-line" style="width:75%;"><br>
+        비상 연락처: <input type="text" class="input-line" style="width:80%;"><br>
+        
+        <p style="margin-top:25px;"><strong>정리가 완성된 후 내 공간이 어떤 모습이기를 바라는지 자유롭게 써주십시오.</strong></p>
+        <textarea rows="6"></textarea>
+
+        <div class="content-box" style="margin-top: 40px; text-align: center; border: 2px solid var(--accent-color);">
+            <h3 style="margin-top:0;">5부. 나의 정리 선언문</h3>
             <p style="font-size: 1.1em; line-height: 2;">
-                "나, <input type="text" class="input-line" style="width:120px; text-align: center;"> 은/는 오늘부터 내 삶의 주인이<br>
-                물건이 아닌 나 자신임을 선언합니다."
+                "나, <input type="text" class="input-line" style="width:120px; text-align:center;"> 은/는 오늘부터 내 삶의 주인이<br>
+                물건이 아닌 나 자신임을 선언합니다.<br>
+                나는 내 삶의 흔적을 정성껏 정리하여, 남겨진 이들에게<br>
+                부담이 아닌 사랑의 서사를 남길 것을 약속합니다."
             </p>
-            <p style="margin-top:20px;">서명: <input type="text" class="input-line" style="width:120px;"></p>
+            <p style="margin-top:20px;">날짜: 20<input type="text" class="input-line" style="width:30px;">년 <input type="text" class="input-line" style="width:30px;">월 <input type="text" class="input-line" style="width:30px;">일 / 서명: <input type="text" class="input-line" style="width:100px;"></p>
         </div>
     </div>
 
-    <div class="info-box">
-        <p style="font-weight: 800; font-size: 1.3em; color: var(--accent-color); margin-bottom: 10px;">웰다잉통합예술교육협회</p>
-        <div style="font-size: 0.95em; color: #666; border-top: 1px solid var(--secondary-color); padding-top: 20px;">
-            홈페이지: <a href="http://wia-edu.org" target="_blank" style="color:var(--primary-color); text-decoration:none;">wia-edu.org</a><br>
-            <p style="margin-top:10px; font-weight: 700;">교육 프로그램 문의: 010-5635-7989</p>
-        </div>
+    <div style="margin-top: 40px; padding: 20px; background: #f9f9f9; border-radius: 10px;">
+        <p><strong>💡 마무리 팁</strong></p>
+        <ul style="font-size: 0.95em; padding-left: 20px;">
+            <li><strong>자기 통합:</strong> 물건에 이름을 붙이고 인사하는 것은 상실을 수용하는 '작은 애도'입니다.</li>
+            <li><strong>외부 저장소:</strong> 사진이나 단추 하나만 남기는 것은 인지적 상실감을 최소화하는 '대표성'의 원리입니다.</li>
+            <li><strong>사회적 재생산:</strong> 직접 선물하는 행위는 유품의 에너지를 '나눔'으로 승화시키는 존엄한 마침표입니다.</li>
+        </ul>
+    </div>
+
+    <div class="footer-text" style="text-align: center; margin-top: 50px;">
+        <p style="font-size: 1.2em; font-weight: 700;">"비울수록 당신의 내면은 더 밀도 있게 채워질 것입니다.<br>지금, 당신의 여백을 축하하십시오.“</p>
+        <hr style="border: 0.5px solid var(--border-color); margin: 30px 0;">
+        <p>존엄은 우연히 주어지지 않습니다.<br>준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.</p>
+    </div>
+
+    <div class="info-section">
+        <p style="font-weight: 800; font-size: 1.2em; color: var(--accent-color);">웰다잉통합예술교육협회</p>
+        <p>삶을 빚는 예술, 죽음을 품는 인문학.<br>삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
+        <p style="margin-top:15px;">
+            홈페이지: <a href="http://wia-edu.org" target="_blank" style="color:var(--primary-color); text-decoration:none;">wia-edu.org</a> &nbsp;|&nbsp; 
+            블로그: <a href="https://blog.naver.com/say2sky" target="_blank" style="color:var(--primary-color); text-decoration:none;">say2sky</a><br>
+            프로그램문의: 010-5635-7989
+        </p>
     </div>
 </div>
 
@@ -368,16 +313,10 @@
             margin:       [10, 10, 10, 10],
             filename:     '정리정돈_실천_워크북.pdf',
             image:        { type: 'jpeg', quality: 1 },
-            html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+            html2canvas:  { scale: 2, useCORS: true },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
-
-        const btn = document.querySelector('.download-btn');
-        btn.innerText = "PDF 생성 중...";
-        
-        html2pdf().set(opt).from(element).save().then(() => {
-            btn.innerText = "기록 완료 및 PDF 저장하기";
-        });
+        html2pdf().set(opt).from(element).save();
     }
 </script>
 
