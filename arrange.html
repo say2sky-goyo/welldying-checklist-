@@ -4,177 +4,407 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비움의 여백, 삶의 밀도로 채우다</title>
+
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
-        :root {
-            --primary-color: #7A8E9B; 
-            --accent-color: #829460;
-            --text-color: #2D2D2D;
-            --white: #ffffff;
-            --border-color: #DDE6ED;
+        :root{
+            /* User palette (요청값 그대로) */
+            --bg-base: #F8F9F5;        /* 배경 기준색 */
+            --primary: #9DB2BF;        /* 주요색 */
+            --secondary: #DDE6ED;      /* 보조색 */
+            --accent: #829460;         /* 포인트 */
+            --text: #454545;           /* 글자색 */
+
+            /* Background gradient: bg-base 보다 짙게 */
+            --bg-1: #E7EAE0;
+            --bg-2: #EEF1E9;
+            --bg-3: #DDE2D7;
+
+            /* Neutrals */
+            --white: #FFFFFF;
+            --ink: #2B2B2B;            /* “글자색은 진하게”를 위한 더 짙은 본문 잉크 */
+            --muted: #5B5B5B;
+            --line: rgba(69,69,69,0.18);
+
+            /* Effects */
+            --shadow: 0 22px 60px rgba(0,0,0,0.08);
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.06);
+            --radius: 14px;
+            --radius-sm: 10px;
+
+            --focus-ring: 0 0 0 4px rgba(157,178,191,0.22);
+            --transition: 180ms ease;
         }
 
-        body {
-            font-family: 'Pretendard', sans-serif;
-            /* 배경 그라데이션 설정 */
-            background: linear-gradient(135deg, #E9EFEC 0%, #F2F4EF 50%, #E2E8E4 100%);
+        *{ box-sizing: border-box; }
+
+        body{
+            font-family: 'Pretendard', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
             background-attachment: fixed;
-            color: var(--text-color);
-            line-height: 1.8;
+
+            color: var(--ink);
+            line-height: 1.9;
             margin: 0;
             padding: 0;
+
             word-break: keep-all;
+            letter-spacing: -0.2px;
+            text-rendering: optimizeLegibility;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 50px auto;
-            background: var(--white);
-            padding: 60px 80px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-            border-radius: 12px;
+        a{
+            color: var(--primary);
+            text-decoration: none;
+            transition: color var(--transition), opacity var(--transition);
+        }
+        a:hover{
+            color: var(--accent);
+            opacity: 0.95;
+        }
+
+        .container{
+            max-width: 960px;
+            margin: 56px auto;
+            background: rgba(248, 249, 245, 0.96); /* bg-base 느낌 유지 */
+            padding: 64px 84px;
+
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            border: 1px solid rgba(69,69,69,0.08);
+
+            backdrop-filter: blur(6px);
+        }
+
+        /* Print-safe */
+        @page{
+            size: A4;
+            margin: 12mm 12mm 14mm 12mm;
         }
 
         /* 주의 문구 */
-        .warning-box {
-            background-color: #FFF0F0;
-            border-left: 5px solid #FF7675;
-            padding: 15px;
-            margin-bottom: 30px;
-            font-size: 0.95em;
-            color: #D63031;
-            border-radius: 4px;
+        .warning-box{
+            background: linear-gradient(180deg, rgba(221,230,237,0.45) 0%, rgba(221,230,237,0.18) 100%);
+            border: 1px solid rgba(157,178,191,0.35);
+            border-left: 6px solid var(--accent);
+
+            padding: 16px 18px;
+            margin-bottom: 28px;
+
+            font-size: 0.98em;
+            color: var(--ink);
+            border-radius: 12px;
+
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        }
+        .warning-box:hover{
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-soft);
+            border-color: rgba(130,148,96,0.45);
         }
 
-        header {
+        header{
             text-align: center;
-            border-bottom: 1.5px solid var(--border-color);
-            padding-bottom: 30px;
+            border-bottom: 1.5px solid rgba(157,178,191,0.55);
+            padding-bottom: 28px;
             margin-bottom: 40px;
         }
 
-        h1 {
-            color: var(--primary-color);
-            font-size: 2.2em;
-            margin: 10px 0;
-            font-weight: 800;
+        h1{
+            color: var(--primary);
+            font-size: 2.25em;
+            margin: 10px 0 8px 0;
+            font-weight: 900;
+            letter-spacing: -0.6px;
         }
 
-        .subtitle {
-            font-size: 1.2em;
-            color: var(--accent-color);
-            font-weight: 600;
+        .subtitle{
+            font-size: 1.18em;
+            color: var(--accent);
+            font-weight: 750;
+            letter-spacing: -0.2px;
         }
 
-        section { margin-bottom: 40px; }
+        section{ margin-bottom: 40px; }
 
-        h2 {
-            border-bottom: 2px solid var(--primary-color);
+        h2{
+            border-bottom: 2px solid rgba(157,178,191,0.95);
             display: inline-block;
-            font-size: 1.5em;
-            padding-bottom: 5px;
-            margin-bottom: 20px;
+            font-size: 1.55em;
+            padding-bottom: 6px;
+            margin-bottom: 18px;
+            color: var(--ink);
+            font-weight: 850;
+            letter-spacing: -0.3px;
         }
 
-        h3 { color: var(--primary-color); margin-top: 30px; }
+        h3{
+            color: var(--primary);
+            margin-top: 30px;
+            font-weight: 850;
+            letter-spacing: -0.2px;
+        }
 
-        .content-box {
-            background: #FAFBF9;
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid rgba(0,0,0,0.05);
+        p, li{
+            color: var(--ink);
+            font-weight: 520; /* “진하게” */
+        }
+
+        .content-box{
+            background: linear-gradient(180deg, rgba(255,255,255,0.70) 0%, rgba(221,230,237,0.25) 100%);
+            padding: 26px;
+            border-radius: 14px;
+            border: 1px solid rgba(69,69,69,0.08);
             margin-bottom: 20px;
+
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        }
+        .content-box:hover{
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-soft);
+            border-color: rgba(157,178,191,0.55);
         }
 
         /* 워크북 스타일 */
-        .workbook-container {
-            border: 2px solid var(--border-color);
-            padding: 40px;
-            border-radius: 15px;
-            margin-top: 50px;
-            background-color: #fdfdfd;
+        .workbook-container{
+            border: 1px solid rgba(157,178,191,0.55);
+            padding: 42px;
+            border-radius: 18px;
+            margin-top: 52px;
+            background:
+                radial-gradient(1200px 420px at 20% 0%, rgba(221,230,237,0.55) 0%, rgba(255,255,255,0.85) 55%),
+                linear-gradient(180deg, rgba(248,249,245,0.95) 0%, rgba(255,255,255,0.92) 100%);
+
+            box-shadow: 0 14px 45px rgba(0,0,0,0.06);
+            transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+        }
+        .workbook-container:hover{
+            transform: translateY(-1px);
+            border-color: rgba(130,148,96,0.38);
+            box-shadow: 0 18px 55px rgba(0,0,0,0.08);
         }
 
-        .input-line {
-            border: none;
-            border-bottom: 1.5px solid #ccc;
-            background: transparent;
-            padding: 2px 8px;
+        .input-line{
+            border: 1px solid rgba(69,69,69,0.14);
+            border-bottom: 2px solid rgba(157,178,191,0.85);
+
+            background: rgba(221,230,237,0.55);
+            padding: 6px 10px;
+            border-radius: 10px;
+
             font-family: inherit;
             font-size: 1em;
-            font-weight: 600;
+            font-weight: 650;
+            color: var(--ink);
+
+            outline: none;
+            transition: box-shadow var(--transition), border-color var(--transition), background var(--transition), transform var(--transition);
+        }
+        .input-line:hover{
+            background: rgba(221,230,237,0.72);
+            transform: translateY(-0.5px);
+        }
+        .input-line:focus{
+            border-color: rgba(130,148,96,0.65);
+            box-shadow: var(--focus-ring);
+            background: rgba(221,230,237,0.78);
         }
 
-        textarea {
+        textarea{
             width: 100%;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            padding: 12px;
+            border: 1px solid rgba(69,69,69,0.16);
+            border-radius: 12px;
+            padding: 14px 14px;
             margin-top: 10px;
             font-family: inherit;
+            font-size: 1.0em;
+            font-weight: 560;
+            color: var(--ink);
+
             resize: none;
+            background: rgba(221,230,237,0.42);
             box-sizing: border-box;
+
+            outline: none;
+            transition: box-shadow var(--transition), border-color var(--transition), background var(--transition), transform var(--transition);
+        }
+        textarea:hover{
+            background: rgba(221,230,237,0.60);
+            transform: translateY(-0.5px);
+        }
+        textarea:focus{
+            border-color: rgba(130,148,96,0.65);
+            box-shadow: var(--focus-ring);
+            background: rgba(221,230,237,0.68);
         }
 
-        table {
+        table{
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
+            background: rgba(255,255,255,0.75);
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(69,69,69,0.10);
         }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
+        th, td{
+            border: 1px solid rgba(69,69,69,0.12);
+            padding: 14px 14px;
             text-align: left;
+            vertical-align: top;
         }
 
-        th { background-color: #F4F6F2; color: var(--primary-color); }
-
-        .info-section {
-            text-align: center;
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.95em;
+        th{
+            background: rgba(221,230,237,0.75);
+            color: var(--ink);
+            font-weight: 850;
         }
 
-        .btn-container { text-align: center; margin: 40px 0; }
-
-        .download-btn {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1em;
-            border-radius: 50px;
+        /* 체크리스트: 클릭 가능 + 호버 시 색 변경 */
+        label{
             cursor: pointer;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(130, 148, 96, 0.3);
+            user-select: none;
+            transition: color var(--transition), transform var(--transition);
+        }
+        label:hover{
+            color: var(--accent);
         }
 
-        @media print {
-            .no-print { display: none; }
-            body { background: white !important; }
-            .container { box-shadow: none; margin: 0; width: 100%; }
+        input[type="checkbox"]{
+            transform: translateY(1px) scale(1.15);
+            margin-right: 8px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        /* 버튼 */
+        .btn-container{ text-align: center; margin: 42px 0 10px; }
+
+        .download-btn{
+            background: linear-gradient(180deg, rgba(130,148,96,0.98) 0%, rgba(112,129,83,0.98) 100%);
+            color: white;
+            border: 1px solid rgba(0,0,0,0.08);
+
+            padding: 15px 44px;
+            font-size: 1.08em;
+            border-radius: 999px;
+            cursor: pointer;
+
+            font-weight: 850;
+            letter-spacing: -0.2px;
+
+            box-shadow: 0 10px 26px rgba(130,148,96,0.26);
+            transition: transform var(--transition), box-shadow var(--transition), filter var(--transition), background var(--transition);
+        }
+        .download-btn:hover{
+            transform: translateY(-1px);
+            box-shadow: 0 14px 36px rgba(130,148,96,0.34);
+            filter: brightness(1.03);
+        }
+        .download-btn:active{
+            transform: translateY(0px);
+            box-shadow: 0 8px 18px rgba(130,148,96,0.24);
+            filter: brightness(0.99);
+        }
+
+        /* 기관 정보: 박스 세련되게 */
+        .info-section{
+            text-align: center;
+            margin-top: 64px;
+            padding: 28px 26px;
+
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(221,230,237,0.62) 0%, rgba(255,255,255,0.78) 100%);
+            border: 1px solid rgba(157,178,191,0.55);
+
+            box-shadow: 0 14px 42px rgba(0,0,0,0.06);
+            font-size: 0.98em;
+
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        }
+        .info-section:hover{
+            transform: translateY(-1px);
+            border-color: rgba(130,148,96,0.38);
+            box-shadow: 0 18px 56px rgba(0,0,0,0.08);
+        }
+
+        /* 페이지 잘림 방지(가능한 범위에서) */
+        .avoid-break,
+        header,
+        .warning-box,
+        .content-box,
+        .workbook-container,
+        table,
+        tr,
+        .info-section{
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        p, li{
+            orphans: 3;
+            widows: 3;
+        }
+
+        /* Print / PDF */
+        @media print{
+            .no-print{ display: none !important; }
+
+            body{
+                background: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .container{
+                box-shadow: none !important;
+                margin: 0 !important;
+                width: 100% !important;
+                padding: 0 !important;
+                border: none !important;
+                background: white !important;
+            }
+
+            .workbook-container,
+            .content-box,
+            .info-section,
+            .warning-box{
+                box-shadow: none !important;
+            }
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 980px){
+            .container{
+                margin: 18px auto;
+                padding: 26px 18px;
+                border-radius: 14px;
+            }
+            .workbook-container{
+                padding: 22px;
+            }
+            h1{ font-size: 1.85em; }
         }
     </style>
 </head>
+
 <body>
 
 <div class="container" id="printable-area">
-    <div class="warning-box no-print">
+    <div class="warning-box no-print avoid-break">
         ⚠️ <strong>주의:</strong> 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.
     </div>
 
-    <header>
+    <header class="avoid-break">
         <h1>🌿 비움의 여백, 삶의 밀도로 채우다</h1>
         <p class="subtitle">: 노년의 정리는 ‘존재를 재배치하는 인문학적 기술’이다</p>
     </header>
 
-    <section>
+    <section class="avoid-break">
         <p><strong>정리는 단순한 청소나 폐기가 아닙니다.</strong> 그것은 물건에 투사된 과거의 나와 작별하고, 지금 이 순간의 삶을 밀도 있게 재구성하는 실존적 행위입니다.</p>
-        
+
         <div class="content-box">
             <h3>1. 정리의 철학: ‘버림’에서 ‘놓음’으로</h3>
             <p><strong>언어의 전환:</strong> ‘버림’이 상실과 결핍을 뜻한다면, ‘놓음’은 순환과 해방을 뜻합니다. 물건을 놓아주는 것은 외부에 흩어진 자아를 내면으로 회수하는 과정입니다.</p>
@@ -192,28 +422,29 @@
         </div>
     </section>
 
-    <div class="workbook-container">
+    <div class="workbook-container avoid-break">
         <h2 style="display:block; text-align:center; border:none;">📔 [워크북] 정리정돈 실천 안내서</h2>
-        <div style="text-align: center; margin-bottom: 30px;">
-            이름: <input type="text" class="input-line" style="width:150px;"> / 
+        <div style="text-align: center; margin-bottom: 30px;" class="avoid-break">
+            이름: <input type="text" class="input-line" style="width:150px;"> /
             시작 날짜: 20<input type="text" class="input-line" style="width:40px;">년 <input type="text" class="input-line" style="width:30px;">월 <input type="text" class="input-line" style="width:30px;">일
             <p style="margin-top:20px;">나의 정리 다짐: <input type="text" class="input-line" style="width:70%;"></p>
         </div>
 
         <h3>1부. 나를 돌아보는 정리 성찰</h3>
         <p>✦ <strong>정리가 어려운 진짜 이유는 무엇인가요? (가장 큰 이유 하나에 ★)</strong></p>
-        <div style="margin: 15px 0;">
+        <div style="margin: 15px 0;" class="avoid-break">
             <label><input type="checkbox"> 기억이 사라질 것 같아서</label> &nbsp;
             <label><input type="checkbox"> 죄책감과 낭비했다는 생각</label> &nbsp;
             <label><input type="checkbox"> 이별이 슬퍼서</label> &nbsp;
             <label><input type="checkbox"> 체력 부족</label> &nbsp;
             <label><input type="checkbox"> 기타(<input type="text" class="input-line" style="width:100px;">)</label>
         </div>
-        <p>✦ 나에게 정리란 ( <input type="text" class="input-line" style="width:120px;"> )이다. <br>왜냐하면 ( <input type="text" class="input-line" style="width:80%;"> )이기 때문이다.</p>
+        <p>✦ 나에게 정리란 ( <input type="text" class="input-line" style="width:120px;"> )이다. <br>
+        왜냐하면 ( <input type="text" class="input-line" style="width:80%;"> )이기 때문이다.</p>
 
         <h3>2부. 정리의 3단계 실천표</h3>
-        <p style="font-size:0.9em; color:#666;">- 세부 항목을 좀 더 구체적으로 구분하여 사용하셔도 됩니다.</p>
-        <table>
+        <p style="font-size:0.95em; color: var(--muted); font-weight: 560;">- 세부 항목을 좀 더 구체적으로 구분하여 사용하셔도 됩니다.</p>
+        <table class="avoid-break">
             <thead>
                 <tr>
                     <th width="25%">단계</th>
@@ -241,62 +472,93 @@
         </table>
 
         <h3>3부. 물건과의 작별 의례 (Ritual)</h3>
-        <div class="content-box">
+        <div class="content-box avoid-break">
             <p><strong>✦ 기억을 기리는 의례 (추억이 깊은 물건)</strong></p>
-            물건 이름: <input type="text" class="input-line" style="width:60%;"><br>
-            그 시절의 나에게 건네는 한마디: <textarea rows="2"></textarea>
-            <p style="font-size:0.9em; margin-top:10px;">※ 기억 저장: 사진을 찍어 보관하고 물건은 가볍게 놓아줍니다.</p>
+            • 물건 이름: <input type="text" class="input-line" style="width:60%;"><br>
+            • 그 시절의 나에게 건네는 한마디:" <textarea rows="2"></textarea>
+            <p style="font-size:0.95em; margin-top:10px; color: var(--muted); font-weight: 560;">• 기억 저장:사진을 찍어 보관하고 물건은 가볍게 놓아줍니다.</p>
 
             <p style="margin-top:25px;"><strong>✦ 전환과 순환의 의례 (죄책감이 드는 물건: 감사 영수증)</strong></p>
-            구입 이유: <input type="text" class="input-line" style="width:30%;"> / 실제 쓰임: <input type="text" class="input-line" style="width:30%;"><br>
-            배운 점: "이 물건을 통해 나는 ( <input type="text" class="input-line" style="width:150px;"> )하다는 것을 알게 되었다. 수업료는 충분했다."<br>
-            선물화: 이 물건이 가장 잘 쓰일 사람에게 직접 전달하기.
+            • 구입 이유: <input type="text" class="input-line" style="width:30%;"> / 실제 쓰임: <input type="text" class="input-line" style="width:30%;"><br>
+            • 배운 점:"이 물건을 통해 나는 ( <input type="text" class="input-line" style="width:150px;"> )하다는 것을 알게 되었다. 수업료는 충분했다."<br>
+            • 선물화:이 물건이 가장 잘 쓰일 사람에게 직접 전달하기.
         </div>
 
         <h3>4부. 존엄한 마무리: 사랑의 기록</h3>
         <p><strong>✦ 나의 나눔 목록 (골든타임 잡기)</strong></p>
-        물건 [ <input type="text" class="input-line" style="width:120px;"> ] → 드릴 분 [ <input type="text" class="input-line" style="width:100px;"> ] → 날짜 [ <input type="text" class="input-line" style="width:80px;"> ]
-        
+        • 물건 [ <input type="text" class="input-line" style="width:120px;"> ] → 드릴 분 [ <input type="text" class="input-line" style="width:100px;"> ] → 날짜 [ <input type="text" class="input-line" style="width:80px;"> ]
+
         <p style="margin-top:25px;"><strong>✦ 비상시를 위한 배려 (관계적 책임)</strong></p>
-        주요 서류 위치: <input type="text" class="input-line" style="width:75%;"><br>
-        비상 연락처: <input type="text" class="input-line" style="width:80%;"><br>
-        
+        • 주요 서류 위치: <input type="text" class="input-line" style="width:75%;"><br>
+        • 비상 연락처: <input type="text" class="input-line" style="width:80%;"><br>
+
         <p style="margin-top:25px;"><strong>정리가 완성된 후 내 공간이 어떤 모습이기를 바라는지 자유롭게 써주십시오.</strong></p>
         <textarea rows="6"></textarea>
 
-        <div class="content-box" style="margin-top: 40px; text-align: center; border: 2px solid var(--accent-color);">
+        <!-- 요청: “작성예시 밑에 스스로 작성할 수 있는 공간” (원문은 유지하고, 작성 공간만 추가) -->
+        <div class="content-box avoid-break" style="margin-top: 26px; border: 1px solid rgba(130,148,96,0.28);">
+            <h3 style="margin-top:0; color: var(--accent);">작성 공간</h3>
+            <textarea rows="6"></textarea>
+            <div style="height: 10px;"></div>
+            <textarea rows="6"></textarea>
+        </div>
+
+        <div class="content-box avoid-break" style="margin-top: 40px; text-align: center; border: 2px solid rgba(130,148,96,0.62); background: linear-gradient(180deg, rgba(221,230,237,0.55) 0%, rgba(255,255,255,0.84) 100%);">
             <h3 style="margin-top:0;">5부. 나의 정리 선언문</h3>
-            <p style="font-size: 1.1em; line-height: 2;">
-                "나, <input type="text" class="input-line" style="width:120px; text-align:center;"> 은/는 오늘부터 내 삶의 주인이<br>
-                물건이 아닌 나 자신임을 선언합니다.<br>
-                나는 내 삶의 흔적을 정성껏 정리하여, 남겨진 이들에게<br>
-                부담이 아닌 사랑의 서사를 남길 것을 약속합니다."
+            <p style="font-size: 1.1em; line-height: 2; font-weight: 620;">
+                "나, <input type="text" class="input-line" style="width:120px; text-align:center;"> 은/는 오늘부터 내 삶의 주인이 물건이 아닌 나 자신임을 선언합니다. 나는 내 삶의 흔적을 정성껏 정리하여, 남겨진 이들에게 부담이 아닌 사랑의 서사를 남길 것을 약속합니다."
             </p>
-            <p style="margin-top:20px;">날짜: 20<input type="text" class="input-line" style="width:30px;">년 <input type="text" class="input-line" style="width:30px;">월 <input type="text" class="input-line" style="width:30px;">일 / 서명: <input type="text" class="input-line" style="width:100px;"></p>
+            <p style="margin-top:20px;">
+                날짜:20<input type="text" class="input-line" style="width:30px;">년 <input type="text" class="input-line" style="width:30px;">월 <input type="text" class="input-line" style="width:30px;">일 / 서명: <input type="text" class="input-line" style="width:120px;">
+            </p>
         </div>
     </div>
 
-    <div style="margin-top: 40px; padding: 20px; background: #f9f9f9; border-radius: 10px;">
+    <div class="content-box avoid-break" style="margin-top: 40px;">
         <p><strong>💡 마무리 팁</strong></p>
-        <ul style="font-size: 0.95em; padding-left: 20px;">
-            <li><strong>자기 통합:</strong> 물건에 이름을 붙이고 인사하는 것은 상실을 수용하는 '작은 애도'입니다.</li>
-            <li><strong>외부 저장소:</strong> 사진이나 단추 하나만 남기는 것은 인지적 상실감을 최소화하는 '대표성'의 원리입니다.</li>
-            <li><strong>사회적 재생산:</strong> 직접 선물하는 행위는 유품의 에너지를 '나눔'으로 승화시키는 존엄한 마침표입니다.</li>
+        <ul style="font-size: 1.0em; padding-left: 20px; margin: 0;">
+            <li><strong>자기 통합:</strong>물건에 이름을 붙이고 인사하는 것은 상실을 수용하는 '작은 애도'입니다.</li>
+            <li><strong>외부 저장소:</strong>사진이나 단추 하나만 남기는 것은 인지적 상실감을 최소화하는 '대표성'의 원리입니다.</li>
+            <li><strong>사회적 재생산:</strong>직접 선물하는 행위는 유품의 에너지를 '나눔'으로 승화시키는 존엄한 마침표입니다.</li>
         </ul>
     </div>
 
-    <div class="footer-text" style="text-align: center; margin-top: 50px;">
-        <p style="font-size: 1.2em; font-weight: 700;">"비울수록 당신의 내면은 더 밀도 있게 채워질 것입니다.<br>지금, 당신의 여백을 축하하십시오.“</p>
-        <hr style="border: 0.5px solid var(--border-color); margin: 30px 0;">
-        <p>존엄은 우연히 주어지지 않습니다.<br>준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.</p>
+    <div class="footer-text avoid-break" style="text-align: center; margin-top: 50px;">
+        <p style="font-size: 1.2em; font-weight: 850; color: var(--ink);">
+            "비울수록 당신의 내면은 더 밀도 있게 채워질 것입니다. 지금, 당신의 여백을 축하하십시오.“
+        </p>
+        <hr style="border: 0.5px solid rgba(157,178,191,0.55); margin: 30px 0;">
+        <p style="font-weight: 600;">
+            -------------------<br>
+            존엄은 우연히 주어지지 않습니다.<br>
+            준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.<br>
+            -------------------------------
+        </p>
+        <p style="font-weight: 600;">
+            삶을 빚는 예술, 죽음을 품는 인문학.<br>
+            삶과 죽음 사이의 숨결을 함께 빚어가는 곳<br>
+            웰다잉통합예술교육협회.
+        </p>
+        <p style="font-weight: 650;">
+            -------------------------<br><br>
+            홈페이지: <a href="http://wia-edu.org" target="_blank">http://wia-edu.org</a><br>
+            블로그: <a href="https://blog.naver.com/say2sky" target="_blank">https://blog.naver.com/say2sky</a><br>
+            프로그램문의: 010-5635-7989<br>
+            ---------------
+        </p>
     </div>
 
-    <div class="info-section">
-        <p style="font-weight: 800; font-size: 1.2em; color: var(--accent-color);">웰다잉통합예술교육협회</p>
-        <p>삶을 빚는 예술, 죽음을 품는 인문학.<br>삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
-        <p style="margin-top:15px;">
-            홈페이지: <a href="http://wia-edu.org" target="_blank" style="color:var(--primary-color); text-decoration:none;">wia-edu.org</a> &nbsp;|&nbsp; 
-            블로그: <a href="https://blog.naver.com/say2sky" target="_blank" style="color:var(--primary-color); text-decoration:none;">say2sky</a><br>
+    <div class="info-section avoid-break">
+        <p style="font-weight: 900; font-size: 1.22em; color: var(--accent); margin: 0 0 10px 0;">
+            웰다잉통합예술교육협회
+        </p>
+        <p style="margin: 0 0 14px 0; font-weight: 620;">
+            삶을 빚는 예술, 죽음을 품는 인문학.<br>
+            삶과 죽음 사이의 숨결을 함께 빚어가는 곳
+        </p>
+        <p style="margin-top:10px; font-weight: 650;">
+            홈페이지: <a href="http://wia-edu.org" target="_blank">wia-edu.org</a> &nbsp;|&nbsp;
+            블로그: <a href="https://blog.naver.com/say2sky" target="_blank">say2sky</a><br>
             프로그램문의: 010-5635-7989
         </p>
     </div>
@@ -309,13 +571,16 @@
 <script>
     function downloadPDF() {
         const element = document.getElementById('printable-area');
+
         const opt = {
-            margin:       [10, 10, 10, 10],
+            margin:       [10, 10, 12, 10],
             filename:     '정리정돈_실천_워크북.pdf',
             image:        { type: 'jpeg', quality: 1 },
-            html2canvas:  { scale: 2, useCORS: true },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['css', 'legacy'], avoid: '.avoid-break' }
         };
+
         html2pdf().set(opt).from(element).save();
     }
 </script>
