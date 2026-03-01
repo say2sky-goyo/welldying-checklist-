@@ -6,75 +6,99 @@
     <title>비움의 여백, 삶의 밀도로 채우다</title>
 
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         :root{
-            /* User palette (요청값 그대로) */
-            --bg-base: #F8F9F5;        /* 배경 기준색 */
-            --primary: #9DB2BF;        /* 주요색 */
-            --secondary: #DDE6ED;      /* 보조색 */
-            --accent: #829460;         /* 포인트 */
-            --text: #454545;           /* 글자색 */
+            /* Premium palette (저채도 + 깊이) */
+            --bg: #E9ECE6;             /* Muted Sage Linen */
+            --layer: #F7F6F2;          /* Warm Ivory Layer */
+            --paper: #FFFFFF;          /* Soft White with Depth */
+            --gold: #8C7A4F;           /* Antique Gold */
+            --olive: #5F6B5C;          /* Deep Olive Gray */
+            --ink: #1F2A33;            /* Deep Ink Charcoal (진한 글자) */
 
-            /* Background gradient: bg-base 보다 짙게 */
-            --bg-1: #E7EAE0;
-            --bg-2: #EEF1E9;
-            --bg-3: #DDE2D7;
+            --ink-soft: rgba(31,42,51,0.78);
+            --ink-mute: rgba(31,42,51,0.62);
+            --line: rgba(31,42,51,0.12);
+            --line-strong: rgba(31,42,51,0.18);
 
-            /* Neutrals */
-            --white: #FFFFFF;
-            --ink: #2B2B2B;            /* “글자색은 진하게”를 위한 더 짙은 본문 잉크 */
-            --muted: #5B5B5B;
-            --line: rgba(69,69,69,0.18);
+            --shadow: 0 14px 34px rgba(0,0,0,0.06);
+            --shadow-soft: 0 10px 26px rgba(0,0,0,0.05);
 
-            /* Effects */
-            --shadow: 0 22px 60px rgba(0,0,0,0.08);
-            --shadow-soft: 0 10px 30px rgba(0,0,0,0.06);
-            --radius: 14px;
-            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-sm: 12px;
 
-            --focus-ring: 0 0 0 4px rgba(157,178,191,0.22);
-            --transition: 180ms ease;
+            --focus: 0 0 0 4px rgba(140,122,79,0.16);
+            --t: 180ms ease;
+
+            --maxw: 900px;
+
+            /* Parallax vars */
+            --px: 0px;
+            --py: 0px;
         }
 
         *{ box-sizing: border-box; }
 
-        body{
-            font-family: 'Pretendard', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-            background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
-            background-attachment: fixed;
+        html, body { height: 100%; }
 
+        body{
+            font-family: 'Pretendard', 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: var(--bg);
             color: var(--ink);
-            line-height: 1.9;
+            line-height: 1.85;
             margin: 0;
             padding: 0;
-
             word-break: keep-all;
             letter-spacing: -0.2px;
             text-rendering: optimizeLegibility;
+            overflow-x: hidden;
+        }
+
+        /* 아주 미세한 종이결/깊이 + Parallax (배경만) */
+        body::before{
+            content:"";
+            position: fixed;
+            inset: -60px;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(980px 420px at 16% 10%, rgba(140,122,79,0.08), transparent 60%),
+                radial-gradient(780px 420px at 88% 18%, rgba(95,107,92,0.10), transparent 62%),
+                radial-gradient(860px 520px at 28% 92%, rgba(31,42,51,0.06), transparent 60%),
+                linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.00)),
+                repeating-linear-gradient(90deg, rgba(31,42,51,0.012) 0 1px, transparent 1px 7px);
+            transform: translate3d(var(--px), var(--py), 0);
+            transition: transform 120ms linear;
         }
 
         a{
-            color: var(--primary);
+            color: var(--olive);
             text-decoration: none;
-            transition: color var(--transition), opacity var(--transition);
+            border-bottom: 1px solid rgba(140,122,79,0.28);
+            transition: color var(--t), border-color var(--t), opacity var(--t);
         }
         a:hover{
-            color: var(--accent);
-            opacity: 0.95;
+            color: var(--gold);
+            border-bottom-color: rgba(140,122,79,0.55);
+            opacity: 0.96;
         }
 
         .container{
-            max-width: 960px;
-            margin: 56px auto;
-            background: rgba(248, 249, 245, 0.96); /* bg-base 느낌 유지 */
-            padding: 64px 84px;
-
-            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 1;
+            max-width: var(--maxw);
+            margin: 58px auto;
+            padding: 64px 72px;
+            background: rgba(255,255,255,0.72);
             border-radius: var(--radius);
-            border: 1px solid rgba(69,69,69,0.08);
-
+            border: 1px solid rgba(31,42,51,0.10);
+            box-shadow: var(--shadow);
             backdrop-filter: blur(6px);
         }
 
@@ -84,137 +108,155 @@
             margin: 12mm 12mm 14mm 12mm;
         }
 
-        /* 주의 문구 */
+        /* 주의 문구: 튀지 않게 “문서의 각주/공지” 톤 */
         .warning-box{
-            background: linear-gradient(180deg, rgba(221,230,237,0.45) 0%, rgba(221,230,237,0.18) 100%);
-            border: 1px solid rgba(157,178,191,0.35);
-            border-left: 6px solid var(--accent);
-
-            padding: 16px 18px;
-            margin-bottom: 28px;
-
+            background: rgba(247,246,242,0.85);
+            border: 1px solid rgba(31,42,51,0.10);
+            border-left: 4px solid rgba(140,122,79,0.85);
+            padding: 14px 16px;
+            margin-bottom: 30px;
             font-size: 0.98em;
             color: var(--ink);
-            border-radius: 12px;
-
-            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-        }
-        .warning-box:hover{
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-soft);
-            border-color: rgba(130,148,96,0.45);
+            border-radius: var(--radius-sm);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.04);
         }
 
         header{
             text-align: center;
-            border-bottom: 1.5px solid rgba(157,178,191,0.55);
-            padding-bottom: 28px;
-            margin-bottom: 40px;
+            padding-bottom: 26px;
+            margin-bottom: 38px;
+            position: relative;
+        }
+        header::after{
+            content:"";
+            display:block;
+            height: 1px;
+            margin: 26px auto 0;
+            width: min(520px, 92%);
+            background: linear-gradient(90deg, transparent, rgba(31,42,51,0.18), transparent);
         }
 
         h1{
-            color: var(--primary);
-            font-size: 2.25em;
-            margin: 10px 0 8px 0;
-            font-weight: 900;
+            font-family: "Noto Serif KR","Noto Sans KR",serif;
+            color: var(--ink);
+            font-size: 2.05em;
+            margin: 10px 0 10px 0;
+            font-weight: 700;
             letter-spacing: -0.6px;
         }
 
         .subtitle{
-            font-size: 1.18em;
-            color: var(--accent);
-            font-weight: 750;
+            font-family: "Noto Sans KR","Pretendard",sans-serif;
+            font-size: 1.08em;
+            color: var(--ink-soft);
+            font-weight: 650;
             letter-spacing: -0.2px;
         }
 
-        section{ margin-bottom: 40px; }
+        section{ margin-bottom: 38px; }
 
         h2{
-            border-bottom: 2px solid rgba(157,178,191,0.95);
-            display: inline-block;
-            font-size: 1.55em;
-            padding-bottom: 6px;
-            margin-bottom: 18px;
+            font-family: "Noto Serif KR","Noto Sans KR",serif;
+            font-size: 1.38em;
             color: var(--ink);
-            font-weight: 850;
+            font-weight: 700;
             letter-spacing: -0.3px;
+            margin: 0 0 18px 0;
+            padding-bottom: 10px;
+            position: relative;
+            page-break-after: avoid;
+            break-after: avoid-page;
+        }
+        h2::after{
+            content:"";
+            position:absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(31,42,51,0.16), rgba(140,122,79,0.45), rgba(31,42,51,0.12));
+            opacity: 0.9;
         }
 
         h3{
-            color: var(--primary);
-            margin-top: 30px;
-            font-weight: 850;
+            font-family: "Noto Sans KR","Pretendard",sans-serif;
+            color: var(--ink);
+            margin-top: 28px;
+            font-weight: 800;
             letter-spacing: -0.2px;
+            page-break-after: avoid;
+            break-after: avoid-page;
         }
 
         p, li{
             color: var(--ink);
-            font-weight: 520; /* “진하게” */
+            font-weight: 520;
         }
 
+        /* “박스가 너무 튄다” 해결: content-box를 카드가 아니라 문서 블록으로 */
         .content-box{
-            background: linear-gradient(180deg, rgba(255,255,255,0.70) 0%, rgba(221,230,237,0.25) 100%);
-            padding: 26px;
-            border-radius: 14px;
-            border: 1px solid rgba(69,69,69,0.08);
-            margin-bottom: 20px;
-
-            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+            background: rgba(247,246,242,0.70);
+            padding: 22px 22px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(31,42,51,0.10);
+            margin-bottom: 18px;
+            box-shadow: 0 10px 22px rgba(0,0,0,0.04);
+            transition: transform var(--t), box-shadow var(--t), border-color var(--t);
         }
         .content-box:hover{
             transform: translateY(-1px);
             box-shadow: var(--shadow-soft);
-            border-color: rgba(157,178,191,0.55);
+            border-color: rgba(140,122,79,0.22);
         }
 
-        /* 워크북 스타일 */
+        /* 워크북: “격식 있는 기록 문서” 프레임 */
         .workbook-container{
-            border: 1px solid rgba(157,178,191,0.55);
-            padding: 42px;
-            border-radius: 18px;
+            border: 1px solid rgba(31,42,51,0.12);
+            padding: 40px;
+            border-radius: var(--radius);
             margin-top: 52px;
             background:
-                radial-gradient(1200px 420px at 20% 0%, rgba(221,230,237,0.55) 0%, rgba(255,255,255,0.85) 55%),
-                linear-gradient(180deg, rgba(248,249,245,0.95) 0%, rgba(255,255,255,0.92) 100%);
-
-            box-shadow: 0 14px 45px rgba(0,0,0,0.06);
-            transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+                linear-gradient(180deg, rgba(255,255,255,0.82), rgba(247,246,242,0.72));
+            box-shadow: 0 14px 34px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
         }
-        .workbook-container:hover{
-            transform: translateY(-1px);
-            border-color: rgba(130,148,96,0.38);
-            box-shadow: 0 18px 55px rgba(0,0,0,0.08);
+        .workbook-container::before{
+            content:"";
+            position:absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, rgba(140,122,79,0.88), rgba(140,122,79,0.40));
+            opacity: 0.95;
         }
 
+        /* 입력: 과한 컬러 배경 제거 + 종이 위 잉크 느낌 */
         .input-line{
-            border: 1px solid rgba(69,69,69,0.14);
-            border-bottom: 2px solid rgba(157,178,191,0.85);
-
-            background: rgba(221,230,237,0.55);
+            border: 1px solid rgba(31,42,51,0.16);
+            border-bottom: 2px solid rgba(31,42,51,0.22);
+            background: rgba(255,255,255,0.78);
             padding: 6px 10px;
             border-radius: 10px;
-
             font-family: inherit;
             font-size: 1em;
             font-weight: 650;
             color: var(--ink);
-
             outline: none;
-            transition: box-shadow var(--transition), border-color var(--transition), background var(--transition), transform var(--transition);
+            transition: box-shadow var(--t), border-color var(--t), background var(--t), transform var(--t);
         }
         .input-line:hover{
-            background: rgba(221,230,237,0.72);
+            background: rgba(255,255,255,0.92);
             transform: translateY(-0.5px);
         }
         .input-line:focus{
-            border-color: rgba(130,148,96,0.65);
-            box-shadow: var(--focus-ring);
-            background: rgba(221,230,237,0.78);
+            border-color: rgba(140,122,79,0.68);
+            box-shadow: var(--focus);
+            background: rgba(255,255,255,0.96);
         }
 
         textarea{
             width: 100%;
-            border: 1px solid rgba(69,69,69,0.16);
+            border: 1px solid rgba(31,42,51,0.16);
             border-radius: 12px;
             padding: 14px 14px;
             margin-top: 10px;
@@ -222,116 +264,114 @@
             font-size: 1.0em;
             font-weight: 560;
             color: var(--ink);
-
             resize: none;
-            background: rgba(221,230,237,0.42);
-            box-sizing: border-box;
-
+            background: rgba(255,255,255,0.76);
             outline: none;
-            transition: box-shadow var(--transition), border-color var(--transition), background var(--transition), transform var(--transition);
+            transition: box-shadow var(--t), border-color var(--t), background var(--t), transform var(--t);
         }
         textarea:hover{
-            background: rgba(221,230,237,0.60);
+            background: rgba(255,255,255,0.92);
             transform: translateY(-0.5px);
         }
         textarea:focus{
-            border-color: rgba(130,148,96,0.65);
-            box-shadow: var(--focus-ring);
-            background: rgba(221,230,237,0.68);
+            border-color: rgba(140,122,79,0.68);
+            box-shadow: var(--focus);
+            background: rgba(255,255,255,0.96);
         }
 
         table{
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            background: rgba(255,255,255,0.75);
+            background: rgba(255,255,255,0.86);
             border-radius: 14px;
             overflow: hidden;
-            border: 1px solid rgba(69,69,69,0.10);
+            border: 1px solid rgba(31,42,51,0.12);
         }
 
         th, td{
-            border: 1px solid rgba(69,69,69,0.12);
+            border-top: 1px solid rgba(31,42,51,0.10);
+            border-right: 1px solid rgba(31,42,51,0.08);
             padding: 14px 14px;
             text-align: left;
             vertical-align: top;
         }
+        tr td:last-child, tr th:last-child{ border-right: none; }
 
         th{
-            background: rgba(221,230,237,0.75);
+            background: rgba(247,246,242,0.92);
             color: var(--ink);
             font-weight: 850;
         }
 
-        /* 체크리스트: 클릭 가능 + 호버 시 색 변경 */
+        /* 체크리스트: 더 “문서적”이고 덜 장난감 같게 */
         label{
             cursor: pointer;
             user-select: none;
-            transition: color var(--transition), transform var(--transition);
+            transition: color var(--t);
+            color: var(--ink);
+            font-weight: 620;
         }
         label:hover{
-            color: var(--accent);
+            color: rgba(95,107,92,0.92);
         }
 
         input[type="checkbox"]{
-            transform: translateY(1px) scale(1.15);
+            transform: translateY(1px) scale(1.08);
             margin-right: 8px;
-            accent-color: var(--accent);
+            accent-color: var(--olive);
             cursor: pointer;
         }
 
-        /* 버튼 */
-        .btn-container{ text-align: center; margin: 42px 0 10px; }
+        /* 버튼: 고급스럽게(과한 그라데이션 제거) */
+        .btn-container{ text-align: center; margin: 44px 0 10px; }
 
         .download-btn{
-            background: linear-gradient(180deg, rgba(130,148,96,0.98) 0%, rgba(112,129,83,0.98) 100%);
-            color: white;
-            border: 1px solid rgba(0,0,0,0.08);
-
-            padding: 15px 44px;
-            font-size: 1.08em;
+            background: rgba(95,107,92,0.96);
+            color: rgba(255,255,255,0.96);
+            border: 1px solid rgba(140,122,79,0.38);
+            padding: 14px 40px;
+            font-size: 1.05em;
             border-radius: 999px;
             cursor: pointer;
-
             font-weight: 850;
             letter-spacing: -0.2px;
-
-            box-shadow: 0 10px 26px rgba(130,148,96,0.26);
-            transition: transform var(--transition), box-shadow var(--transition), filter var(--transition), background var(--transition);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.10);
+            transition: transform var(--t), box-shadow var(--t), background var(--t), filter var(--t);
         }
         .download-btn:hover{
             transform: translateY(-1px);
-            box-shadow: 0 14px 36px rgba(130,148,96,0.34);
-            filter: brightness(1.03);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.14);
+            background: rgba(95,107,92,1);
+            filter: saturate(0.98);
         }
         .download-btn:active{
             transform: translateY(0px);
-            box-shadow: 0 8px 18px rgba(130,148,96,0.24);
-            filter: brightness(0.99);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.12);
         }
 
-        /* 기관 정보: 박스 세련되게 */
+        /* 기관 정보: ‘명함형 카드’(튀지 않게, 선과 여백으로) */
         .info-section{
-            text-align: center;
+            text-align: left;
             margin-top: 64px;
-            padding: 28px 26px;
-
-            border-radius: 16px;
-            background: linear-gradient(180deg, rgba(221,230,237,0.62) 0%, rgba(255,255,255,0.78) 100%);
-            border: 1px solid rgba(157,178,191,0.55);
-
-            box-shadow: 0 14px 42px rgba(0,0,0,0.06);
+            padding: 24px 22px;
+            border-radius: var(--radius);
+            background: rgba(247,246,242,0.88);
+            border: 1px solid rgba(31,42,51,0.10);
+            box-shadow: 0 12px 26px rgba(0,0,0,0.05);
             font-size: 0.98em;
-
-            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+            position: relative;
+            overflow: hidden;
         }
-        .info-section:hover{
-            transform: translateY(-1px);
-            border-color: rgba(130,148,96,0.38);
-            box-shadow: 0 18px 56px rgba(0,0,0,0.08);
+        .info-section::before{
+            content:"";
+            position:absolute;
+            left:0; top:0; bottom:0;
+            width: 4px;
+            background: linear-gradient(180deg, rgba(140,122,79,0.90), rgba(140,122,79,0.42));
         }
 
-        /* 페이지 잘림 방지(가능한 범위에서) */
+        /* 페이지 잘림 방지: 더 강하게 */
         .avoid-break,
         header,
         .warning-box,
@@ -343,6 +383,13 @@
             break-inside: avoid;
             page-break-inside: avoid;
         }
+
+        /* 제목이 페이지 하단에 걸리지 않게 */
+        h1, h2, h3{
+            page-break-after: avoid;
+            break-after: avoid-page;
+        }
+
         p, li{
             orphans: 3;
             widows: 3;
@@ -357,6 +404,8 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+
+            body::before{ display: none !important; }
 
             .container{
                 box-shadow: none !important;
@@ -385,7 +434,7 @@
             .workbook-container{
                 padding: 22px;
             }
-            h1{ font-size: 1.85em; }
+            h1{ font-size: 1.75em; }
         }
     </style>
 </head>
@@ -443,7 +492,7 @@
         왜냐하면 ( <input type="text" class="input-line" style="width:80%;"> )이기 때문이다.</p>
 
         <h3>2부. 정리의 3단계 실천표</h3>
-        <p style="font-size:0.95em; color: var(--muted); font-weight: 560;">- 세부 항목을 좀 더 구체적으로 구분하여 사용하셔도 됩니다.</p>
+        <p style="font-size:0.95em; color: var(--ink-mute); font-weight: 560;">- 세부 항목을 좀 더 구체적으로 구분하여 사용하셔도 됩니다.</p>
         <table class="avoid-break">
             <thead>
                 <tr>
@@ -476,7 +525,7 @@
             <p><strong>✦ 기억을 기리는 의례 (추억이 깊은 물건)</strong></p>
             • 물건 이름: <input type="text" class="input-line" style="width:60%;"><br>
             • 그 시절의 나에게 건네는 한마디:" <textarea rows="2"></textarea>
-            <p style="font-size:0.95em; margin-top:10px; color: var(--muted); font-weight: 560;">• 기억 저장:사진을 찍어 보관하고 물건은 가볍게 놓아줍니다.</p>
+            <p style="font-size:0.95em; margin-top:10px; color: var(--ink-mute); font-weight: 560;">• 기억 저장:사진을 찍어 보관하고 물건은 가볍게 놓아줍니다.</p>
 
             <p style="margin-top:25px;"><strong>✦ 전환과 순환의 의례 (죄책감이 드는 물건: 감사 영수증)</strong></p>
             • 구입 이유: <input type="text" class="input-line" style="width:30%;"> / 실제 쓰임: <input type="text" class="input-line" style="width:30%;"><br>
@@ -496,14 +545,14 @@
         <textarea rows="6"></textarea>
 
         <!-- 요청: “작성예시 밑에 스스로 작성할 수 있는 공간” (원문은 유지하고, 작성 공간만 추가) -->
-        <div class="content-box avoid-break" style="margin-top: 26px; border: 1px solid rgba(130,148,96,0.28);">
-            <h3 style="margin-top:0; color: var(--accent);">작성 공간</h3>
+        <div class="content-box avoid-break" style="margin-top: 26px; border: 1px solid rgba(140,122,79,0.22);">
+            <h3 style="margin-top:0; color: var(--olive);">작성 공간</h3>
             <textarea rows="6"></textarea>
             <div style="height: 10px;"></div>
             <textarea rows="6"></textarea>
         </div>
 
-        <div class="content-box avoid-break" style="margin-top: 40px; text-align: center; border: 2px solid rgba(130,148,96,0.62); background: linear-gradient(180deg, rgba(221,230,237,0.55) 0%, rgba(255,255,255,0.84) 100%);">
+        <div class="content-box avoid-break" style="margin-top: 40px; text-align: center; border: 1px solid rgba(140,122,79,0.34); background: rgba(247,246,242,0.78);">
             <h3 style="margin-top:0;">5부. 나의 정리 선언문</h3>
             <p style="font-size: 1.1em; line-height: 2; font-weight: 620;">
                 "나, <input type="text" class="input-line" style="width:120px; text-align:center;"> 은/는 오늘부터 내 삶의 주인이 물건이 아닌 나 자신임을 선언합니다. 나는 내 삶의 흔적을 정성껏 정리하여, 남겨진 이들에게 부담이 아닌 사랑의 서사를 남길 것을 약속합니다."
@@ -527,8 +576,8 @@
         <p style="font-size: 1.2em; font-weight: 850; color: var(--ink);">
             "비울수록 당신의 내면은 더 밀도 있게 채워질 것입니다. 지금, 당신의 여백을 축하하십시오.“
         </p>
-        <hr style="border: 0.5px solid rgba(157,178,191,0.55); margin: 30px 0;">
-        <p style="font-weight: 600;">
+        <hr style="border: 0.5px solid rgba(31,42,51,0.18); margin: 30px 0;">
+        <p style="font-weight: 600; color: var(--ink);">
             -------------------<br>
             존엄은 우연히 주어지지 않습니다.<br>
             준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.<br>
@@ -537,14 +586,14 @@
     </div>
 
     <div class="info-section avoid-break">
-        <p style="font-weight: 900; font-size: 1.22em; color: var(--accent); margin: 0 0 10px 0;">
+        <p style="font-weight: 900; font-size: 1.18em; color: var(--ink); margin: 0 0 10px 0;">
             웰다잉통합예술교육협회
         </p>
-        <p style="margin: 0 0 14px 0; font-weight: 620;">
+        <p style="margin: 0 0 14px 0; font-weight: 620; color: var(--ink-soft);">
             삶을 빚는 예술, 죽음을 품는 인문학.<br>
             삶과 죽음 사이의 숨결을 함께 빚어가는 곳
         </p>
-        <p style="margin-top:10px; font-weight: 650;">
+        <p style="margin-top:10px; font-weight: 650; color: var(--ink);">
             홈페이지: <a href="http://wia-edu.org" target="_blank">wia-edu.org</a> &nbsp;|&nbsp;
             블로그: <a href="https://blog.naver.com/say2sky" target="_blank">say2sky</a><br>
             프로그램문의: 010-5635-7989
@@ -557,6 +606,24 @@
 </div>
 
 <script>
+    // Mouse Parallax (배경만 3~5% 수준으로 아주 미세하게)
+    (function(){
+        const root = document.documentElement;
+        let raf = null;
+
+        window.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) - 0.5;
+            const y = (e.clientY / window.innerHeight) - 0.5;
+
+            if (raf) cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+                // subtle: px 14px, py 10px 정도
+                root.style.setProperty('--px', (-x * 14).toFixed(2) + 'px');
+                root.style.setProperty('--py', (-y * 10).toFixed(2) + 'px');
+            });
+        }, { passive: true });
+    })();
+
     function downloadPDF() {
         const element = document.getElementById('printable-area');
 
