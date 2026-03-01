@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="ko-KR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>유산 정리 및 디지털 자산 가이드 | 웰다잉통합예술교육협회</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css"/>
+
+  <style>
+    :root{
+      /* Premium palette */
+      --bg: #E9ECE6;          /* Muted Sage Linen */
+      --panel: #F7F6F2;       /* Warm Ivory Layer */
+      --ink: #1F2A33;         /* Deep Ink Charcoal */
+      --muted-ink: #5F6B5C;   /* Deep Olive Gray */
+      --gold: #8C7A4F;        /* Antique Gold */
+      --line: #D8DCD6;
+
+      --white: #FFFFFF;
+      --shadow: 0 10px 28px rgba(0,0,0,0.06);
+      --shadow-hover: 0 16px 40px rgba(0,0,0,0.10);
+
+      --radius: 16px;
+      --radius-sm: 12px;
+
+      --maxw: 900px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Pretendard Variable","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+      font-size: 15.5px;
+      line-height: 1.75;
+      letter-spacing: -0.2px;
+      overflow-x:hidden;
+    }
+
+    /* Subtle paper-like depth */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: -40px;
+      background:
+        radial-gradient(900px 360px at 18% 8%, rgba(140,122,79,0.08), transparent 55%),
+        radial-gradient(700px 320px at 90% 20%, rgba(95,107,92,0.10), transparent 55%),
+        radial-gradient(760px 360px at 25% 90%, rgba(31,42,51,0.06), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.00));
+      transform: translate3d(var(--px,0px), var(--py,0px), 0);
+      transition: transform 120ms linear;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .wrap{
+      position: relative;
+      z-index:1;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 64px 18px 88px;
+    }
+
+    header{
+      margin-bottom: 22px;
+    }
+
+    .doc-title{
+      font-family: "Noto Serif KR","Noto Sans KR",serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 0 0 10px 0;
+    }
+
+    .doc-subtitle{
+      margin: 0;
+      color: rgba(31,42,51,0.86);
+      font-weight: 600;
+    }
+
+    .notice{
+      margin-top: 18px;
+      background: var(--panel);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.05);
+      position: relative;
+      overflow:hidden;
+    }
+    .notice::before{
+      content:"";
+      position:absolute;
+      left:0; top:0; bottom:0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--gold), rgba(140,122,79,0.55));
+    }
+    .notice p{
+      margin: 0;
+      color: rgba(31,42,51,0.92);
+      font-weight: 600;
+    }
+
+    .toolbar{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 18px 0 22px;
+      align-items:center;
+    }
+
+    .btn{
+      appearance:none;
+      border: 1px solid rgba(95,107,92,0.25);
+      background: rgba(255,255,255,0.70);
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor:pointer;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.06);
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.10);
+      border-color: rgba(140,122,79,0.45);
+    }
+    .btn:active{ transform: translateY(0px); }
+
+    .btn.primary{
+      border-color: rgba(140,122,79,0.45);
+      background: linear-gradient(180deg, rgba(140,122,79,0.16), rgba(140,122,79,0.08));
+    }
+
+    .card{
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px 26px;
+      transition: transform .2s ease, box-shadow .2s ease;
+      position: relative;
+      overflow:hidden;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .divider{
+      margin: 22px 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      position: relative;
+    }
+    .divider::after{
+      content:"";
+      position:absolute;
+      top:-1px;
+      left:50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.75;
+    }
+
+    h2{
+      font-family: "Noto Serif KR","Noto Sans KR",serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin: 0 0 10px 0;
+      page-break-after: avoid;
+      break-after: avoid-page;
+    }
+
+    h3{
+      font-size: 16px;
+      font-weight: 700;
+      margin: 16px 0 8px;
+      page-break-after: avoid;
+      break-after: avoid-page;
+    }
+
+    p{ margin: 10px 0; }
+
+    .lead{
+      font-weight: 600;
+      color: rgba(31,42,51,0.92);
+    }
+
+    /* Checklist (clickable) */
+    .checklist{
+      margin: 10px 0 0;
+      padding: 0;
+      list-style:none;
+      display:grid;
+      gap: 10px;
+    }
+    .check-item{
+      display:flex;
+      align-items:flex-start;
+      gap: 12px;
+      padding: 14px 14px;
+      border-radius: 14px;
+      background: rgba(247,246,242,0.70);
+      border: 1px solid rgba(216,220,214,0.9);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .check-item:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.08);
+      border-color: rgba(140,122,79,0.35);
+    }
+    .check-icon{
+      width: 22px; height: 22px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(95,107,92,0.55);
+      background: rgba(255,255,255,0.65);
+      display:grid;
+      place-items:center;
+      flex: 0 0 auto;
+      margin-top: 2px;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .check-icon svg{
+      width: 16px; height: 16px;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity .2s ease, transform .2s ease;
+      fill: none;
+      stroke: var(--muted-ink);
+      stroke-width: 2.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .check-text{
+      flex: 1 1 auto;
+      transition: color .2s ease;
+      color: rgba(31,42,51,0.96);
+      font-weight: 600;
+    }
+    .check-item.done .check-text{
+      color: var(--muted-ink);
+      font-weight: 700;
+    }
+    .check-item.done .check-icon{
+      border-color: rgba(95,107,92,0.70);
+      background: rgba(255,255,255,0.92);
+      transform: translateY(-1px);
+    }
+    .check-item.done .check-icon svg{
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Writing area */
+    .write-box{
+      margin-top: 14px;
+      background: var(--panel);
+      border-radius: var(--radius-sm);
+      padding: 14px 14px;
+      border: 1px solid rgba(216,220,214,0.9);
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .write-box label{
+      display:block;
+      font-weight: 800;
+      color: rgba(31,42,51,0.90);
+      margin-bottom: 8px;
+    }
+    textarea{
+      width:100%;
+      min-height: 140px;
+      resize: vertical;
+      border-radius: 12px;
+      border: 1px solid rgba(95,107,92,0.35);
+      background: rgba(255,255,255,0.75);
+      padding: 12px 12px;
+      font: inherit;
+      color: var(--ink);
+      line-height: 1.75;
+      outline: none;
+      transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+    textarea:focus{
+      border-color: rgba(140,122,79,0.70);
+      box-shadow: 0 0 0 4px rgba(140,122,79,0.16);
+      background: rgba(255,255,255,0.92);
+    }
+    textarea::placeholder{
+      color: rgba(31,42,51,0.45);
+      font-weight: 600;
+    }
+
+    /* Institution card */
+    .org-card{
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 18px 18px;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.06);
+      position: relative;
+      overflow:hidden;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .org-card::before{
+      content:"";
+      position:absolute;
+      left:0; top:0; bottom:0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--gold), rgba(140,122,79,0.45));
+    }
+    .org-quote{
+      margin: 0 0 10px 0;
+      font-family: "Noto Serif KR","Noto Sans KR",serif;
+      font-weight: 700;
+      color: rgba(31,42,51,0.92);
+    }
+    .org-name{
+      font-weight: 900;
+      font-size: 16.5px;
+      color: var(--ink);
+      margin: 6px 0 12px;
+      letter-spacing: -0.2px;
+    }
+    .org-meta{
+      margin: 0;
+      padding: 0;
+      list-style:none;
+      display:grid;
+      gap: 6px;
+      color: rgba(31,42,51,0.92);
+      font-weight: 650;
+    }
+    .org-meta a{
+      color: rgba(31,42,51,0.92);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(140,122,79,0.35);
+    }
+    .org-meta a:hover{
+      border-bottom-color: rgba(140,122,79,0.70);
+    }
+
+    /* Print / PDF */
+    @media print{
+      body{ background: #ffffff !important; }
+      body::before{ display:none !important; }
+      .wrap{ max-width: none; padding: 40px 30px; }
+      .toolbar{ display:none !important; }
+      .card{ box-shadow:none; border: 1px solid #E6E8E2; }
+      .check-item:hover, .card:hover, .btn:hover { transform:none !important; box-shadow:none !important; }
+      a{ color: var(--ink) !important; text-decoration: none !important; border-bottom: 0 !important; }
+
+      /* Page break optimization */
+      .card, .check-item, .write-box, .org-card { page-break-inside: avoid; break-inside: avoid; }
+      h2, h3 { page-break-after: avoid; break-after: avoid-page; }
+      .divider{ border-top-color: #D8DCD6; }
+
+      textarea{
+        background: #ffffff !important;
+        border-color: #D8DCD6 !important;
+        box-shadow:none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap" id="top">
+    <header>
+      <h1 class="doc-title">「유산 정리 및 디지털 자산 가이드」</h1>
+      <p class="doc-subtitle">재산·권리·기억의 귀속에 대한 주체적 결정</p>
+
+      <div class="notice">
+        <p>⚠️ 주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.</p>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn primary" type="button" id="btnPdf">PDF로 저장</button>
+        <button class="btn" type="button" id="btnTop">맨 위로</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <p class="lead">
+          유산 정리는 단순한 재산 분배를 넘어, 한 사람의 삶에 대한 최종적 해석을 남기는 작업입니다.
+          법적 골격 위에 정서적 설명을 더할 때, 이 기록은 가족 간 갈등을 방지하는 강력한 완충 장치가 됩니다.
+        </p>
+
+        <div class="divider"></div>
+
+        <h2>1. 유산 정리의 4단계 프로세스</h2>
+
+        <h3>① 성찰과 가치 설정 (Philosophical Foundation)</h3>
+        <ul class="checklist" aria-label="성찰과 가치 설정 체크리스트">
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 분배 기준 수립:평등 배분 혹은 기여도·필요에 따른 차등 배분 결정.</span>
+          </li>
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 상징적 유품 선별:삶의 철학이 담긴 물건(책, 일기, 취미용품 등)에 의미 부여.</span>
+          </li>
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 갈등 예방:오해의 소지가 있는 결정은 미리 이유를 설명하여 심리적 저항 감소.</span>
+          </li>
+        </ul>
+
+        <div class="write-box">
+          <label for="w1">기록 공간 (성찰과 가치 설정)</label>
+          <textarea id="w1" placeholder="여기에 나의 기준(왜 그렇게 결정하는지), 상징적 유품 후보, 갈등을 줄이기 위한 설명 문장을 조용히 적어보세요."></textarea>
+        </div>
+
+        <h3>② 법적 유산의 실무적 정리 (Legal Assets)</h3>
+        <ul class="checklist" aria-label="법적 유산 체크리스트">
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 유언 형식 선택:자필증서(직접 작성) 또는 공정증서(공증인 대동) 중 선택.</span>
+          </li>
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 상속 재산 목록화:부동산, 금융자산뿐 아니라 채무(빚)와 보증 내역을 반드시 포함.</span>
+          </li>
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 유언 집행자 지정:실무 능력이 있는 신뢰 인물 및 예비 집행자 선정.</span>
+          </li>
+        </ul>
+
+        <div class="write-box">
+          <label for="w2">기록 공간 (법적 유산)</label>
+          <textarea id="w2" placeholder="유언 형식 선택 이유, 재산·채무 목록 초안, 유언 집행자 후보와 선택 근거를 적어보세요."></textarea>
+        </div>
+
+        <h3>③ 디지털 유산 관리 (Digital Legacy)</h3>
+        <ul class="checklist" aria-label="디지털 유산 체크리스트">
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 접근 정보:기기 잠금 해제 방법 및 마스터 비밀번호를 봉인 문서로 보관.</span>
+          </li>
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 계정별 방침:SNS·이메일 등에 대한 [삭제 / 보존 / 추모 전환] 선택.</span>
+          </li>
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 경제적 가치 보호:암호화폐, 온라인 포인트, 구독 서비스 목록 작성으로 손실 방지.</span>
+          </li>
+        </ul>
+
+        <div class="write-box">
+          <label for="w3">기록 공간 (디지털 유산)</label>
+          <textarea id="w3" placeholder="계정별 방침(삭제/보존/추모), 접근 정보 보관 방식, 구독·포인트·암호화폐 목록 초안을 적어보세요."></textarea>
+        </div>
+
+        <h3>④ 정서적 귀속과 관계 매듭 (Emotional Legacy)</h3>
+        <ul class="checklist" aria-label="정서적 유산 체크리스트">
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 유품의 스토리:특정 물건을 주는 이유를 덧붙여 '선물'로서의 가치 부여.</span>
+          </li>
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 민감 정보 처리:타인에게 공개를 원치 않는 기록의 폐기 시점과 방법 명시.</span>
+          </li>
+          <li class="check-item" data-check>
+            <span class="check-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span class="check-text">• 반려동물 계획:사후 보호자 지정 및 양육비·건강 정보 기록.</span>
+          </li>
+        </ul>
+
+        <div class="write-box">
+          <label for="w4">기록 공간 (정서적 귀속과 관계 매듭)</label>
+          <textarea id="w4" placeholder="유품의 스토리(왜 그 사람에게), 민감 정보 처리 방식, 반려동물 계획을 적어보세요."></textarea>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top:18px;">
+        <h2>2.유언장 유형</h2>
+
+        <h3>1. 자필증서에 의한 유언</h3>
+        <p>유언자가 전문, 연월일, 주소, 성명을 직접 손글씨로 쓰고 날인해야 합니다.</p>
+        <p>작성 시 증인은 필요 없지만, 사후에 집행하려면 가정법원 검인 절차가 필요합니다.</p>
+        <p>​기재사항 누락·오기 등 형식 하자가 많아 분쟁이 잦으므로 문구를 정확히 쓰는 것이 중요합니다.</p>
+
+        <h3>2. 녹음에 의한 유언</h3>
+        <p>유언자가 유언의 취지, 성명, 연월일을 말로 하고, 그 내용이 녹음에 남아야 합니다.</p>
+        <p>2인 이상의 증인이 참여하여 유언의 정확한 내용과 본인 성명을 녹음에서 말해 주어야 합니다.</p>
+        <p>거동이 불편해 글쓰기가 어려운 경우 활용할 수 있으나, 파일 훼손·분실 위험을 고려해 안전하게 보관해야 합니다.</p>
+
+        <h3>3. 공정증서에 의한 유언</h3>
+        <p>유언자가 공증인 앞에서 유언 내용을 말하면, 공증인이 문서로 작성하고, 증인 2인 이상이 참여하는 방식입니다.</p>
+        <p>문서가 공적 장부에 보관되므로 가장 안전하고 확실한 방식으로 평가되며, 별도의 유언검인이 필요 없습니다.</p>
+        <p>공증 비용이 들지만, 형식 하자로 인한 무효 위험이 적어 재산 규모가 크거나 분쟁 우려 시 많이 선택됩니다.</p>
+
+        <h3>4. 비밀증서에 의한 유언</h3>
+        <p>유언 내용을 적은 문서를 작성해 서명·날인한 뒤 봉함(엄봉) 하고, 이를 공증인과 증인 2인 이상 앞에 제출하여 자신의 유언서임을 밝힙니다.</p>
+        <p>봉투 겉면에 제출 연월일을 적고 유언자와 증인이 서명 또는 기명날인한 후, 5일 이내에 공증인 또는 법원서기에게 제출하여 봉인 위에 확정일자를 받아야 합니다.</p>
+        <p>​유언 내용은 생전에 타인에게 공개되지 않으나, 절차가 복잡하고 형식 흠결 시 무효가 될 위험이 큽니다.</p>
+
+        <h3>5. 구수증서에 의한 유언</h3>
+        <p>질병 기타 급박한 사유로 다른 방식의 유언을 할 수 없을 때만 예외적으로 허용되는 방식입니다.</p>
+        <p>유언자가 2인 이상의 증인이 보는 앞에서 그 중 1인에게 유언 취지를 말하면, 그 사람이 이를 필기·낭독하고, 유언자와 다른 증인이 내용의 정확함을 승인하여 각자 서명 또는 기명날인해야 합니다.</p>
+        <p>​급박한 사유가 끝난 날부터 7일 이내에 가정법원에 검인을 신청해야 하며, “다른 방식이 가능한데도 편의상 구수증서를 이용한 경우”에는 무효가 될 수 있습니다.</p>
+
+        <div class="divider"></div>
+
+        <h3>공증인</h3>
+        <p>지금 문장도 의미는 맞지만, 이렇게만 고쳐 쓰면 좋습니다.</p>
+
+        <p><strong>공증인:</strong></p>
+        <p>“변호사 = 공증인”이 아니라, 판사·검사·변호사 등으로 일정 기간(통산 10년 이상 등) 경력을 쌓고, 법무부장관의 임명이나 인가를 받아 공적으로 지정된 사람</p>
+        <p>유언 공정증서를 하려면 반드시 공증사무소(공증인가 법무법인)에 있는 공증인을 찾아가야 합니다.</p>
+
+        <p><strong>증인:</strong></p>
+        <p>기본적으로는 주변의 믿을 만한 성인이면 가능하지만,</p>
+        <p>유언으로 직접 재산을 받는 사람이나 그 가족처럼 이해관계가 너무 직접적인 사람, 미성년자, 의사결정 능력이 부족한 사람은 피하는 것이 좋습니다.</p>
+
+        <div class="write-box">
+          <label for="w5">기록 공간 (유언장 유형 선택 메모)</label>
+          <textarea id="w5" placeholder="내 상황에서 적합한 유언장 유형, 필요한 준비물, 증인/공증 관련 메모를 적어보세요."></textarea>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top:18px;">
+        <h2>3. 자필 유언 예시</h2>
+
+        <p style="white-space:pre-wrap; font-weight:650; color: rgba(31,42,51,0.92);">
+유 언 장
+나 김OO은 다음과 같이 유언한다.
+1. 서울시 OO구 OO동 123 아파트는 배우자 이OO에게 상속한다.
+2. OO은행 예금(계좌번호: 123-456) 전액은 장남 김△△에게 상속한다.
+3. 나의 장례는 화장 후 수목장으로 진행하길 희망한다.
+4. 유언 집행자로 동생 김□□를 지정한다.
+작성일:2026년 2월 26일
+주소:서울시 OO구 OO로 12, 101동 102호
+유언자:김 O O (인) ◀ 도장 날인
+        </p>
+
+        <div class="write-box">
+          <label for="w6">기록 공간 (나의 자필 유언 초안)</label>
+          <textarea id="w6" placeholder="위 예시 형식을 참고해, 나의 문장을 ‘정확하게’ 적어보세요. (작성 후 PDF로 보관)"></textarea>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>🌟 핵심 원칙 요약 (Core Principles)</h3>
+        <p>• 명확성:재산과 권리를 구체적인 수치와 명칭으로 기록하십시오.</p>
+        <p>• 투명성:결정의 이유를 밝혀 남겨진 이들의 심리적 저항을 줄이십시오.</p>
+        <p>• 보안성:디지털 접근 정보를 철저히 격리하여 안전하게 관리하십시오.</p>
+        <p>• 정기적 갱신:삶의 상황은 변하므로 1~3년 주기로 내용을 업데이트하십시오.</p>
+
+        <p style="font-weight:700; font-family:'Noto Serif KR','Noto Sans KR',serif;">
+          "법적 요건(형식)에 정서적 설명(내용)이 더해질 때, 유언장은 분쟁의 씨앗이 아닌 가족을 위한 마지막 선물이 됩니다."
+        </p>
+
+        <div class="divider"></div>
+
+        <p style="white-space:pre-wrap; font-weight:750; font-family:'Noto Serif KR','Noto Sans KR',serif;">
+-------------------
+존엄은 우연히 주어지지 않습니다.
+준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
+-------------------------------
+        </p>
+
+        <div class="org-card">
+          <p class="org-quote">삶을 빚는 예술, 죽음을 품는 인문학.</p>
+          <p class="org-quote">삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
+          <div class="org-name">웰다잉통합예술교육협회</div>
+
+          <p style="white-space:pre-wrap; margin: 0 0 12px 0; font-weight:650; color: rgba(31,42,51,0.92);">
+-------------------------
+홈페이지: http://wia-edu.org
+블로그: https://blog.naver.com/say2sky
+프로그램문의: 010-5635-7989
+---------------
+          </p>
+
+          <ul class="org-meta" aria-label="기관 정보">
+            <li>홈페이지: <a href="http://wia-edu.org" target="_blank" rel="noopener">http://wia-edu.org</a></li>
+            <li>블로그: <a href="https://blog.naver.com/say2sky" target="_blank" rel="noopener">https://blog.naver.com/say2sky</a></li>
+            <li>프로그램문의: 010-5635-7989</li>
+          </ul>
+        </div>
+
+        <div class="write-box">
+          <label for="w7">기록 공간 (마지막 메모)</label>
+          <textarea id="w7" placeholder="남기고 싶은 말, 설명의 문장(이 결정의 이유), 그리고 다음 갱신 날짜를 적어두세요."></textarea>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Parallax: subtle (3~5% 느낌) — 과하지 않게
+    (function(){
+      const root = document.documentElement;
+      let rafId = null;
+      window.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth) - 0.5;
+        const y = (e.clientY / window.innerHeight) - 0.5;
+
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          // very subtle shifts
+          root.style.setProperty('--px', (-x * 14).toFixed(2) + 'px');
+          root.style.setProperty('--py', (-y * 10).toFixed(2) + 'px');
+        });
+      }, { passive: true });
+    })();
+
+    // Checklist interaction: click => check icon + color shift + smooth animation
+    document.querySelectorAll('[data-check]').forEach((el) => {
+      el.addEventListener('click', () => {
+        el.classList.toggle('done');
+      });
+      el.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          el.classList.toggle('done');
+        }
+      });
+      el.setAttribute('tabindex','0');
+      el.setAttribute('role','checkbox');
+      el.setAttribute('aria-checked','false');
+      el.addEventListener('click', () => {
+        el.setAttribute('aria-checked', el.classList.contains('done') ? 'true' : 'false');
+      });
+    });
+
+    // PDF: print 기반(텍스트 선명, page-break 안정)
+    document.getElementById('btnPdf').addEventListener('click', () => {
+      window.print();
+    });
+
+    document.getElementById('btnTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
