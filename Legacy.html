@@ -11,6 +11,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css"/>
 
+  <!-- ✅ PDF 자동 다운로드 라이브러리 (html2pdf = html2canvas + jsPDF 번들) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+          integrity="sha512-YcsIPGdhPK4P/uRWxB8kK1C6oGZ8wCwzNwO3Vb6o7z7Jwq0q2b0Gm6K+0kY1g5T1i1dP7Vx6qH9jvV8Lw2WQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <style>
     :root{
       /* Premium palette */
@@ -33,6 +38,8 @@
 
     *{ box-sizing: border-box; }
     html, body { height: 100%; }
+    html { scroll-behavior: smooth; }
+
     body{
       margin:0;
       color: var(--ink);
@@ -42,6 +49,8 @@
       line-height: 1.75;
       letter-spacing: -0.2px;
       overflow-x:hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
     }
 
     /* Subtle paper-like depth */
@@ -65,12 +74,12 @@
       z-index:1;
       max-width: var(--maxw);
       margin: 0 auto;
-      padding: 64px 18px 88px;
+
+      /* ✅ 하단 플로팅 툴바가 콘텐츠를 가리지 않도록 padding-bottom을 넉넉히 */
+      padding: 64px 18px 160px;
     }
 
-    header{
-      margin-bottom: 22px;
-    }
+    header{ margin-bottom: 22px; }
 
     .doc-title{
       font-family: "Noto Serif KR","Noto Sans KR",serif;
@@ -108,12 +117,31 @@
       font-weight: 600;
     }
 
+    /* ✅ (중요) 툴바를 화면 하단에 고정: 스크롤 내려도 항상 보임 */
     .toolbar{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      z-index: 60;
+
       display:flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin: 18px 0 22px;
       align-items:center;
+      justify-content: center;
+
+      padding: 10px 12px;
+      background: rgba(247,246,242,0.78);
+      border: 1px solid rgba(95,107,92,0.22);
+      border-radius: 999px;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+
+      max-width: calc(100% - 24px);
     }
 
     .btn{
@@ -127,6 +155,7 @@
       cursor:pointer;
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
       box-shadow: 0 10px 22px rgba(0,0,0,0.06);
+      white-space: nowrap;
     }
     .btn:hover{
       transform: translateY(-2px);
@@ -138,6 +167,17 @@
     .btn.primary{
       border-color: rgba(140,122,79,0.45);
       background: linear-gradient(180deg, rgba(140,122,79,0.16), rgba(140,122,79,0.08));
+    }
+
+    .btn.subtle{
+      border-color: rgba(95,107,92,0.22);
+      background: rgba(255,255,255,0.58);
+      font-weight: 750;
+    }
+
+    /* 작은 화면에서 버튼이 너무 길면 줄바꿈 */
+    @media (max-width: 420px){
+      .btn{ padding: 10px 12px; }
     }
 
     .card{
@@ -355,12 +395,40 @@
       border-bottom-color: rgba(140,122,79,0.70);
     }
 
-    /* Print / PDF */
+    /* ✅ PDF 생성 중(다운로드 렌더링 중) 화면/스타일 정리: 더 '문서'다운 결과 */
+    body.pdfing{
+      background: #ffffff !important;
+    }
+    body.pdfing::before{ display:none !important; }
+    body.pdfing .card{
+      box-shadow: none !important;
+      border: 1px solid #E6E8E2 !important;
+      transform: none !important;
+    }
+    body.pdfing .org-card{
+      box-shadow: none !important;
+      border: 1px solid #E6E8E2 !important;
+    }
+    body.pdfing .toolbar{ display:none !important; } /* PDF에 버튼이 들어가면 덜 고급스러움 */
+    body.pdfing .check-item:hover,
+    body.pdfing .card:hover,
+    body.pdfing .btn:hover{
+      transform:none !important;
+      box-shadow:none !important;
+    }
+
+    /* Print / PDF (브라우저 인쇄용: 최고 품질 벡터 텍스트) */
     @media print{
+      /* 색상 유지(브라우저에 따라 필요) */
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      @page { size: A4; margin: 14mm 12mm; }
+
       body{ background: #ffffff !important; }
       body::before{ display:none !important; }
-      .wrap{ max-width: none; padding: 40px 30px; }
+      .wrap{ max-width: none; padding: 0 !important; }
       .toolbar{ display:none !important; }
+
       .card{ box-shadow:none; border: 1px solid #E6E8E2; }
       .check-item:hover, .card:hover, .btn:hover { transform:none !important; box-shadow:none !important; }
       a{ color: var(--ink) !important; text-decoration: none !important; border-bottom: 0 !important; }
@@ -388,14 +456,9 @@
       <div class="notice">
         <p>⚠️ 주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.</p>
       </div>
-
-      <div class="toolbar">
-        <button class="btn primary" type="button" id="btnPdf">PDF로 저장</button>
-        <button class="btn" type="button" id="btnTop">맨 위로</button>
-      </div>
     </header>
 
-    <main>
+    <main id="docRoot" aria-label="문서 본문">
       <section class="card">
         <p class="lead">
           유산 정리는 단순한 재산 분배를 넘어, 한 사람의 삶에 대한 최종적 해석을 남기는 작업입니다.
@@ -623,8 +686,15 @@
     </main>
   </div>
 
+  <!-- ✅ 하단 고정 플로팅 툴바: 스크롤 내려도 항상 보임 -->
+  <div class="toolbar" role="toolbar" aria-label="빠른 작업">
+    <button class="btn primary" type="button" id="btnPdf">PDF 다운로드</button>
+    <button class="btn subtle" type="button" id="btnPrint">인쇄(PDF 최고품질)</button>
+    <button class="btn" type="button" id="btnTop">맨 위로</button>
+  </div>
+
   <script>
-    // Parallax: subtle (3~5% 느낌) — 과하지 않게
+    // Parallax: subtle
     (function(){
       const root = document.documentElement;
       let rafId = null;
@@ -634,40 +704,97 @@
 
         if (rafId) cancelAnimationFrame(rafId);
         rafId = requestAnimationFrame(() => {
-          // very subtle shifts
           root.style.setProperty('--px', (-x * 14).toFixed(2) + 'px');
           root.style.setProperty('--py', (-y * 10).toFixed(2) + 'px');
         });
       }, { passive: true });
     })();
 
-    // Checklist interaction: click => check icon + color shift + smooth animation
+    // Checklist interaction: 클릭/키보드 토글 + aria 동기화
     document.querySelectorAll('[data-check]').forEach((el) => {
+      const syncAria = () => el.setAttribute('aria-checked', el.classList.contains('done') ? 'true' : 'false');
+      el.setAttribute('tabindex','0');
+      el.setAttribute('role','checkbox');
+      syncAria();
+
       el.addEventListener('click', () => {
         el.classList.toggle('done');
+        syncAria();
       });
+
       el.addEventListener('keydown', (ev) => {
         if (ev.key === 'Enter' || ev.key === ' ') {
           ev.preventDefault();
           el.classList.toggle('done');
+          syncAria();
         }
       });
-      el.setAttribute('tabindex','0');
-      el.setAttribute('role','checkbox');
-      el.setAttribute('aria-checked','false');
-      el.addEventListener('click', () => {
-        el.setAttribute('aria-checked', el.classList.contains('done') ? 'true' : 'false');
-      });
     });
 
-    // PDF: print 기반(텍스트 선명, page-break 안정)
-    document.getElementById('btnPdf').addEventListener('click', () => {
-      window.print();
-    });
-
+    // ✅ 맨 위로
     document.getElementById('btnTop').addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // ✅ 인쇄(PDF 최고품질: 텍스트가 벡터로 가장 선명)
+    // 사용자가 "저장 > PDF"로 하면 브라우저가 제목 기반 파일명도 제안하는 경우가 많음
+    document.getElementById('btnPrint').addEventListener('click', () => {
+      window.print();
+    });
+
+    // ✅ PDF 다운로드 (자동 파일 다운로드)
+    // 솔직히: 이 방식은 '인쇄'보다 텍스트가 약간 덜 선명할 수 있으나,
+    // 사용자 요청대로 "파일로 바로 다운로드"를 구현하는 가장 안정적인 클라이언트 방식입니다.
+    async function downloadPdf() {
+      if (!window.html2pdf) {
+        alert('PDF 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 다시 시도해주세요.');
+        return;
+      }
+
+      const doc = document.getElementById('docRoot');
+
+      // 파일명: 제목 + 오늘 날짜
+      const d = new Date();
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth()+1).padStart(2,'0');
+      const dd = String(d.getDate()).padStart(2,'0');
+      const filename = `유산정리_디지털자산가이드_${yyyy}${mm}${dd}.pdf`;
+
+      // PDF 렌더링 동안 화면을 '문서 모드'로 (그림자 제거/버튼 숨김)
+      document.body.classList.add('pdfing');
+
+      // 약간의 레이아웃 안정화 시간
+      await new Promise(r => setTimeout(r, 80));
+
+      const opt = {
+        margin:       [12, 10, 14, 10], // mm (상,좌,하,우)처럼 보이지만 html2pdf는 배열 순서가 상/좌/하/우
+        filename:     filename,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  {
+          scale: 3,              // 고해상도
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          logging: false
+        },
+        jsPDF:        {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait',
+          compress: true
+        },
+        pagebreak: {
+          mode: ['css', 'legacy']
+        }
+      };
+
+      try {
+        await html2pdf().set(opt).from(doc).save();
+      } finally {
+        document.body.classList.remove('pdfing');
+      }
+    }
+
+    document.getElementById('btnPdf').addEventListener('click', downloadPdf);
   </script>
 </body>
 </html>
