@@ -8,19 +8,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            --bg-color: #F2F4EF; /* 미색보다 조금 더 진한 안정적인 톤 */
-            --primary-color: #7A8E9B; /* 조금 더 깊이감 있는 뮤트 블루 */
+            /* 배경색을 그라데이션용 변수로 설정 */
+            --bg-start: #E2E8E4; 
+            --bg-mid: #F2F4EF;
+            --bg-end: #E2E8E4;
+            
+            --primary-color: #7A8E9B; 
             --secondary-color: #DDE6ED;
             --accent-color: #829460;
             --accent-hover: #6D7C50;
-            --text-color: #2D2D2D; /* 가독성을 위해 더 진한 회색 */
+            --text-color: #2D2D2D; 
             --white: #ffffff;
             --border-subtle: rgba(0, 0, 0, 0.05);
         }
 
         body {
             font-family: 'Pretendard', sans-serif;
-            background-color: var(--bg-color);
+            /* 배경 그라데이션 적용 */
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
+            background-attachment: fixed; /* 스크롤 시 배경 고정 */
             color: var(--text-color);
             line-height: 1.8;
             margin: 0;
@@ -33,12 +39,13 @@
             margin: 50px auto;
             background: var(--white);
             padding: 70px 90px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+            /* 그라데이션 배경 위에서 더 돋보이도록 그림자 강화 */
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
             border-radius: 12px;
             position: relative;
         }
 
-        /* 경고 문구 스타일 */
+        /* 이하 스타일은 기존 고급스러운 스타일을 유지하며 최적화 */
         .warning-box {
             background-color: #FFF0F0;
             border-left: 5px solid #FF7675;
@@ -101,7 +108,6 @@
             margin-bottom: 25px;
         }
 
-        /* 워크북 입력 필드 디자인 */
         .workbook-section {
             background-color: #FDFDFD;
             border: 1px solid var(--secondary-color);
@@ -169,7 +175,6 @@
             font-size: 1em;
         }
 
-        /* 체크박스 커스텀 */
         .check-item {
             display: flex;
             align-items: center;
@@ -182,7 +187,7 @@
         }
 
         .check-item:hover {
-            background-color: var(--bg-color);
+            background-color: #f0f2ed;
         }
 
         .check-item input {
@@ -193,9 +198,8 @@
             cursor: pointer;
         }
 
-        /* 기관 정보 박스 - 더 세련되게 */
         .info-box {
-            background: var(--bg-color);
+            background: #f7f8f5;
             border: 1px solid var(--secondary-color);
             padding: 35px;
             margin-top: 80px;
@@ -254,7 +258,7 @@
         @media print {
             .no-print { display: none; }
             .container { box-shadow: none; margin: 0; width: 100%; padding: 40px; }
-            body { background: white; }
+            body { background: white !important; }
             .workbook-section { border: 1px solid #eee; }
             textarea { border: 1px solid #eee; }
         }
@@ -264,7 +268,7 @@
 
 <div class="container" id="printable-area">
     <div class="warning-box no-print">
-        ⚠️ <strong>알림:</strong> 본 페이지는 개인정보를 서버에 저장하지 않습니다. 브라우저를 종료하거나 새로고침하면 내용이 사라지므로, 작성을 마친 후 반드시 하단의 버튼을 눌러 <strong>PDF로 저장</strong>해 주세요.
+        ⚠️ <strong>알림:</strong> 본 페이지는 개인정보를 서버에 저장하지 않습니다. 작성을 마친 후 하단의 버튼을 눌러 <strong>PDF로 저장</strong>해 주세요.
     </div>
 
     <header>
@@ -274,27 +278,20 @@
     </header>
 
     <section>
-        <p style="font-size: 1.1em;"><strong>정리는 단순한 청소나 폐기가 아닙니다.</strong> 그것은 물건에 투사된 과거의 나와 작별하고, 지금 이 순간의 삶을 밀도 있게 재구성하는 실존적 행위입니다.</p>
+        <p style="font-size: 1.1em;"><strong>정리는 단순한 청소나 폐기가 아닙니다.</strong> 물건에 투사된 과거의 나와 작별하고, 지금 이 순간의 삶을 밀도 있게 재구성하는 실존적 행위입니다.</p>
         
         <div class="content-box">
             <h3>1. 정리의 철학: ‘버림’에서 ‘놓음’으로</h3>
             <ul>
-                <li><strong>언어의 전환:</strong> ‘버림’이 상실과 결핍을 뜻한다면, ‘놓음’은 순환과 해방을 뜻합니다. 물건을 놓아주는 것은 외부에 흩어진 자아를 내면으로 회수하는 과정입니다.</li>
-                <li><strong>자아의 재구성:</strong> 물건은 자아의 일부입니다. 물건을 정리하는 것은 결국 ‘과거의 나’와의 관계를 정리하고, 더 선명한 ‘현재의 나’를 만나는 일입니다.</li>
+                <li><strong>언어의 전환:</strong> ‘버림’은 상실이지만, ‘놓음’은 순환과 해방입니다.</li>
+                <li><strong>자아의 재구성:</strong> 물건을 정리하는 것은 결국 ‘과거의 나’와의 관계를 정리하는 일입니다.</li>
             </ul>
 
             <h3>2. 삶의 질서를 세우는 프로세스</h3>
             <ul>
-                <li><strong>정리 (Selection):</strong> “무엇을 버릴까”가 아닌 “무엇을 남길까”를 결정하는 가치의 선별 단계입니다.</li>
-                <li><strong>수납 (Placement):</strong> 물건에 가장 잘 어울리는 ‘주소(자리)’를 부여하는 존중의 단계입니다.</li>
-                <li><strong>정돈 (Order):</strong> 사용 후 제자리로 돌려보내는 리듬의 단계입니다. 무질서에 저항하며 삶의 평온을 유지합니다.</li>
-            </ul>
-
-            <h3>3. 삶을 가볍게 만드는 세 가지 기준</h3>
-            <ul>
-                <li><strong>현재의 나:</strong> 과거의 내가 아닌, ‘지금’의 내 몸과 삶에 맞는 물건을 선택합니다.</li>
-                <li><strong>안전과 건강:</strong> 사고를 예방하고 나를 보호하는 공간을 만드는 선제적 생존 전략입니다.</li>
-                <li><strong>기억의 밀도:</strong> 양보다 질입니다. 삶의 정수(에센스)가 담긴 서사만을 남깁니다.</li>
+                <li><strong>정리 (Selection):</strong> 무엇을 남길까를 결정하는 가치의 선별 단계입니다.</li>
+                <li><strong>수납 (Placement):</strong> 물건에 가장 잘 어울리는 자리를 부여하는 존중의 단계입니다.</li>
+                <li><strong>정돈 (Order):</strong> 사용 후 제자리로 돌려보내는 리듬의 단계입니다.</li>
             </ul>
         </div>
     </section>
@@ -309,91 +306,52 @@
         </div>
 
         <h3>1부. 나를 돌아보는 정리 성찰</h3>
-        <p>✦ <strong>정리가 어려운 진짜 이유는 무엇인가요?</strong> (가장 큰 이유 하나에 체크)</p>
+        <p>✦ <strong>정리가 어려운 진짜 이유는 무엇인가요?</strong></p>
         <div style="margin: 20px 0;">
             <label class="check-item"><input type="checkbox"> 기억이 사라질 것 같아서</label>
             <label class="check-item"><input type="checkbox"> 죄책감과 낭비했다는 생각</label>
             <label class="check-item"><input type="checkbox"> 이별이 슬퍼서</label>
             <label class="check-item"><input type="checkbox"> 체력 부족</label>
-            <label class="check-item"><input type="checkbox"> 기타: <input type="text" class="input-line" style="width:200px;"></label>
         </div>
-        <p>✦ 나에게 정리란 ( <input type="text" class="input-line" style="width:150px;"> )이다. <br>왜냐하면 ( <input type="text" class="input-line" style="width:80%;"> )이기 때문이다.</p>
 
         <h3>2부. 정리의 3단계 실천표</h3>
         <table>
             <thead>
                 <tr>
                     <th width="20%">단계</th>
-                    <th width="35%">핵심 질문</th>
-                    <th width="45%">나의 실천 기록</th>
+                    <th width="80%">나의 실천 기록</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><strong>1. 정리</strong></td>
-                    <td>"지금 나에게 맞는가?"</td>
-                    <td><textarea rows="3" placeholder="오늘 비운 물건들을 기록해 보세요."></textarea></td>
+                    <td><textarea rows="2" placeholder="오늘 비운 물건을 기록하세요."></textarea></td>
                 </tr>
                 <tr>
                     <td><strong>2. 수납</strong></td>
-                    <td>"어디서 가장 살아나는가?"</td>
-                    <td><textarea rows="3" placeholder="물건에 부여한 새로운 자리를 기록해 보세요."></textarea></td>
+                    <td><textarea rows="2" placeholder="물건의 새로운 주소를 적어보세요."></textarea></td>
                 </tr>
                 <tr>
                     <td><strong>3. 정돈</strong></td>
-                    <td>"제자리로 돌아왔는가?"</td>
-                    <td><textarea rows="3" placeholder="나만의 정돈 루틴을 만들어 보세요."></textarea></td>
+                    <td><textarea rows="2" placeholder="유지를 위한 나만의 루틴을 적어보세요."></textarea></td>
                 </tr>
             </tbody>
         </table>
-
-        <h3>3부. 물건과의 작별 의례 (Ritual)</h3>
-        <div class="content-box">
-            <p><strong>✦ 기억을 기리는 의례 (추억 물건)</strong></p>
-            <p>물건 이름: <input type="text" class="input-line" style="width:70%;"></p>
-            <p>그 시절 나에게 건네는 한마디: <br>
-            <textarea rows="2" placeholder="예: 그때의 나를 따뜻하게 해줘서 정말 고마웠어."></textarea></p>
-            
-            <p style="margin-top:30px;"><strong>✦ 전환과 순환의 의례 (감사 영수증)</strong></p>
-            <p>구입 이유 및 실제 쓰임: <textarea rows="2"></textarea></p>
-            <p>배운 점: "이 물건을 통해 나는 ( <input type="text" class="input-line" style="width:200px;"> )함을 알게 되었다. 수업료는 충분했다."</p>
-        </div>
-
-        <h3>4부. 존엄한 마무리: 사랑의 기록</h3>
-        <p><strong>✦ 나의 나눔 목록</strong></p>
-        <p>물건 [ <input type="text" class="input-line" style="width:150px;"> ] → 받으실 분 [ <input type="text" class="input-line" style="width:150px;"> ]</p>
-        
-        <p style="margin-top:30px;"><strong>✦ 비상시를 위한 배려</strong></p>
-        <p>중요 서류/귀중품 보관 위치: <input type="text" class="input-line" style="width:70%;"></p>
-        <p>비상 연락처: <input type="text" class="input-line" style="width:80%;"></p>
-        
-        <p style="margin-top:30px;">✦ <strong>공간의 미래:</strong> 정리가 완성된 후 내 공간의 모습을 상상하며 적어보세요.</p>
-        <textarea rows="5"></textarea>
 
         <div class="content-box" style="margin-top: 50px; text-align: center; border: 2px solid var(--accent-color);">
             <h3 style="margin-top:0; color:var(--accent-color);">나의 정리 선언문</h3>
             <p style="font-size: 1.1em; line-height: 2;">
                 "나, <input type="text" class="input-line" style="width:120px; text-align: center;"> 은/는 오늘부터 내 삶의 주인이<br>
-                물건이 아닌 나 자신임을 선언합니다.<br>
-                나는 내 삶의 흔적을 정성껏 정리하여,<br>
-                남겨진 이들에게 부담이 아닌 사랑의 서사를 남기겠습니다."
+                물건이 아닌 나 자신임을 선언합니다."
             </p>
-            <p style="margin-top:30px;">20<input type="text" class="input-line" style="width:30px;">년 <input type="text" class="input-line" style="width:30px;">월 <input type="text" class="input-line" style="width:30px;">일</p>
-            <p>서명: <input type="text" class="input-line" style="width:120px;"></p>
+            <p style="margin-top:20px;">서명: <input type="text" class="input-line" style="width:120px;"></p>
         </div>
-    </div>
-
-    <div class="footer-text">
-        <p>"비울수록 당신의 내면은 더 밀도 있게 채워질 것입니다.<br>지금, 당신의 여백을 축하하십시오.“</p>
-        <p style="font-size: 0.9em; opacity: 0.8; margin-top: 20px;">존엄은 준비하는 만큼 삶의 마지막까지 ‘나의 것’이 됩니다.</p>
     </div>
 
     <div class="info-box">
         <p style="font-weight: 800; font-size: 1.3em; color: var(--accent-color); margin-bottom: 10px;">웰다잉통합예술교육협회</p>
-        <p style="margin-bottom: 20px; font-weight: 500;">삶을 빚는 예술, 죽음을 품는 인문학.<br>우리는 삶과 죽음 사이의 아름다운 조화를 지향합니다.</p>
         <div style="font-size: 0.95em; color: #666; border-top: 1px solid var(--secondary-color); padding-top: 20px;">
-            홈페이지: <a href="http://wia-edu.org" target="_blank" style="color:var(--primary-color); text-decoration:none;">wia-edu.org</a> &nbsp;&nbsp;|&nbsp;&nbsp;
-            블로그: <a href="https://blog.naver.com/say2sky" target="_blank" style="color:var(--primary-color); text-decoration:none;">say2sky</a><br>
+            홈페이지: <a href="http://wia-edu.org" target="_blank" style="color:var(--primary-color); text-decoration:none;">wia-edu.org</a><br>
             <p style="margin-top:10px; font-weight: 700;">교육 프로그램 문의: 010-5635-7989</p>
         </div>
     </div>
@@ -416,11 +374,9 @@
 
         const btn = document.querySelector('.download-btn');
         btn.innerText = "PDF 생성 중...";
-        btn.style.opacity = "0.5";
-
+        
         html2pdf().set(opt).from(element).save().then(() => {
             btn.innerText = "기록 완료 및 PDF 저장하기";
-            btn.style.opacity = "1";
         });
     }
 </script>
