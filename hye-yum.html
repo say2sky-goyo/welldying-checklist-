@@ -13,9 +13,9 @@
   
   <style>
     :root {
-      /* 연분홍 & 연보라 테마에 맞춘 선명한 대비 컬러 */
-      --primary-color: #2b1830;        /* 가독성이 뛰어난 딥 플럼 챠콜 */
-      --accent-color: #9c4d81;         /* 로즈 바이올렛 포인트 컬러 */
+      /* 연분홍 & 연보라 바탕에 또렷하게 대비되는 가독성 컬러 */
+      --primary-color: #2b1830;        /* 깊고 선명한 딥 플럼 챠콜 */
+      --accent-color: #9c4d81;         /* 포인트 로즈 바이올렛 */
       --accent-soft: rgba(156, 77, 129, 0.15);
       --card-bg: rgba(255, 255, 255, 0.94);
       --border-color: #ead5e7;
@@ -280,8 +280,8 @@
       box-shadow: none;
     }
   
-    /* Hand Heart Canvas Section */
-    .heart-section {
+    /* Heart Balloons Section */
+    .balloon-section {
       text-align: center;
       margin-top: 40px;
       padding: 36px 20px;
@@ -291,19 +291,19 @@
       transition: all 0.3s ease;
     }
   
-    .heart-section:hover {
+    .balloon-section:hover {
       box-shadow: 0 8px 30px rgba(156, 77, 129, 0.09);
       border-color: var(--border-hover);
     }
   
-    .heart-section h3 {
+    .balloon-section h3 {
       font-size: 21px;
       margin-bottom: 8px;
       color: var(--primary-color);
       font-weight: 700;
     }
   
-    .heart-section p {
+    .balloon-section p {
       font-size: 14.5px;
       color: var(--text-muted);
       margin-bottom: 22px;
@@ -385,7 +385,7 @@
     .canvas-container {
       position: relative;
       width: 420px;
-      height: 420px;
+      height: 520px;
       max-width: 100%;
       margin: 0 auto;
       background: #ffffff;
@@ -396,7 +396,7 @@
       touch-action: none;
     }
   
-    .heart-background-art {
+    .balloon-background-art {
       position: absolute;
       top: 0;
       left: 0;
@@ -567,16 +567,16 @@
       </div>
     </section>
   
-    <!-- Epilogue & Hand Heart Coloring Section -->
-    <section class="heart-section">
-      <h3>EPILOGUE. 이 손하트 안에 담고 싶은 말을 써보세요.</h3>
-      <p>과거의 나에게, 미래의 나에게, 혹은 누군가에게 마음을 전하며 손하트를 예쁘게 색칠해보세요.</p>
+    <!-- Epilogue & Heart Balloon Coloring Section -->
+    <section class="balloon-section">
+      <h3>EPILOGUE. 하트 풍선과 네모 카드에 마음을 담아보세요.</h3>
+      <p>하트 풍선을 예쁘게 색칠하고, 아래 네모 카드 안에 나에게 전하고 싶은 따뜻한 메시지를 적어보세요.</p>
       
       <!-- Palette Toolbar -->
       <div class="canvas-toolbar">
         <div class="color-palette">
           <div class="color-btn active" style="background: #e85a85;" data-color="#e85a85"></div>
-          <div class="color-btn" style="background: #a862ea;" data-color="#a862ea"></div>
+          <div class="color-btn" style="background: #ba68c8;" data-color="#ba68c8"></div>
           <div class="color-btn" style="background: #f28b82;" data-color="#f28b82"></div>
           <div class="color-btn" style="background: #fbc02d;" data-color="#fbc02d"></div>
           <div class="color-btn" style="background: #7ca982;" data-color="#7ca982"></div>
@@ -586,93 +586,84 @@
   
         <div class="brush-size-wrap">
           <span>굵기</span>
-          <input type="range" id="brushSize" min="2" max="25" value="6">
+          <input type="range" id="brushSize" min="2" max="25" value="5">
         </div>
   
         <button class="tool-btn" id="eraserBtn">지우개</button>
         <button class="tool-btn" id="clearBtn">전체 지우기</button>
       </div>
   
-      <!-- Coloring Canvas with Uploaded Hand Heart Art -->
+      <!-- Coloring Canvas with Uploaded 3 Heart Balloons & Card -->
       <div class="canvas-container" id="canvasBox">
-        <svg class="heart-background-art" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-          <!-- 도안 배경 흰색 채우기 -->
+        <svg class="balloon-background-art" viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg">
+          <!-- 도안 배경 흰색 -->
           <rect width="100%" height="100%" fill="#ffffff" />
 
-          <!-- 중앙 하트 (이미지 원본 형태 반영) -->
-          <path d="M250,92 
-                   C220,44 145,44 110,95 
-                   C75,146 80,215 168,284 
-                   C210,318 250,342 250,342 
-                   C250,342 290,318 332,284 
-                   C420,215 425,146 390,95 
-                   C355,44 280,44 250,92 Z" 
-                fill="#ffffff" stroke="#111111" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round"/>
+          <!-- 1. 뒤쪽 왼쪽 하트 풍선 -->
+          <path d="M145,108 
+                   C115,108 85,130 85,165 
+                   C85,205 150,225 190,228 
+                   C190,228 200,185 210,170 
+                   C185,115 165,108 145,108 Z" 
+                fill="#ffffff" stroke="#111111" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <!-- 왼쪽 풍선 매듭 -->
+          <path d="M185,225 L180,242 L198,236 Z" 
+                fill="#ffffff" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
 
-          <!-- 왼쪽 손가락/손바닥 라인 -->
-          <!-- 검지 손가락 끝 둥근 캡 -->
-          <path d="M148,24 C135,26 122,34 118,48 C115,58 120,68 126,73" 
-                fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
-          <path d="M148,24 C158,26 163,33 161,42 C159,51 154,60 148,68" 
-                fill="none" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
-          <path d="M153,52 C156,60 156,70 150,78" fill="none" stroke="#111111" stroke-width="2.6" stroke-linecap="round"/>
+          <!-- 2. 뒤쪽 오른쪽 하트 풍선 -->
+          <path d="M355,108 
+                   C385,108 415,130 415,165 
+                   C415,205 350,225 310,228 
+                   C310,228 300,185 290,170 
+                   C315,115 335,108 355,108 Z" 
+                fill="#ffffff" stroke="#111111" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <!-- 오른쪽 풍선 매듭 -->
+          <path d="M315,225 L320,242 L302,236 Z" 
+                fill="#ffffff" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
 
-          <!-- 외곽 손등 & 손목 라인 (왼쪽) -->
-          <path d="M118,48 C85,76 56,126 44,178 C35,218 43,260 70,300 C92,332 110,375 130,422 C140,445 146,470 148,490" 
-                fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- 손등 바깥쪽 작은 잔선 주름 -->
-          <path d="M47,150 C51,154 53,160 52,166" fill="none" stroke="#111111" stroke-width="2.6" stroke-linecap="round"/>
+          <!-- 3. 앞쪽 가운데 가장 큰 메인 하트 풍선 -->
+          <path d="M250,56 
+                   C225,12 145,12 125,72 
+                   C105,132 185,190 250,218 
+                   C315,190 395,132 375,72 
+                   C355,12 275,12 250,56 Z" 
+                fill="#ffffff" stroke="#111111" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+          <!-- 가운데 풍선 매듭 -->
+          <path d="M242,217 L236,236 L264,236 L258,217 Z" 
+                fill="#ffffff" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
 
-          <!-- 왼쪽 엄지 손가락 및 안쪽 손바닥 라인 -->
-          <!-- 엄지 손톱 -->
-          <path d="M80,126 C75,145 74,166 84,178 C94,177 106,170 109,155 C111,142 104,124 94,121 C88,120 83,122 80,126 Z" 
-                fill="#ffffff" stroke="#111111" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- 엄지 관절 주름 -->
-          <path d="M92,204 C104,204 114,202 118,198" fill="none" stroke="#111111" stroke-width="2.8" stroke-linecap="round"/>
-          <path d="M95,220 C104,220 112,217 117,213" fill="none" stroke="#111111" stroke-width="2.8" stroke-linecap="round"/>
-          <!-- 엄지 외곽 안쪽 라인 -->
-          <path d="M84,178 C80,210 90,265 112,315 C118,328 120,344 121,358" 
-                fill="none" stroke="#111111" stroke-width="3.6" stroke-linecap="round"/>
-          <path d="M80,248 C94,250 102,246 108,238" fill="none" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+          <!-- 4. 풍선 줄 (리본 중심으로 모임) -->
+          <!-- 왼쪽 풍선 줄 -->
+          <path d="M190,240 L250,358" fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
+          <!-- 가운데 풍선 줄 -->
+          <path d="M250,236 L250,358" fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
+          <!-- 오른쪽 풍선 줄 -->
+          <path d="M310,240 L250,358" fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
 
-          <!-- 왼쪽 엄지 밑 손바닥에서 손목으로 이어지는 안쪽 곡선 -->
-          <path d="M228,348 C185,385 145,438 148,490" 
-                fill="none" stroke="#111111" stroke-width="3.8" stroke-linecap="round"/>
-          <!-- 하트 하단 아래 모이는 손목 안쪽 세로선 -->
-          <path d="M250,344 C247,382 250,442 250,490" 
-                fill="none" stroke="#111111" stroke-width="3.8" stroke-linecap="round"/>
-          <path d="M242,392 C240,418 243,450 248,474" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+          <!-- 5. 리본 매듭 (풍선 줄이 묶이는 지점) -->
+          <!-- 왼쪽 리본 날개 -->
+          <path d="M243,365 C215,350 210,355 212,382 C214,402 225,398 243,375 Z" 
+                fill="#ffffff" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M225,368 C228,375 228,385 224,392" fill="none" stroke="#111111" stroke-width="2.5"/>
 
+          <!-- 오른쪽 리본 날개 -->
+          <path d="M257,365 C285,350 290,355 288,382 C286,402 275,398 257,375 Z" 
+                fill="#ffffff" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M275,368 C272,375 272,385 276,392" fill="none" stroke="#111111" stroke-width="2.5"/>
 
-          <!-- 오른쪽 손가락/손바닥 라인 (대칭형) -->
-          <!-- 검지 손가락 끝 둥근 캡 -->
-          <path d="M352,24 C365,26 378,34 382,48 C385,58 380,68 374,73" 
-                fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
-          <path d="M352,24 C342,26 337,33 339,42 C341,51 346,60 352,68" 
-                fill="none" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
-          <path d="M347,52 C344,60 344,70 350,78" fill="none" stroke="#111111" stroke-width="2.6" stroke-linecap="round"/>
+          <!-- 가운데 리본 사각 매듭 -->
+          <rect x="243" y="360" width="14" height="20" rx="3" fill="#ffffff" stroke="#111111" stroke-width="4"/>
 
-          <!-- 외곽 손등 & 손목 라인 (오른쪽) -->
-          <path d="M382,48 C415,76 444,126 456,178 C465,218 457,260 430,300 C408,332 390,375 370,422 C360,445 354,470 352,490" 
-                fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- 손등 바깥쪽 작은 잔선 주름 -->
-          <path d="M453,150 C449,154 447,160 448,166" fill="none" stroke="#111111" stroke-width="2.6" stroke-linecap="round"/>
+          <!-- 리본 아래 늘어뜨린 꼬리 줄 & 연결 고리 -->
+          <path d="M246,380 C242,400 244,422 250,432 C256,422 258,400 254,380 Z" 
+                fill="#ffffff" stroke="#111111" stroke-width="3.5" stroke-linejoin="round"/>
+          <!-- 카드 연결 작은 링 O자 고리 -->
+          <circle cx="250" cy="436" r="6" fill="#ffffff" stroke="#111111" stroke-width="3.5"/>
 
-          <!-- 오른쪽 엄지 손가락 및 안쪽 손바닥 라인 -->
-          <!-- 엄지 손톱 -->
-          <path d="M420,126 C425,145 426,166 416,178 C406,177 394,170 391,155 C389,142 396,124 406,121 C412,120 417,122 420,126 Z" 
-                fill="#ffffff" stroke="#111111" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- 엄지 관절 주름 -->
-          <path d="M408,204 C396,204 386,202 382,198" fill="none" stroke="#111111" stroke-width="2.8" stroke-linecap="round"/>
-          <path d="M405,220 C396,220 388,217 383,213" fill="none" stroke="#111111" stroke-width="2.8" stroke-linecap="round"/>
-          <!-- 엄지 외곽 안쪽 라인 -->
-          <path d="M416,178 C420,210 410,265 388,315 C382,328 380,344 379,358" 
-                fill="none" stroke="#111111" stroke-width="3.6" stroke-linecap="round"/>
-          <path d="M420,248 C406,250 398,246 392,238" fill="none" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
-
-          <!-- 오른쪽 엄지 밑 손바닥에서 손목으로 이어지는 안쪽 곡선 -->
-          <path d="M272,348 C315,385 355,438 352,490" 
-                fill="none" stroke="#111111" stroke-width="3.8" stroke-linecap="round"/>
+          <!-- 6. 마지막 네모 카드 (글과 메모를 남길 수 있는 영역) -->
+          <rect x="110" y="442" width="280" height="162" rx="2" fill="#ffffff" stroke="#111111" stroke-width="4.5"/>
+          <!-- 카드 오른쪽 디테일 세로선 (이미지 원본 형태 반영) -->
+          <line x1="375" y1="442" x2="375" y2="604" stroke="#111111" stroke-width="4"/>
         </svg>
   
         <canvas id="coloringCanvas"></canvas>
@@ -697,7 +688,7 @@
     let isDrawing = false;
     let currentColor = '#e85a85';
     let isEraser = false;
-    let brushSize = 6;
+    let brushSize = 5;
   
     function initCanvasResolution() {
       const rect = container.getBoundingClientRect();
@@ -784,7 +775,7 @@
     });
   
     document.getElementById('clearBtn').addEventListener('click', () => {
-      if (confirm('손하트에 그린 내용을 모두 지우시겠습니까?')) {
+      if (confirm('풍선과 카드에 그린 내용을 모두 지우시겠습니까?')) {
         const rect = container.getBoundingClientRect();
         ctx.clearRect(0, 0, rect.width, rect.height);
       }
