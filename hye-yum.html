@@ -14,14 +14,14 @@
   <style>
     :root {
       /* 연분홍 & 연보라 바탕에 또렷하게 대비되는 가독성 컬러 */
-      --primary-color: #2b1830;        /* 깊고 선명한 딥 플럼 챠콜 */
-      --accent-color: #9c4d81;         /* 포인트 로즈 바이올렛 */
+      --primary-color: #2b1830;
+      --accent-color: #9c4d81;
       --accent-soft: rgba(156, 77, 129, 0.15);
       --card-bg: rgba(255, 255, 255, 0.94);
       --border-color: #ead5e7;
       --border-hover: #cf9ec5;
-      --text-main: #2b1a2d;            /* 선명한 본문 텍스트 */
-      --text-muted: #6b5570;           /* 가독성 높은 보조 텍스트 */
+      --text-main: #2b1a2d;
+      --text-muted: #6b5570;
       --hover-bg: #fff5fa;
     }
   
@@ -33,7 +33,6 @@
   
     body {
       font-family: 'MaruBuri', 'Noto Serif KR', serif;
-      /* 연분홍과 연보라의 부드러운 그라데이션 */
       background: linear-gradient(135deg, #ffeef6 0%, #f6e8fb 50%, #eae2fd 100%);
       background-attachment: fixed;
       color: var(--text-main);
@@ -310,15 +309,16 @@
       word-break: keep-all;
     }
   
-    .canvas-toolbar {
+    /* Palette Toolbar */
+    .color-toolbar {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       background: #ffffff;
-      padding: 10px 20px;
+      padding: 10px 22px;
       border-radius: 40px;
       box-shadow: 0 4px 14px rgba(90, 40, 80, 0.06);
       width: fit-content;
@@ -329,16 +329,17 @@
   
     .color-palette {
       display: flex;
-      gap: 8px;
+      gap: 9px;
       align-items: center;
     }
   
     .color-btn {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      border: 2px solid #f0e2ee;
+      border: 2.5px solid #ffffff;
       cursor: pointer;
+      outline: 1.5px solid #e2cfe0;
       transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
   
@@ -347,73 +348,80 @@
     }
   
     .color-btn.active {
-      transform: scale(1.3);
-      border-color: var(--primary-color);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    }
-  
-    .brush-size-wrap {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--text-muted);
+      transform: scale(1.25);
+      outline: 2.5px solid var(--primary-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
   
     .tool-btn {
       background: #f7eef7;
       border: 1px solid #dec6db;
-      padding: 5px 12px;
+      padding: 6px 14px;
       border-radius: 20px;
       font-family: 'MaruBuri', serif;
-      font-size: 12.5px;
+      font-size: 13px;
       cursor: pointer;
       transition: all 0.2s ease;
       color: var(--text-main);
+      font-weight: 600;
     }
   
     .tool-btn:hover {
       background: #edd5eb;
     }
   
-    .tool-btn.active {
-      background: var(--accent-color);
-      color: #fff;
-      border-color: var(--accent-color);
-    }
-  
-    .canvas-container {
+    /* Interactive SVG Art Container */
+    .art-container {
       position: relative;
       width: 420px;
-      height: 520px;
+      height: 530px;
       max-width: 100%;
       margin: 0 auto;
       background: #ffffff;
       border: 1.5px solid #dec6db;
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 6px 20px rgba(130, 70, 115, 0.08);
-      touch-action: none;
+      box-shadow: 0 8px 24px rgba(130, 70, 115, 0.09);
     }
   
-    .balloon-background-art {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .balloon-art {
       width: 100%;
       height: 100%;
-      pointer-events: none;
-      z-index: 1;
+      display: block;
     }
   
-    #coloringCanvas {
+    /* 클릭하여 색을 채울 수 있는 SVG 파트 스타일 */
+    .fillable {
+      cursor: pointer;
+      transition: fill 0.25s ease, filter 0.2s ease;
+    }
+  
+    .fillable:hover {
+      filter: brightness(0.96) drop-shadow(0 0 4px rgba(156, 77, 129, 0.35));
+    }
+  
+    /* 네모 카드 위 텍스트 작성 영역 */
+    .card-text-overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      cursor: crosshair;
+      left: 110px;
+      bottom: 22px;
+      width: 205px;
+      height: 125px;
+      border: none;
+      background: transparent;
+      outline: none;
+      resize: none;
+      font-family: 'MaruBuri', serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-main);
+      padding: 4px;
+      z-index: 5;
+    }
+  
+    .card-text-overlay::placeholder {
+      color: #9f8c9d;
+      font-size: 12px;
     }
   
     /* Footer */
@@ -473,7 +481,7 @@
         box-shadow: none;
         padding: 0;
       }
-      .canvas-toolbar, .btn-wrap {
+      .color-toolbar, .btn-wrap {
         display: none;
       }
     }
@@ -567,106 +575,99 @@
       </div>
     </section>
   
-    <!-- Epilogue & Heart Balloon Coloring Section -->
+    <!-- Epilogue & Heart Balloon Click-Fill Section -->
     <section class="balloon-section">
-      <h3>EPILOGUE. 하트 풍선과 네모 카드에 마음을 담아보세요.</h3>
-      <p>하트 풍선을 예쁘게 색칠하고, 아래 네모 카드 안에 나에게 전하고 싶은 따뜻한 메시지를 적어보세요.</p>
+      <h3>EPILOGUE. 색상을 선택하고 풍선이나 카드를 클릭하여 채워보세요.</h3>
+      <p>원하는 색상을 선택한 후 풍선, 매듭, 리본, 카드 영역을 클릭하면 예쁜 색으로 채워집니다.</p>
       
       <!-- Palette Toolbar -->
-      <div class="canvas-toolbar">
+      <div class="color-toolbar">
         <div class="color-palette">
-          <div class="color-btn active" style="background: #e85a85;" data-color="#e85a85"></div>
-          <div class="color-btn" style="background: #ba68c8;" data-color="#ba68c8"></div>
-          <div class="color-btn" style="background: #f28b82;" data-color="#f28b82"></div>
-          <div class="color-btn" style="background: #fbc02d;" data-color="#fbc02d"></div>
-          <div class="color-btn" style="background: #7ca982;" data-color="#7ca982"></div>
-          <div class="color-btn" style="background: #5c7cb5;" data-color="#5c7cb5"></div>
-          <div class="color-btn" style="background: #2b1830;" data-color="#2b1830"></div>
+          <div class="color-btn active" style="background: #ff7597;" data-color="#ff7597" title="로즈 핑크"></div>
+          <div class="color-btn" style="background: #ffb3c6;" data-color="#ffb3c6" title="베이비 핑크"></div>
+          <div class="color-btn" style="background: #c38fff;" data-color="#c38fff" title="라벤더 퍼플"></div>
+          <div class="color-btn" style="background: #e8d0ff;" data-color="#e8d0ff" title="소프트 바이올렛"></div>
+          <div class="color-btn" style="background: #ffd166;" data-color="#ffd166" title="따뜻한 노랑"></div>
+          <div class="color-btn" style="background: #90dbf4;" data-color="#90dbf4" title="스카이 블루"></div>
+          <div class="color-btn" style="background: #a3e4d7;" data-color="#a3e4d7" title="민트 그린"></div>
+          <div class="color-btn" style="background: #ffffff;" data-color="#ffffff" title="흰색 (기본)"></div>
         </div>
   
-        <div class="brush-size-wrap">
-          <span>굵기</span>
-          <input type="range" id="brushSize" min="2" max="25" value="5">
-        </div>
-  
-        <button class="tool-btn" id="eraserBtn">지우개</button>
-        <button class="tool-btn" id="clearBtn">전체 지우기</button>
+        <button class="tool-btn" id="resetBtn">전체 초기화</button>
       </div>
   
-      <!-- Coloring Canvas with Uploaded 3 Heart Balloons & Card -->
-      <div class="canvas-container" id="canvasBox">
-        <svg class="balloon-background-art" viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg">
-          <!-- 도안 배경 흰색 -->
+      <!-- Click-Fill Interactive SVG Container -->
+      <div class="art-container">
+        <svg class="balloon-art" viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg">
+          <!-- 도안 배경 -->
           <rect width="100%" height="100%" fill="#ffffff" />
 
           <!-- 1. 뒤쪽 왼쪽 하트 풍선 -->
-          <path d="M145,108 
+          <path class="fillable" d="M145,108 
                    C115,108 85,130 85,165 
                    C85,205 150,225 190,228 
                    C190,228 200,185 210,170 
                    C185,115 165,108 145,108 Z" 
                 fill="#ffffff" stroke="#111111" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
           <!-- 왼쪽 풍선 매듭 -->
-          <path d="M185,225 L180,242 L198,236 Z" 
+          <path class="fillable" d="M185,225 L180,242 L198,236 Z" 
                 fill="#ffffff" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
 
           <!-- 2. 뒤쪽 오른쪽 하트 풍선 -->
-          <path d="M355,108 
+          <path class="fillable" d="M355,108 
                    C385,108 415,130 415,165 
                    C415,205 350,225 310,228 
                    C310,228 300,185 290,170 
                    C315,115 335,108 355,108 Z" 
                 fill="#ffffff" stroke="#111111" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
           <!-- 오른쪽 풍선 매듭 -->
-          <path d="M315,225 L320,242 L302,236 Z" 
+          <path class="fillable" d="M315,225 L320,242 L302,236 Z" 
                 fill="#ffffff" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
 
           <!-- 3. 앞쪽 가운데 가장 큰 메인 하트 풍선 -->
-          <path d="M250,56 
+          <path class="fillable" d="M250,56 
                    C225,12 145,12 125,72 
                    C105,132 185,190 250,218 
                    C315,190 395,132 375,72 
                    C355,12 275,12 250,56 Z" 
                 fill="#ffffff" stroke="#111111" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
           <!-- 가운데 풍선 매듭 -->
-          <path d="M242,217 L236,236 L264,236 L258,217 Z" 
+          <path class="fillable" d="M242,217 L236,236 L264,236 L258,217 Z" 
                 fill="#ffffff" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
 
-          <!-- 4. 풍선 줄 (리본 중심으로 모임) -->
-          <!-- 왼쪽 풍선 줄 -->
+          <!-- 4. 풍선 줄 -->
           <path d="M190,240 L250,358" fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
-          <!-- 가운데 풍선 줄 -->
           <path d="M250,236 L250,358" fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
-          <!-- 오른쪽 풍선 줄 -->
           <path d="M310,240 L250,358" fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
 
-          <!-- 5. 리본 매듭 (풍선 줄이 묶이는 지점) -->
+          <!-- 5. 리본 매듭 -->
           <!-- 왼쪽 리본 날개 -->
-          <path d="M243,365 C215,350 210,355 212,382 C214,402 225,398 243,375 Z" 
+          <path class="fillable" d="M243,365 C215,350 210,355 212,382 C214,402 225,398 243,375 Z" 
                 fill="#ffffff" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
           <path d="M225,368 C228,375 228,385 224,392" fill="none" stroke="#111111" stroke-width="2.5"/>
 
           <!-- 오른쪽 리본 날개 -->
-          <path d="M257,365 C285,350 290,355 288,382 C286,402 275,398 257,375 Z" 
+          <path class="fillable" d="M257,365 C285,350 290,355 288,382 C286,402 275,398 257,375 Z" 
                 fill="#ffffff" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
           <path d="M275,368 C272,375 272,385 276,392" fill="none" stroke="#111111" stroke-width="2.5"/>
 
           <!-- 가운데 리본 사각 매듭 -->
-          <rect x="243" y="360" width="14" height="20" rx="3" fill="#ffffff" stroke="#111111" stroke-width="4"/>
+          <rect class="fillable" x="243" y="360" width="14" height="20" rx="3" fill="#ffffff" stroke="#111111" stroke-width="4"/>
 
           <!-- 리본 아래 늘어뜨린 꼬리 줄 & 연결 고리 -->
-          <path d="M246,380 C242,400 244,422 250,432 C256,422 258,400 254,380 Z" 
+          <path class="fillable" d="M246,380 C242,400 244,422 250,432 C256,422 258,400 254,380 Z" 
                 fill="#ffffff" stroke="#111111" stroke-width="3.5" stroke-linejoin="round"/>
-          <!-- 카드 연결 작은 링 O자 고리 -->
-          <circle cx="250" cy="436" r="6" fill="#ffffff" stroke="#111111" stroke-width="3.5"/>
+          <circle class="fillable" cx="250" cy="436" r="6" fill="#ffffff" stroke="#111111" stroke-width="3.5"/>
 
-          <!-- 6. 마지막 네모 카드 (글과 메모를 남길 수 있는 영역) -->
-          <rect x="110" y="442" width="280" height="162" rx="2" fill="#ffffff" stroke="#111111" stroke-width="4.5"/>
-          <!-- 카드 오른쪽 디테일 세로선 (이미지 원본 형태 반영) -->
+          <!-- 6. 마지막 네모 카드 (글과 색상을 채울 수 있는 영역) -->
+          <rect class="fillable" id="mainCardRect" x="110" y="442" width="280" height="162" rx="2" fill="#ffffff" stroke="#111111" stroke-width="4.5"/>
+          <!-- 카드 오른쪽 디자인 세로선 -->
           <line x1="375" y1="442" x2="375" y2="604" stroke="#111111" stroke-width="4"/>
+          <rect class="fillable" x="375" y="442" width="15" height="162" fill="#ffffff" stroke="#111111" stroke-width="2" style="opacity: 0.1;"/>
         </svg>
-  
-        <canvas id="coloringCanvas"></canvas>
+
+        <!-- 네모 카드 안에 직접 메시지를 작성할 수 있는 텍스트 상자 -->
+        <textarea class="card-text-overlay" placeholder="이곳에 나에게 보내는 한 줄 편지를 적어보세요..."></textarea>
       </div>
     </section>
   
@@ -681,103 +682,34 @@
   </div>
   
   <script>
-    const canvas = document.getElementById('coloringCanvas');
-    const ctx = canvas.getContext('2d');
-    const container = document.getElementById('canvasBox');
+    // 현재 선택된 색상
+    let selectedColor = '#ff7597';
   
-    let isDrawing = false;
-    let currentColor = '#e85a85';
-    let isEraser = false;
-    let brushSize = 5;
-  
-    function initCanvasResolution() {
-      const rect = container.getBoundingClientRect();
-      canvas.width = rect.width * 2;
-      canvas.height = rect.height * 2;
-      ctx.scale(2, 2);
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-    }
-  
-    window.addEventListener('load', initCanvasResolution);
-    window.addEventListener('resize', initCanvasResolution);
-  
-    function getPos(e) {
-      const rect = canvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      return {
-        x: clientX - rect.left,
-        y: clientY - rect.top
-      };
-    }
-  
-    function startDraw(e) {
-      isDrawing = true;
-      const pos = getPos(e);
-      ctx.beginPath();
-      ctx.moveTo(pos.x, pos.y);
-      draw(e);
-    }
-  
-    function draw(e) {
-      if (!isDrawing) return;
-      e.preventDefault();
-      const pos = getPos(e);
-      
-      ctx.lineWidth = brushSize;
-      if (isEraser) {
-        ctx.globalCompositeOperation = 'destination-out';
-      } else {
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.strokeStyle = currentColor;
-      }
-  
-      ctx.lineTo(pos.x, pos.y);
-      ctx.stroke();
-    }
-  
-    function stopDraw() {
-      if (!isDrawing) return;
-      isDrawing = false;
-      ctx.closePath();
-    }
-  
-    canvas.addEventListener('mousedown', startDraw);
-    canvas.addEventListener('mousemove', draw);
-    window.addEventListener('mouseup', stopDraw);
-  
-    canvas.addEventListener('touchstart', startDraw, { passive: false });
-    canvas.addEventListener('touchmove', draw, { passive: false });
-    window.addEventListener('touchend', stopDraw);
-  
-    document.querySelectorAll('.color-btn').forEach(btn => {
+    // 팔레트 버튼 클릭 시 활성화 및 색상 변경
+    const colorBtns = document.querySelectorAll('.color-btn');
+    colorBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        isEraser = false;
-        document.getElementById('eraserBtn').classList.remove('active');
-        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        currentColor = e.target.getAttribute('data-color');
+        colorBtns.forEach(b => b.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        selectedColor = e.currentTarget.getAttribute('data-color');
       });
     });
   
-    document.getElementById('brushSize').addEventListener('input', (e) => {
-      brushSize = e.target.value;
+    // 채우기 가능한 SVG 영역 클릭 시 선택된 색상으로 채우기
+    const fillableParts = document.querySelectorAll('.fillable');
+    fillableParts.forEach(part => {
+      part.addEventListener('click', (e) => {
+        e.currentTarget.setAttribute('fill', selectedColor);
+      });
     });
   
-    const eraserBtn = document.getElementById('eraserBtn');
-    eraserBtn.addEventListener('click', () => {
-      isEraser = !isEraser;
-      eraserBtn.classList.toggle('active', isEraser);
-      if (isEraser) {
-        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-      }
-    });
-  
-    document.getElementById('clearBtn').addEventListener('click', () => {
-      if (confirm('풍선과 카드에 그린 내용을 모두 지우시겠습니까?')) {
-        const rect = container.getBoundingClientRect();
-        ctx.clearRect(0, 0, rect.width, rect.height);
+    // 전체 초기화 버튼
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      if (confirm('풍선과 카드의 색상을 모두 초기화하시겠습니까?')) {
+        fillableParts.forEach(part => {
+          part.setAttribute('fill', '#ffffff');
+        });
+        document.querySelector('.card-text-overlay').value = '';
       }
     });
   </script>
