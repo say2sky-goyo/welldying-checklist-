@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인생 아카이브 매거진 - Hye-yum (혜윰)</title>
+  
+  <!-- 웹폰트 불러오기: MaruBuri & Cormorant Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri.css">
+  
+  <style>
+    :root {
+      /* 연분홍 & 연보라 테마에 맞춰 선명하게 대비되는 컬러 팔레트 */
+      --primary-color: #2e1d33;        /* 깊은 플럼 챠콜 (가독성 최우선) */
+      --accent-color: #a45a8a;         /* 세련된 로즈 바이올렛 포인트 */
+      --accent-soft: rgba(164, 90, 138, 0.15);
+      --card-bg: rgba(255, 255, 255, 0.94);
+      --border-color: #ebd7e7;
+      --border-hover: #d2a6c8;
+      --text-main: #2b1f30;            /* 진하고 선명한 본문 텍스트 */
+      --text-muted: #6e5872;           /* 차분한 퍼플 그레이 보조 텍스트 */
+      --hover-bg: #fff5fb;
+    }
+  
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+  
+    body {
+      font-family: 'MaruBuri', 'Noto Serif KR', serif;
+      /* 연분홍과 연보라의 부드러운 그라데이션 */
+      background: linear-gradient(135deg, #ffeef6 0%, #f7e8fb 50%, #eae2fd 100%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.8;
+      padding: 40px 16px;
+      letter-spacing: -0.2px;
+    }
+  
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      padding: 56px 44px;
+      border-radius: 24px;
+      box-shadow: 0 12px 40px rgba(88, 45, 84, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+    }
+  
+    /* Header */
+    header {
+      text-align: center;
+      border-bottom: 1.5px solid var(--border-color);
+      padding-bottom: 28px;
+      margin-bottom: 36px;
+    }
+  
+    .sub-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent-color);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+  
+    .main-title {
+      font-family: 'Cormorant Garamond', 'MaruBuri', serif;
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--primary-color);
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+  
+    .desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      word-break: keep-all;
+    }
+  
+    /* Cover Story */
+    .cover-story {
+      background: #fdf6fa;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      border-left: 4px solid var(--accent-color);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(164, 90, 138, 0.06);
+    }
+  
+    .cover-story:hover {
+      background: #faeef7;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(164, 90, 138, 0.12);
+    }
+  
+    .cover-story h2 {
+      font-size: 19px;
+      margin-bottom: 14px;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+  
+    .protagonist-input {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15.5px;
+      font-weight: 600;
+    }
+  
+    .protagonist-input input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-family: 'MaruBuri', serif;
+      font-size: 15px;
+      background: #ffffff;
+      transition: all 0.3s ease;
+      color: var(--text-main);
+    }
+  
+    .protagonist-input input:hover,
+    .protagonist-input input:focus {
+      border-color: var(--accent-color);
+      background-color: var(--hover-bg);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+      outline: none;
+    }
+  
+    /* Archive Sections */
+    .archive-card {
+      margin-bottom: 36px;
+      padding: 24px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background-color: transparent;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+  
+    .archive-card:hover {
+      background-color: rgba(255, 255, 255, 0.88);
+      border-color: var(--border-hover);
+      box-shadow: 0 8px 24px rgba(130, 70, 115, 0.07);
+      transform: translateY(-2px);
+    }
+  
+    .archive-header {
+      margin-bottom: 18px;
+    }
+  
+    .archive-badge {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      background: var(--accent-color);
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+  
+    .archive-card h3 {
+      font-size: 20px;
+      color: var(--primary-color);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+  
+    .archive-card .sub-guide {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+  
+    .form-group {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 10px;
+      transition: all 0.25s ease;
+    }
+  
+    .form-group:hover {
+      background-color: rgba(250, 235, 246, 0.45);
+    }
+  
+    .form-group label {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+  
+    .form-group .hint {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-left: 6px;
+    }
+  
+    /* Inputs */
+    textarea, input[type="text"] {
+      width: 100%;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'MaruBuri', serif;
+      font-size: 14.5px;
+      color: var(--text-main);
+      background-color: #fdfbfc;
+      transition: all 0.25s ease;
+    }
+  
+    textarea:hover, input[type="text"]:hover {
+      background-color: #ffffff;
+      border-color: var(--border-hover);
+      box-shadow: 0 2px 10px rgba(164, 90, 138, 0.08);
+    }
+  
+    textarea:focus, input[type="text"]:focus {
+      outline: none;
+      background-color: #ffffff;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3.5px var(--accent-soft);
+    }
+  
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+  
+    /* Inline Sentences */
+    .inline-sentence {
+      margin-top: 14px;
+      font-size: 15.5px;
+      line-height: 2.2;
+      padding: 12px 16px;
+      background: #fdf5fb;
+      border-radius: 8px;
+      border-left: 3px solid #dcb5d6;
+      transition: all 0.3s ease;
+    }
+  
+    .inline-sentence:hover {
+      background: #faeaf7;
+      border-left-color: var(--accent-color);
+    }
+  
+    .inline-sentence input {
+      display: inline-block;
+      width: auto;
+      min-width: 150px;
+      padding: 3px 8px;
+      margin: 0 6px;
+      border: none;
+      border-bottom: 2px solid #825c7e;
+      border-radius: 0;
+      background: transparent;
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+  
+    .inline-sentence input:hover,
+    .inline-sentence input:focus {
+      background-color: #ffffff;
+      border-bottom-color: var(--accent-color);
+      box-shadow: none;
+    }
+  
+    /* Hand Heart Canvas Section */
+    .heart-section {
+      text-align: center;
+      margin-top: 40px;
+      padding: 36px 20px;
+      background: #fbf5fc;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+  
+    .heart-section:hover {
+      box-shadow: 0 8px 30px rgba(164, 90, 138, 0.09);
+      border-color: var(--border-hover);
+    }
+  
+    .heart-section h3 {
+      font-size: 21px;
+      margin-bottom: 8px;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+  
+    .heart-section p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      word-break: keep-all;
+    }
+  
+    .canvas-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      background: #ffffff;
+      padding: 10px 20px;
+      border-radius: 40px;
+      box-shadow: 0 4px 14px rgba(90, 40, 80, 0.06);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid #eedbed;
+    }
+  
+    .color-palette {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+  
+    .color-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #f0e2ee;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+  
+    .color-btn:hover {
+      transform: scale(1.15);
+    }
+  
+    .color-btn.active {
+      transform: scale(1.3);
+      border-color: var(--primary-color);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+  
+    .brush-size-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+  
+    .tool-btn {
+      background: #f7eef7;
+      border: 1px solid #dec6db;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-family: 'MaruBuri', serif;
+      font-size: 12.5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-main);
+    }
+  
+    .tool-btn:hover {
+      background: #edd5eb;
+    }
+  
+    .tool-btn.active {
+      background: var(--accent-color);
+      color: #fff;
+      border-color: var(--accent-color);
+    }
+  
+    .canvas-container {
+      position: relative;
+      width: 390px;
+      height: 390px;
+      max-width: 100%;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1.5px solid #dec6db;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(130, 70, 115, 0.08);
+      touch-action: none;
+    }
+  
+    .heart-background-art {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+  
+    #coloringCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      cursor: crosshair;
+    }
+  
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 28px;
+      border-top: 1.5px solid var(--border-color);
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+  
+    .brand-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 4px;
+    }
+  
+    .btn-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 34px;
+    }
+  
+    .btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: 'MaruBuri', serif;
+      font-size: 14.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
+  
+    .btn-print {
+      background: var(--primary-color);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(46, 29, 51, 0.25);
+    }
+  
+    .btn-print:hover {
+      background: #462c4d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(46, 29, 51, 0.3);
+    }
+  
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .container {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+      .canvas-toolbar, .btn-wrap {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <header>
+      <div class="sub-title">Life Archive Magazine</div>
+      <h1 class="main-title">Hye-yum (혜윰)</h1>
+      <p class="desc">깊이 생각하고 헤아린다는 뜻, 당신의 삶을 천천히 헤아려보는 시간입니다.</p>
+    </header>
+  
+    <!-- Cover Story -->
+    <section class="cover-story">
+      <h2>COVER STORY &lsquo;나의 발걸음을 축복하며&rsquo;</h2>
+      <div class="protagonist-input">
+        <label for="protagonist">이달의 주인공 :</label>
+        <input type="text" id="protagonist" placeholder="이름을 입력해주세요">
+      </div>
+    </section>
+  
+    <!-- Archive 01 -->
+    <section class="archive-card">
+      <div class="archive-header">
+        <span class="archive-badge">ARCHIVE 01</span>
+        <h3>눈부신 기억의 조각 <small style="font-weight: normal; font-size: 14px; color: var(--text-muted);">(자아의 발견)</small></h3>
+        <p class="sub-guide">• 진짜 &lsquo;나&rsquo;를 발견했던 빛나는 순간을 떠올려 봅니다.</p>
+      </div>
+  
+      <div class="form-group">
+        <label>내가 가장 살아있다고 느꼈던 &lsquo;빛나는 순간&rsquo;은 언제였나요?</label>
+        <textarea placeholder="그 순간의 풍경, 감정, 온기를 자유롭게 적어보세요."></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label>그때 내 안에 숨쉬고 있던 가치는 무엇인가요? <span class="hint">(예: 열정, 순수, 용기, 따뜻함 등)</span></label>
+        <input type="text" placeholder="내 안의 가치 적기">
+      </div>
+    </section>
+  
+    <!-- Archive 02 -->
+    <section class="archive-card">
+      <div class="archive-header">
+        <span class="archive-badge">ARCHIVE 02</span>
+        <h3>인생 칼럼: 고난을 넘어 피어난 단단함 <small style="font-weight: normal; font-size: 14px; color: var(--text-muted);">(고난의 재해석)</small></h3>
+        <p class="sub-guide">삶의 무게 속에서 나를 지탱해주었던 깊은 온기입니다.</p>
+      </div>
+  
+      <div class="form-group">
+        <label>• 힘들었던 순간, 나를 버티게 하고 여기까지 데려온 힘은 무엇이었나요?</label>
+        <textarea placeholder="나를 지켜준 사람, 신념, 혹은 작은 습관들..."></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label>● 그 힘든 시간을 지나오며 나에게 새로 생긴 &lsquo;단단함(지혜)&rsquo;은 무엇인가요?</label>
+        <textarea placeholder="고난을 겪으며 얻게 된 나만의 지혜를 적어보세요."></textarea>
+      </div>
+    </section>
+  
+    <!-- Archive 03 -->
+    <section class="archive-card">
+      <div class="archive-header">
+        <span class="archive-badge">ARCHIVE 03</span>
+        <h3>에필로그 : 나의 안부를 묻고 온기를 채우다</h3>
+        <p class="sub-guide">지친 나를 다정하게 안아주고, 앞으로 나에게 남겨줄 따뜻한 선물입니다.</p>
+      </div>
+  
+      <div class="form-group">
+        <label>● 기자의 말 (나에게 전하는 칭찬과 안부):</label>
+        <div class="inline-sentence">
+          &ldquo;오늘도 묵묵히 애쓴 나야,
+          <textarea placeholder="나에게 건네고 싶은 따뜻한 위로와 격려의 말" style="margin-top: 10px;"></textarea>
+          &rdquo;
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>● 내가 세상과 나 자신에게 남기고 싶은 선물 <span class="hint">(예: 미소, 넉넉한 마음, 여유 등)</span></label>
+        <div class="inline-sentence">
+          나는 <input type="text" style="width: 220px;" placeholder="선물"> 을(를) 선물로 남깁니다.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>• 나의 인생 한 줄 헤드라인:</label>
+        <div class="inline-sentence">
+          내 삶은 <input type="text" style="width: 260px;" placeholder="한 줄 표현"> 이었습니다.
+        </div>
+      </div>
+    </section>
+  
+    <!-- Epilogue & Hand Heart Coloring Section -->
+    <section class="heart-section">
+      <h3>EPILOGUE. 이 손하트 안에 담고 싶은 말을 써보세요.</h3>
+      <p>과거의 나에게, 미래의 나에게, 혹은 누군가에게 마음을 전하며 손하트를 예쁘게 색칠해보세요.</p>
+      
+      <!-- Palette Toolbar -->
+      <div class="canvas-toolbar">
+        <div class="color-palette">
+          <div class="color-btn active" style="background: #e85a85;" data-color="#e85a85"></div>
+          <div class="color-btn" style="background: #a862ea;" data-color="#a862ea"></div>
+          <div class="color-btn" style="background: #f28b82;" data-color="#f28b82"></div>
+          <div class="color-btn" style="background: #fbc02d;" data-color="#fbc02d"></div>
+          <div class="color-btn" style="background: #7ca982;" data-color="#7ca982"></div>
+          <div class="color-btn" style="background: #5c7cb5;" data-color="#5c7cb5"></div>
+          <div class="color-btn" style="background: #2e1d33;" data-color="#2e1d33"></div>
+        </div>
+  
+        <div class="brush-size-wrap">
+          <span>굵기</span>
+          <input type="range" id="brushSize" min="2" max="25" value="6">
+        </div>
+  
+        <button class="tool-btn" id="eraserBtn">지우개</button>
+        <button class="tool-btn" id="clearBtn">전체 지우기</button>
+      </div>
+  
+      <!-- Coloring Canvas with Hands Holding Heart Art -->
+      <div class="canvas-container" id="canvasBox">
+        <svg class="heart-background-art" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <!-- 중앙 큰 하트 -->
+          <path d="M200,105 
+                   C172,66 122,66 94,102 
+                   C62,143 68,206 142,274 
+                   C172,302 200,328 200,328 
+                   C200,328 228,302 258,274 
+                   C332,206 338,143 306,102 
+                   C278,66 228,66 200,105 Z" 
+                fill="#ffffff" stroke="#221e20" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+          <!-- 왼쪽 손 & 손가락 -->
+          <!-- 손바닥 및 엄지 외곽 라인 -->
+          <path d="M96,75 C70,105 50,155 45,210 C38,275 62,345 88,390" 
+                fill="none" stroke="#221e20" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- 검지 손톱 라인 -->
+          <path d="M72,130 C66,145 74,166 86,165 C96,164 100,146 95,133 C90,123 77,121 72,130 Z" 
+                fill="#ffffff" stroke="#221e20" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- 손가락 접히는 주름들 -->
+          <path d="M78,188 C88,188 94,196 90,205" fill="none" stroke="#221e20" stroke-width="2" stroke-linecap="round"/>
+          <path d="M82,208 C90,208 94,215 90,222" fill="none" stroke="#221e20" stroke-width="2" stroke-linecap="round"/>
+          <path d="M70,250 C85,255 102,248 108,235" fill="none" stroke="#221e20" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M66,290 C84,295 106,280 115,260" fill="none" stroke="#221e20" stroke-width="2.4" stroke-linecap="round"/>
+          <!-- 엄지와 손목 경계 주름 -->
+          <path d="M200,330 C195,355 198,375 200,395" fill="none" stroke="#221e20" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- 오른쪽 손 & 손가락 -->
+          <!-- 손바닥 및 엄지 외곽 라인 -->
+          <path d="M304,75 C330,105 350,155 355,210 C362,275 338,345 312,390" 
+                fill="none" stroke="#221e20" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- 검지 손톱 라인 -->
+          <path d="M328,130 C334,145 326,166 314,165 C304,164 300,146 305,133 C310,123 323,121 328,130 Z" 
+                fill="#ffffff" stroke="#221e20" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- 손가락 접히는 주름들 -->
+          <path d="M322,188 C312,188 306,196 310,205" fill="none" stroke="#221e20" stroke-width="2" stroke-linecap="round"/>
+          <path d="M318,208 C310,208 306,215 310,222" fill="none" stroke="#221e20" stroke-width="2" stroke-linecap="round"/>
+          <path d="M330,250 C315,255 298,248 292,235" fill="none" stroke="#221e20" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M334,290 C316,295 294,280 285,260" fill="none" stroke="#221e20" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+  
+        <canvas id="coloringCanvas"></canvas>
+      </div>
+    </section>
+  
+    <div class="btn-wrap">
+      <button class="btn btn-print" onclick="window.print()">작성 내용 인쇄 / PDF 저장</button>
+    </div>
+  
+    <footer>
+      <div class="brand-title">Hye-yum. 삶을 헤아리는 시간</div>
+      <p>- 웰다잉통합예술교육협회 -</p>
+    </footer>
+  </div>
+  
+  <script>
+    const canvas = document.getElementById('coloringCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvasBox');
+  
+    let isDrawing = false;
+    let currentColor = '#e85a85';
+    let isEraser = false;
+    let brushSize = 6;
+  
+    function initCanvasResolution() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * 2;
+      canvas.height = rect.height * 2;
+      ctx.scale(2, 2);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+  
+    window.addEventListener('load', initCanvasResolution);
+    window.addEventListener('resize', initCanvasResolution);
+  
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+  
+    function startDraw(e) {
+      isDrawing = true;
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+      draw(e);
+    }
+  
+    function draw(e) {
+      if (!isDrawing) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      
+      ctx.lineWidth = brushSize;
+      if (isEraser) {
+        ctx.globalCompositeOperation = 'destination-out';
+      } else {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = currentColor;
+      }
+  
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+    }
+  
+    function stopDraw() {
+      if (!isDrawing) return;
+      isDrawing = false;
+      ctx.closePath();
+    }
+  
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stopDraw);
+  
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    window.addEventListener('touchend', stopDraw);
+  
+    document.querySelectorAll('.color-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        isEraser = false;
+        document.getElementById('eraserBtn').classList.remove('active');
+        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentColor = e.target.getAttribute('data-color');
+      });
+    });
+  
+    document.getElementById('brushSize').addEventListener('input', (e) => {
+      brushSize = e.target.value;
+    });
+  
+    const eraserBtn = document.getElementById('eraserBtn');
+    eraserBtn.addEventListener('click', () => {
+      isEraser = !isEraser;
+      eraserBtn.classList.toggle('active', isEraser);
+      if (isEraser) {
+        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+      }
+    });
+  
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      if (confirm('손하트에 그린 내용을 모두 지우시겠습니까?')) {
+        const rect = container.getBoundingClientRect();
+        ctx.clearRect(0, 0, rect.width, rect.height);
+      }
+    });
+  </script>
+</body>
+</html>
