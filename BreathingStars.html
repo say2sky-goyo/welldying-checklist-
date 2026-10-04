@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>반려동물 애도 의례: Breathing Stars</title>
+
+  <!-- 폰트 로딩 최적화: preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- 본문: Pretendard / 제목: 고운바탕 -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* Pastel Green System — 배경은 연하게, 글자는 진하게 */
+      --bg0: #e6f2e8;
+      --bg1: #d7e9db;
+
+      --paper: #f8fcf8;
+      --paper-2: #eef6ef;
+      --tint: #dcecdf;
+      --tint-strong: #c9e0cf;
+
+      --ink: #13231a;        /* 본문 글자 */
+      --ink-soft: #2c4034;   /* 보조 글자 */
+      --deep: #1c4530;       /* 제목 글자 */
+      --accent: #3d7355;     /* 포인트 */
+      --accent-2: #6fa283;
+
+      --line: #bcd6c3;
+      --line-strong: #9cc0a7;
+
+      --shadow-soft: 0 20px 50px rgba(28, 69, 48, 0.10);
+      --shadow-card: 0 6px 18px rgba(28, 69, 48, 0.06);
+
+      --font-body: "Pretendard Variable", Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      --font-display: "Gowun Batang", "Nanum Myeongjo", "Noto Serif KR", "AppleMyungjo", serif;
+
+      --ease: cubic-bezier(.2,.9,.2,1);
+    }
+
+    *{ box-sizing: border-box; }
+
+    html{
+      background: var(--bg0);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body{
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--ink);
+      line-height: 1.8;
+      letter-spacing: -0.01em;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+      background:
+        radial-gradient(1100px 700px at 10% 0%, rgba(255,255,255,0.65), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      background-attachment: fixed;
+    }
+
+    .container{
+      width: min(900px, calc(100% - 28px));
+      margin: clamp(14px, 4vw, 48px) auto clamp(90px, 10vw, 110px);
+      padding: clamp(20px, 4.4vw, 56px);
+      background: var(--paper-2);
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .content{ position: relative; }
+
+    /* 인쇄용 틀: 화면에서는 보이지 않고, 인쇄 시 매 쪽 위아래 여백을 만들어 줍니다 */
+    .print-frame, .print-frame > tbody, .print-frame > tbody > tr, .print-frame > tbody > tr > td{ display: block; padding: 0; }
+    .print-frame > thead, .print-frame > tfoot{ display: none; }
+    .print-bg{ display: none; }
+
+    .warning-banner{
+      background: var(--tint);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 28px;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      font-weight: 600;
+    }
+
+    /* ---------- 머리말 ---------- */
+    header{
+      text-align: center;
+      margin: 8px 0 34px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sub-title{
+      font-size: 0.98rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      margin: 0 0 12px;
+    }
+
+    .main-title{
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.7rem, 4.2vw, 2.45rem);
+      color: var(--deep);
+      margin: 0 0 14px;
+      letter-spacing: -0.03em;
+      line-height: 1.3;
+    }
+
+    .lead{
+      font-family: var(--font-display);
+      font-size: clamp(0.98rem, 2vw, 1.08rem);
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* ---------- 섹션 카드 ---------- */
+    section.card{
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: clamp(16px, 3vw, 28px);
+      margin: 0 0 22px;
+      box-shadow: var(--shadow-card);
+    }
+
+    h2{
+      font-family: var(--font-display);
+      font-size: clamp(1.12rem, 2.4vw, 1.3rem);
+      font-weight: 700;
+      color: var(--deep);
+      background: linear-gradient(90deg, var(--tint-strong), var(--tint));
+      border-left: 5px solid var(--accent);
+      padding: 11px 16px;
+      border-radius: 6px 14px 14px 6px;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+      line-height: 1.45;
+    }
+
+    h3{
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--deep);
+      padding: 0 0 10px;
+      margin: 0 0 12px;
+      border-bottom: 1px solid var(--line);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+    }
+
+    p{ margin: 0 0 10px; }
+    ul{ margin: 0 0 10px; padding-left: 1.25em; }
+    li{ margin: 2px 0; }
+    li::marker{ color: var(--accent); }
+    strong{ font-weight: 700; color: var(--deep); }
+
+    .intro-text{
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--ink);
+      padding: 4px 6px 2px;
+    }
+
+    /* ---------- 표 ---------- */
+    .table-wrap{
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      overflow: auto;
+      background: var(--paper);
+    }
+
+    .table-wrap table{
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 560px;
+    }
+
+    .table-wrap th, .table-wrap td{
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    .table-wrap tbody tr:last-child td{ border-bottom: none; }
+    .table-wrap th{
+      background: var(--tint);
+      color: var(--deep);
+      font-weight: 700;
+    }
+    .table-wrap td:first-child{ font-weight: 700; color: var(--deep); white-space: nowrap; }
+
+    /* ---------- 입력 ---------- */
+    .input-underline{
+      border: none;
+      border-bottom: 1.5px solid var(--line-strong);
+      padding: 4px 8px;
+      margin: 2px 0;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1.5;
+      background: transparent;
+      color: var(--ink);
+      width: 100%;
+      border-radius: 6px 6px 0 0;
+      transition: border-color .25s var(--ease), background .25s var(--ease);
+    }
+    .input-underline::placeholder,
+    .textarea-box::placeholder{ color: #5d7566; opacity: 1; }
+
+    .input-underline:focus{
+      outline: none;
+      border-bottom-color: var(--accent);
+      background: var(--tint);
+    }
+
+    .program-box{
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      padding: clamp(14px, 2.6vw, 22px);
+      border-radius: 16px;
+      margin: 14px 0 0;
+    }
+    .program-box > :last-child{ margin-bottom: 0; }
+
+    .key-point{
+      display: block;
+      background: var(--tint);
+      color: var(--deep);
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.6;
+      padding: 8px 14px;
+      border-radius: 10px;
+      margin-top: 14px;
+    }
+
+    .textarea-box{
+      display: block;
+      width: 100%;
+      height: 164px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 6px 0 0;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--ink);
+      resize: vertical;
+      background: var(--paper);
+      transition: box-shadow .25s var(--ease), border-color .25s var(--ease);
+    }
+    .textarea-box:focus{
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(61,115,85,0.14);
+    }
+
+    /* ---------- 체크리스트 (클릭 가능) ---------- */
+    .checklist-group{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .checklist-item{
+      position: relative;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 12px;
+      align-items: start;
+      cursor: pointer;
+      padding: 13px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color .2s var(--ease), background .2s var(--ease);
+    }
+    .checklist-item:hover{ border-color: var(--accent-2); background: var(--tint); }
+    .checklist-item:has(.cb-input:checked){
+      background: var(--tint);
+      border-color: var(--accent-2);
+    }
+
+    .cb-input{
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .cb-ui{
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      border: 2px solid var(--accent);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      margin-top: 2px;
+      transition: background .2s var(--ease), border-color .2s var(--ease);
+    }
+    .cb-ui svg{ width: 15px; height: 15px; color: #fff; }
+    .cb-ui path{
+      stroke-dasharray: 34;
+      stroke-dashoffset: 34;
+      transition: stroke-dashoffset .35s var(--ease);
+    }
+    .cb-input:focus-visible + .cb-ui{ box-shadow: 0 0 0 4px rgba(61,115,85,0.25); }
+    .cb-input:checked + .cb-ui{ background: var(--accent); }
+    .cb-input:checked + .cb-ui path{ stroke-dashoffset: 0; }
+
+    .check-text{
+      font-size: 0.98rem;
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    /* ---------- 맺음 문장 ---------- */
+    .closing-quote{
+      text-align: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.02rem, 2.3vw, 1.2rem);
+      margin: 30px 0 26px;
+      color: var(--deep);
+      line-height: 1.8;
+    }
+
+    /* ---------- 기관 정보 박스 ---------- */
+    .info-box{
+      position: relative;
+      padding: clamp(18px, 3vw, 26px) clamp(18px, 3.4vw, 30px);
+      background: linear-gradient(135deg, var(--tint-strong), var(--tint));
+      border: 1px solid var(--line-strong);
+      border-radius: 20px;
+      color: var(--ink);
+      outline: 1px solid rgba(255,255,255,0.75);
+      outline-offset: -7px;
+    }
+    .info-box h3{
+      font-family: var(--font-display);
+      border: none;
+      padding: 0;
+      margin: 0 0 4px;
+      font-size: 1.3rem;
+      color: var(--deep);
+    }
+    .info-box p{ margin: 4px 0; font-size: 0.95rem; line-height: 1.7; }
+    .info-box hr{ border: 0; border-top: 1px solid var(--line-strong); margin: 12px 0; }
+    .info-box a{
+      color: var(--deep);
+      text-decoration: underline;
+      text-decoration-color: var(--accent-2);
+      text-underline-offset: 3px;
+      font-weight: 700;
+      word-break: break-all;
+    }
+    .info-box a:hover{ text-decoration-color: var(--deep); }
+
+    /* ---------- 버튼 ---------- */
+    .btn-print{
+      position: fixed;
+      bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+      right: 22px;
+      background: var(--deep);
+      color: #fff;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(28,69,48,0.28);
+      z-index: 999;
+      transition: transform .2s var(--ease), background .2s var(--ease);
+    }
+    .btn-print:hover{ transform: translateY(-2px); background: var(--accent); }
+    .btn-print:focus-visible{ outline: 3px solid var(--accent-2); outline-offset: 3px; }
+
+    @media (max-width: 560px){
+      body{ font-size: 15px; }
+      .container{ border-radius: 20px; }
+      section.card{ border-radius: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      * { transition: none !important; animation: none !important; }
+    }
+
+    /* =========================
+       인쇄 / PDF 저장 (A4 · 4쪽 이내)
+       - 박스 단위로만 페이지가 넘어가 글자가 잘리지 않습니다.
+       ========================= */
+    @page{
+      size: A4;
+      margin: 0;   /* 파스텔 그린 배경을 종이 끝까지 채우기 위해 0 */
+    }
+
+    @media print{
+      html, body{
+        background: var(--bg0) !important;
+        background-image: none !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      body{ font-size: 9.6pt; line-height: 1.6; }
+
+      /* 모든 쪽에 반복되는 배경 */
+      .print-bg{
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: var(--bg0);
+        z-index: -1;
+      }
+      /* 모든 쪽에 반복되는 위·아래 여백 */
+      .print-frame{ display: table; width: 100%; border-collapse: collapse; }
+      .print-frame > thead{ display: table-header-group; }
+      .print-frame > tfoot{ display: table-footer-group; }
+      .print-frame > tbody{ display: table-row-group; }
+      .print-frame > tbody > tr{ display: table-row; }
+      .print-frame > tbody > tr > td{ display: table-cell; padding: 0 12mm; }
+      .print-frame > thead td, .print-frame > tfoot td{ height: 11mm; padding: 0; }
+
+      .no-print{ display: none !important; }
+
+      .container{
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+      }
+
+      header{ margin: 0 0 10pt; padding-bottom: 10pt; }
+      .sub-title{ font-size: 9.5pt; margin-bottom: 5pt; }
+      .main-title{ font-size: 20pt; margin-bottom: 6pt; }
+      .lead{ font-size: 10pt; }
+
+      section.card{
+        box-shadow: none !important;
+        padding: 10pt 11pt;
+        margin: 0 0 9pt;
+        border-radius: 12pt;
+      }
+      /* 긴 섹션(Ⅲ)은 안쪽 박스 단위로 나뉘도록 허용 */
+      section.card{ -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+      section.card:not(.card-long){ break-inside: avoid; page-break-inside: avoid; }
+
+      h2{ font-size: 11.5pt; padding: 6pt 10pt; margin-bottom: 8pt; }
+      h3{ font-size: 10.5pt; padding-bottom: 5pt; margin-bottom: 6pt; }
+      h2, h3{ break-after: avoid; page-break-after: avoid; }
+
+      p{ margin-bottom: 4pt; orphans: 3; widows: 3; }
+      ul{ margin-bottom: 4pt; }
+      .intro-text{ font-size: 9.6pt; line-height: 1.7; padding: 0 3pt; }
+
+      .table-wrap{ overflow: visible !important; break-inside: avoid; page-break-inside: avoid; }
+      .table-wrap table{ min-width: 0; }
+      .table-wrap th, .table-wrap td{ font-size: 9.2pt; padding: 5pt 9pt; }
+      .table-wrap tr{ break-inside: avoid; page-break-inside: avoid; }
+
+      .program-box{
+        padding: 9pt 11pt;
+        margin-top: 8pt;
+        border-radius: 10pt;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .key-point{ font-size: 8.8pt; padding: 4pt 9pt; margin-top: 7pt; break-inside: avoid; }
+
+      .input-underline{ font-size: 9.6pt; padding: 2pt 5pt; background: transparent !important; }
+      .textarea-box{
+        font-size: 9.6pt;
+        line-height: 1.6;
+        height: 31mm;
+        padding: 6pt 9pt;
+        margin-top: 3pt;
+        resize: none;
+        overflow: hidden;
+        box-shadow: none !important;
+      }
+
+      .checklist-group{ gap: 5pt; }
+      .checklist-item{
+        padding: 6pt 10pt;
+        gap: 8pt;
+        grid-template-columns: 15pt 1fr;
+        border-radius: 9pt;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .cb-ui{ width: 13pt; height: 13pt; border-width: 1.2pt; border-radius: 4pt; margin-top: 1pt; }
+      .cb-ui svg{ width: 9pt; height: 9pt; }
+      .check-text{ font-size: 9.4pt; }
+
+      /* 맺음 문장과 기관 정보는 한 덩어리로 */
+      .closing{ break-inside: avoid; page-break-inside: avoid; }
+      .closing-quote{ font-size: 11pt; margin: 12pt 0 11pt; line-height: 1.7; }
+      .info-box{ padding: 11pt 14pt; border-radius: 12pt; outline-offset: -4pt; }
+      .info-box h3{ font-size: 12.5pt; }
+      .info-box p{ font-size: 9.2pt; margin: 2pt 0; }
+      .info-box hr{ margin: 6pt 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="print-bg" aria-hidden="true"></div>
+  <table class="print-frame" role="presentation">
+  <thead><tr><td></td></tr></thead>
+  <tfoot><tr><td></td></tr></tfoot>
+  <tbody><tr><td>
+  <div class="container">
+    <div class="content">
+
+      <div class="no-print warning-banner">
+        ⚠️ 주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.
+      </div>
+
+      <header>
+        <p class="sub-title">반려동물 애도 의례- 관계를 다시 놓는 시간</p>
+        <h1 class="main-title">🕯 [Home Program] 다시 만날 너에게</h1>
+        <p class="lead">
+          "상실을 존엄한 의례로, 기억을 삶의 문장으로 치환하는 시간"
+        </p>
+      </header>
+
+      <section class="card">
+        <h2>Ⅰ. 서문: 집, 가장 고유하고 고요한 성소</h2>
+        <div class="intro-text">
+          반려동물과의 이별은 내 일상을 지탱하던 '애착의 세계'가 해체되는 사건입니다. 심리학자 존 볼비(John Bowlby)는 안정 애착 대상의 상실이 신체적 통증과 유사한 고통을 일으킨다고 말합니다. 특히 반려동물의 죽음은 사회적으로 슬퍼할 권리를 충분히 인정받지 못하는 '인정받지 못한 애도(Disenfranchised Grief)'가 되기 쉬워, 그 슬픔은 종종 마음 깊은 곳에 지하수처럼 고여 머물게 됩니다.<br><br>
+          하지만 우리가 온기를 나누던 이 ‘집’은 사실 가장 강력한 치유의 성소입니다. 본 프로그램은 막연한 고통을 물리적인 형체와 언어로 바꾸어, 당신이 슬픔의 주도권을 회복하도록 돕는 데 목적이 있습니다.<br><br>
+          애도는 잊는 과정이 아니라 관계를 지속하는 형식을 바꾸는 과정입니다. 이제 아이의 이름을 나직이 부르며, 이별이 아닌 '다른 방식의 동행'을 준비해 보시기 바랍니다.
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Ⅱ. 5단계 애도 로드맵</h2>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th width="25%">단계</th>
+                <th width="35%">핵심 목표</th>
+                <th width="40%">주요 활동</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1. 존재의 마주함</td><td>슬픔을 환대하기</td><td>추모 공간 마련 및 이름 부르기</td></tr>
+              <tr><td>2. 감각의 구체화</td><td>기억을 물성으로 바꾸기</td><td>사진 기록 및 일상 서사 리스트 작성</td></tr>
+              <tr><td>3. 내면의 표출</td><td>감정의 정체 확인하기</td><td>마음 추상화 및 감정 언어화</td></tr>
+              <tr><td>4. 서사의 재구성</td><td>관점을 사랑으로 이동하기</td><td>'덕분에' 쓰기 및 역할 바꾸기 편지</td></tr>
+              <tr><td>5. 관계의 전환</td><td>새로운 연결 약속하기</td><td>기억 상자 제작 및 빛의 의례</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card card-long">
+        <h2>Ⅲ. 세부 프로그램 가이드</h2>
+
+        <div class="program-box">
+          <h3>[1단계] 존재의 마주함: 슬픔을 환대하기 (20분)</h3>
+          <p>텅 빈 자리를 외면하는 대신, 그 자리에 아이를 위한 작은 섬을 만듭니다.</p>
+          <ul>
+            <li><strong>추모의 자리:</strong> 아이가 좋아하던 장소에 사진, 유품, 간식을 두고 양초를 켭니다.</li>
+            <li><strong>선언적 부름:</strong> 빈칸을 채워 소리 내어 말해봅니다.</li>
+          </ul>
+          <p>“<input type="text" class="input-underline" style="width: 80px; display:inline-block;">야, 너는 나에게
+            <input type="text" class="input-underline" style="width: 120px; display:inline-block;">이었고, 너와 함께한 시간은 나에게
+            <input type="text" class="input-underline" style="width: 150px; display:inline-block;">이었어.”</p>
+          <div class="key-point">Key Point: 감정의 정리가 아니라 상실이라는 실재를 온전히 마주하는 것입니다.</div>
+        </div>
+
+        <div class="program-box">
+          <h3>[2단계] 기억의 감각화: 물성으로 기록하기 (40분)</h3>
+          <p>감각은 기억을 안전하게 붙잡아 주는 닻이 됩니다.</p>
+          <p><strong>• 세 장면 기록:</strong> (첫 만남, 행복했던 날, 마지막 순간)</p>
+          <p>그날의 날씨와 공기: <input type="text" class="input-underline"></p>
+          <p>나와 아이의 표정/행동: <input type="text" class="input-underline"></p>
+          <p>그때 마음 한 문장: <input type="text" class="input-underline"></p>
+          <p><strong>• 일상의 감각 목록:</strong> 5가지를 적어봅니다. (예: 꼬릿한 발 냄새 등)</p>
+          <textarea class="textarea-box" placeholder="1. &#10;2. &#10;3. &#10;4. &#10;5."></textarea>
+          <div class="key-point">Key Point: 막연한 '상실'을 구체적인 '그리움'의 서사로 전환하는 작업입니다.</div>
+        </div>
+
+        <div class="program-box">
+          <h3>[3단계] 감정의 가시화: 내면의 풍경 그리기 (30분)</h3>
+          <p>정의되지 않은 혼란스러운 감정에 이름표를 붙여줍니다.</p>
+          <p><strong>• 마음 추상화:</strong> 기분을 선, 면, 색으로만 표현해 봅니다. (별도 종이 활용 가능)</p>
+          <p><strong>• 감정의 구조화:</strong> 아래 문장을 완성합니다.</p>
+          <p>“나는 지금 <input type="text" class="input-underline" style="width: 120px; display:inline-block;">해서
+            <input type="text" class="input-underline" style="width: 120px; display:inline-block;">하다. 내 슬픔은
+            <input type="text" class="input-underline" style="width: 150px; display:inline-block;">의 모습과 닮아 있다.”</p>
+          <div class="key-point">Key Point: 감정은 이름 붙여질 때 비로소 다룰 수 있는 대상이 됩니다.</div>
+        </div>
+
+        <div class="program-box">
+          <h3>[4단계] 서사의 재구성: 관점을 사랑으로 이동하기 (40분)</h3>
+          <p><strong>• ‘덕분에’로 치환하기:</strong> 죄책감을 감사의 문장으로 바꿉니다.</p>
+          <p>(후) "네가 <input type="text" class="input-underline" style="width: 150px; display:inline-block;">해준 덕분에 나는
+            <input type="text" class="input-underline" style="width: 150px; display:inline-block;">을 배웠어"</p>
+          <p><strong>• 역할 바꾸기 편지:</strong> 아이의 시선에서 나에게 편지를 씁니다.</p>
+          <textarea class="textarea-box" placeholder="“엄마/아빠, 나랑 살면서 [ ]이 가장 좋았어. 난 지금 괜찮아. 그러니 너도 [ ]해도 좋아.”"></textarea>
+        </div>
+
+        <div class="program-box">
+          <h3>[5단계] 관계의 전환: 새로운 연결의 약속 (50분)</h3>
+          <p><strong>• 기억 상자(Memory Box):</strong> 유품과 오늘 쓴 기록물을 담아 '정서적 안전장치'를 만듭니다.</p>
+          <p><strong>• 빛의 의례:</strong> 초를 바라보며 마지막 한 문장을 건네고 불을 끕니다.</p>
+          <p>“너의 존재에 감사한다. 우리는 다른 방식으로 계속 연결되어 있다.”</p>
+          <p><strong>• 가치의 확장(선택):</strong> 아이의 이름으로 행할 작은 선행(기부, 봉사 등)을 정해봅니다.</p>
+          <input type="text" class="input-underline" placeholder="나의 실천 계획: ">
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Ⅳ. 동행을 위한 자기 돌봄 (Self-Care)</h2>
+
+        <div class="checklist-group">
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>가족 활동:</strong> 전지에 사진을 모아 '기억의 축제'를 열거나, '기억의 조약돌' 활동하기</span>
+          </label>
+
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>감정의 파도:</strong> 의례 후 슬픔이 다시 찾아오는 것은 정상이니 스스로를 다그치지 말기</span>
+          </label>
+
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>어린이를 위한 배려:</strong> 슬픔을 억누르지 않도록 충분히 표현하게 돕고 경청하기</span>
+          </label>
+
+          <label class="checklist-item">
+            <input class="cb-input" type="checkbox">
+            <span class="cb-ui" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="check-text"><strong>전문가의 도움:</strong> 일상이 불가능할 정도라면 상담 전문가의 도움 받기 (용기 있는 선택)</span>
+          </label>
+        </div>
+      </section>
+
+      <div class="closing">
+      <div class="closing-quote">
+        존엄은 우연히 주어지지 않습니다.<br>
+        준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
+      </div>
+
+      <footer class="info-box">
+        <h3>웰다잉통합예술교육협회</h3>
+        <p>삶을 빚는 예술, 죽음을 품는 인문학. 삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
+        <hr>
+        <p>🌐 홈페이지: <a href="http://wia-edu.org" target="_blank">http://wia-edu.org</a></p>
+        <p>📝 블로그: <a href="https://blog.naver.com/say2sky" target="_blank">https://blog.naver.com/say2sky</a></p>
+        <p>📞 프로그램문의: 010-5635-7989</p>
+      </footer>
+      </div>
+
+    </div>
+  </div>
+  </td></tr></tbody>
+  </table>
+
+  <button id="btnPrint" class="btn-print no-print" type="button">고화질 PDF로 보관하기</button>
+
+  <script>
+    // PDF 품질의 숨은 변수: "폰트 로딩 완료" 후 인쇄
+    const btn = document.getElementById('btnPrint');
+
+    btn.addEventListener('click', async () => {
+      try {
+        if (document.fonts && document.fonts.ready) {
+          btn.textContent = 'PDF 준비 중...';
+          btn.disabled = true;
+          await document.fonts.ready;
+        }
+      } finally {
+        btn.textContent = '고화질 PDF로 보관하기';
+        btn.disabled = false;
+        window.print();
+      }
+    });
+  </script>
+</body>
+</html>
