@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>나의 반려동물을 위한 돌봄 의향서</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+  <!-- 제목: 고운바탕(명조) / 본문: 프리텐다드(산세리프) -->
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet" />
+
+  <style>
+    :root{
+      /* 파스텔 그린 바탕 */
+      --bg:        #e6f1e1;
+      --bg-soft:   #eef6ea;
+      --card:      #f6faf3;
+      --paper:     #ffffff;
+
+      /* 진한 글자색 */
+      --ink:       #14231a;
+      --ink-2:     #2a4233;
+      --hint:      #7c8f80;
+
+      /* 그린 포인트 */
+      --green:     #4c7a3d;
+      --green-2:   #6f9f52;
+      --green-deep:#2f5a34;
+
+      --line:      #cfe0c8;
+      --line-2:    #b4cdaa;
+
+      --serif: "Gowun Batang", "Nanum Myeongjo", "Noto Serif KR", "Noto Serif CJK KR", serif;
+      --sans:  "Pretendard", "Noto Sans KR", "Noto Sans CJK KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+      --ease: cubic-bezier(.2,.9,.2,1);
+    }
+
+    *{ box-sizing: border-box; }
+
+    html{ background: var(--bg); }
+
+    body{
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      -webkit-font-smoothing: antialiased;
+      background:
+        radial-gradient(900px 600px at 8% 0%, #f3f9ee 0%, transparent 60%),
+        radial-gradient(800px 600px at 100% 12%, #dcecd5 0%, transparent 62%),
+        var(--bg);
+      background-attachment: fixed;
+    }
+
+    .container{
+      width: min(920px, calc(100% - 28px));
+      margin: clamp(16px, 4vw, 48px) auto clamp(90px, 10vw, 120px);
+    }
+
+    /* 안내 배너 */
+    .warning-banner{
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 13px 16px;
+      margin-bottom: 22px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--green);
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.6;
+      color: var(--ink-2);
+    }
+
+    /* 표제 */
+    header{
+      text-align: center;
+      padding: clamp(22px, 4vw, 40px) 8px clamp(20px, 3.4vw, 34px);
+    }
+    header::before{
+      content: "";
+      display: block;
+      width: 44px; height: 44px;
+      margin: 0 auto 16px;
+      background: var(--green);
+      -webkit-mask: var(--paw) center / contain no-repeat;
+              mask: var(--paw) center / contain no-repeat;
+      --paw: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cellipse cx='11' cy='21' rx='4.4' ry='5.8' transform='rotate(-20 11 21)'/%3E%3Cellipse cx='19.5' cy='12' rx='4.4' ry='6'/%3E%3Cellipse cx='28.5' cy='12' rx='4.4' ry='6'/%3E%3Cellipse cx='37' cy='21' rx='4.4' ry='5.8' transform='rotate(20 37 21)'/%3E%3Cpath d='M24 22c-6 0-12 7-12 13 0 4 3 6 6.500 6 2.300 0 3.600-1 5.500-1s3.200 1 5.500 1c3.500 0 6.500-2 6.500-6 0-6-6-13-12-13z'/%3E%3C/svg%3E");
+    }
+    h1{
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: clamp(1.55rem, 4.4vw, 2.3rem);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .sub-h1{
+      margin: 12px 0 0;
+      font-size: clamp(0.92rem, 2.2vw, 1.02rem);
+      color: var(--ink-2);
+      font-weight: 500;
+    }
+    header::after{
+      content: "";
+      display: block;
+      width: 56px; height: 2px;
+      margin: 22px auto 0;
+      background: var(--green);
+      border-radius: 2px;
+    }
+
+    /* 섹션 카드 */
+    section.card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: clamp(14px, 2.6vw, 24px);
+      margin: 0 0 20px;
+      box-shadow: 0 1px 0 #fff inset, 0 10px 30px rgba(47, 90, 52, 0.07);
+    }
+
+    h2{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0 8px;
+      margin: 0 0 14px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      color: #fff;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: clamp(1.05rem, 2.6vw, 1.22rem);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+      background: linear-gradient(120deg, var(--green-deep), var(--green) 55%, var(--green-2));
+    }
+    h2 .en{
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: 0.8em;
+      opacity: 0.88;
+      letter-spacing: 0.01em;
+    }
+
+    h3{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 22px 0 10px;
+      font-size: 1.03rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    h3::before{
+      content: "";
+      flex: none;
+      width: 4px; height: 1.1em;
+      border-radius: 3px;
+      background: var(--green);
+    }
+    h2 + h3{ margin-top: 16px; }
+
+    /* 격자 */
+    .grid{ display: grid; gap: 10px; }
+    .grid + .grid, .field + .field, .field + .grid, .grid + .field{ margin-top: 10px; }
+    .grid > .field{ margin-top: 0; }
+    .grid-2{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .span-all{ grid-column: 1 / -1; }
+
+    @media screen and (max-width: 700px){
+      .grid-2, .grid-3{ grid-template-columns: 1fr; }
+    }
+
+    .field{
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 11px 14px 12px;
+      min-width: 0;
+    }
+    .field .label{
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      color: var(--ink-2);
+    }
+
+    .input-field{
+      width: 100%;
+      border: 0;
+      border-bottom: 1.5px solid var(--line-2);
+      border-radius: 0;
+      padding: 5px 2px;
+      font: inherit;
+      font-size: 1rem;
+      color: var(--ink);
+      background: transparent;
+      transition: border-color .2s var(--ease);
+    }
+    .input-field:focus{
+      outline: none;
+      border-bottom-color: var(--green);
+      box-shadow: 0 1.5px 0 var(--green);
+    }
+    .input-follow{ margin-top: 8px; }
+
+    .textarea-box{
+      display: block;
+      width: 100%;
+      min-height: 96px;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      resize: none;
+      overflow: hidden;
+      font: inherit;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--bg-soft);
+      transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .textarea-box.tall{ min-height: 220px; }
+    .textarea-box:focus{
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(76, 122, 61, 0.16);
+    }
+    ::placeholder{ color: var(--hint); opacity: 1; }
+
+    /* 선택 항목(체크/라디오) */
+    .pill-group{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .pill-group .pill{ flex: 1 1 auto; }
+    .pill-group.stack{ display: grid; grid-template-columns: 1fr; margin-top: 0; }
+
+    .pill{
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--bg-soft);
+      cursor: pointer;
+      user-select: none;
+      transition: border-color .2s var(--ease), background .2s var(--ease);
+    }
+    .pill-group.stack .pill{ background: var(--paper); padding: 11px 14px; }
+    .pill:hover{ border-color: var(--green-2); }
+    .pill:has(input:checked){
+      border-color: var(--green);
+      background: #e3f0db;
+    }
+
+    .pill input{
+      position: absolute;
+      opacity: 0;
+      width: 1px; height: 1px;
+    }
+
+    .ui{
+      flex: none;
+      display: grid;
+      place-items: center;
+      width: 20px; height: 20px;
+      border: 1.5px solid var(--line-2);
+      border-radius: 6px;
+      background: var(--paper);
+      transition: background .2s var(--ease), border-color .2s var(--ease);
+    }
+    .pill input:focus-visible + .ui{
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+    }
+
+    .ui svg{ width: 14px; height: 14px; color: #fff; display: none; }
+    .ui path{
+      stroke-dasharray: 34;
+      stroke-dashoffset: 34;
+      transition: stroke-dashoffset .35s var(--ease);
+    }
+    .pill input[type="checkbox"] + .ui svg{ display: block; }
+    .pill input[type="checkbox"]:checked + .ui{
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .pill input[type="checkbox"]:checked + .ui path{ stroke-dashoffset: 0; }
+
+    .pill input[type="radio"] + .ui{ border-radius: 50%; }
+    .pill input[type="radio"] + .ui::after{
+      content: "";
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      transform: scale(0);
+      transition: transform .2s var(--ease);
+    }
+    .pill input[type="radio"]:checked + .ui{ border-color: var(--green); }
+    .pill input[type="radio"]:checked + .ui::after{ transform: scale(1); }
+
+    .txt{
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+
+    /* 서명 영역 */
+    .sign-area{
+      margin: 0 0 20px;
+      padding: clamp(16px, 2.8vw, 26px);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+    }
+    .sign-text{
+      margin: 0 0 14px;
+      font-family: var(--serif);
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--ink);
+    }
+    .sign-text .input-field{
+      display: inline-block;
+      width: 140px;
+      padding: 0 2px;
+      text-align: center;
+      font-family: var(--serif);
+      font-weight: 700;
+    }
+    .sign-area .field{ background: var(--card); }
+
+    /* 맺음 문장 */
+    .closing-quote{
+      margin: 30px 0 26px;
+      text-align: center;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: clamp(1rem, 2.6vw, 1.14rem);
+      line-height: 1.85;
+      color: var(--green-deep);
+    }
+
+    /* 기관 정보 박스 */
+    .info-box{
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      background: var(--paper);
+      border: 1px solid var(--line-2);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(47, 90, 52, 0.08);
+    }
+    .info-brand{
+      padding: 22px 24px;
+      background: linear-gradient(140deg, #dcebd3, #eaf4e3);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .info-box h3{
+      display: block;
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-size: 1.28rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--green-deep);
+    }
+    .info-box h3::before{ display: none; }
+    .info-brand p{
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--ink-2);
+    }
+    .info-divider{ display: none; }
+    .info-contact{
+      padding: 18px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 9px;
+    }
+    .info-contact p{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2px 8px;
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+    .info-contact svg{
+      flex: none;
+      width: 28px; height: 28px;
+      padding: 6px;
+      border-radius: 50%;
+      background: #e3f0db;
+      color: var(--green-deep);
+    }
+    .info-contact b{ font-weight: 700; color: var(--ink-2); }
+    .info-box a{
+      color: var(--green-deep);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid var(--line-2);
+    }
+    .info-box a:hover{ border-bottom-color: var(--green-deep); }
+
+    @media screen and (max-width: 700px){
+      .info-box{ grid-template-columns: 1fr; }
+      .info-brand{ border-right: 0; border-bottom: 1px solid var(--line); }
+    }
+
+    /* PDF 버튼 */
+    .btn-print{
+      position: fixed;
+      right: 22px; bottom: 22px;
+      z-index: 1000;
+      padding: 14px 24px;
+      border: 0;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: #fff;
+      background: var(--green-deep);
+      box-shadow: 0 12px 28px rgba(31, 61, 36, 0.28);
+      cursor: pointer;
+      transition: background .2s var(--ease), transform .2s var(--ease);
+    }
+    .btn-print:hover{ background: var(--green); transform: translateY(-1px); }
+    .btn-print:focus-visible{ outline: 3px solid #fff; outline-offset: 2px; }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ transition: none !important; animation: none !important; }
+    }
+
+    /* =========================
+       인쇄 / PDF : A4 5쪽
+       1쪽 Ⅰ·Ⅱ / 2쪽 Ⅲ / 3쪽 Ⅳ·Ⅴ / 4쪽 Ⅵ / 5쪽 Ⅶ·서명·기관
+       ========================= */
+    @page{ size: A4; margin: 10mm 13mm; }
+
+    @media print{
+      html, body{
+        background: var(--bg) !important;
+        -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+      }
+      body{ font-size: 10pt; line-height: 1.55; }
+
+      .no-print{ display: none !important; }
+
+      .container{ width: 100%; margin: 0; }
+
+      header{ padding: 0 0 3.4mm; }
+      header::before{ width: 6mm; height: 6mm; margin-bottom: 1.4mm; }
+      header::after{ margin-top: 2.6mm; }
+      h1{ font-size: 19pt; }
+      .sub-h1{ margin-top: 1.4mm; font-size: 10pt; }
+
+      section.card{
+        padding: 3.4mm;
+        margin: 0 0 3.4mm;
+        border-radius: 4mm;
+        box-shadow: none;
+      }
+      h2{ font-size: 12.5pt; padding: 1.9mm 4mm; margin-bottom: 2.6mm; border-radius: 2.5mm; }
+      h3{ font-size: 10.8pt; margin: 3.6mm 0 2mm; }
+      h2 + h3{ margin-top: 3mm; }
+
+      .grid{ gap: 2.2mm; }
+      .grid + .grid, .field + .field, .field + .grid, .grid + .field{ margin-top: 2.2mm; }
+      .grid > .field{ margin-top: 0; }
+
+      .field{ padding: 1.6mm 3.2mm 2mm; border-radius: 3mm; }
+      .field .label{ font-size: 9pt; line-height: 1.3; margin-bottom: 0.5mm; }
+      .input-field{ font-size: 10pt; padding: 0.6mm 0.5mm; height: 5.6mm; }
+      .input-follow{ margin-top: 1.6mm; }
+
+      .textarea-box{
+        min-height: 14mm;
+        margin-top: 1.4mm;
+        padding: 2mm 2.6mm;
+        font-size: 10pt;
+        line-height: 1.5;
+        border-radius: 2.4mm;
+      }
+      .textarea-box.tall{ min-height: 100mm; }
+      .roomy .textarea-box{ min-height: 52mm; }
+      .roomy-lg .textarea-box{ min-height: 96mm; }
+      .roomy-xl .textarea-box{ min-height: 132mm; }
+
+      .pill-group{ gap: 1.8mm; margin-top: 1.2mm; }
+      .pill{ min-height: 0; padding: 1.4mm 2.4mm; gap: 1.8mm; border-radius: 2.6mm; }
+      .pill-group.stack .pill{ padding: 2.6mm 3.4mm; }
+      .ui{ width: 4.2mm; height: 4.2mm; border-radius: 1.2mm; }
+      .ui svg{ width: 3.2mm; height: 3.2mm; }
+      .pill input[type="radio"] + .ui::after{ width: 2.2mm; height: 2.2mm; }
+      .txt{ font-size: 9.6pt; }
+
+      .sign-area{ padding: 5mm; margin: 0 0 4mm; border-radius: 4mm; }
+      .sign-text{ font-size: 10.4pt; line-height: 1.9; margin-bottom: 3mm; }
+      .sign-text .input-field{ width: 34mm; height: auto; }
+
+      .closing-quote{ margin: 6mm 0 5mm; font-size: 11.5pt; }
+
+      .info-box{ box-shadow: none; border-radius: 4mm; }
+      .info-brand{ padding: 4.5mm 5.5mm; }
+      .info-box h3{ font-size: 13.5pt; margin: 0 0 1.5mm; }
+      .info-brand p{ font-size: 9.2pt; }
+      .info-contact{ padding: 4mm 5.5mm; gap: 1.8mm; }
+      .info-contact p{ font-size: 9.4pt; }
+      .info-contact svg{ width: 6mm; height: 6mm; padding: 1.3mm; }
+
+      .print-pair{ grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); }
+
+      /* 쪽 나눔: 묶음 단위로 새 쪽에서 시작 */
+      .page-start{ break-before: page; page-break-before: always; }
+
+      /* 글자와 칸이 쪽 경계에 걸리지 않도록 */
+      .field, .pill, .sign-text, .info-box, .closing-quote, header{
+        break-inside: avoid; page-break-inside: avoid;
+      }
+      h2, h3, .field .label{ break-after: avoid; page-break-after: avoid; }
+      .closing-quote{ break-after: avoid; page-break-after: avoid; }
+      p{ orphans: 3; widows: 3; }
+
+      ::placeholder{ color: #93a596; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="no-print warning-banner">
+      <span aria-hidden="true">⚠️</span>
+      <span>주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.</span>
+    </div>
+
+    <header>
+      <h1>『나의 반려동물을 위한 돌봄 의향서』</h1>
+      <p class="sub-h1">: 나의 부재 시 반려동물의 안녕과 지속 가능한 돌봄을 위한 기록</p>
+    </header>
+
+    <!-- Ⅰ -->
+    <section class="card">
+      <h2><span>Ⅰ. 반려동물 기본 프로필</span> <span class="en">(Identity)</span></h2>
+
+      <div class="grid grid-2">
+        <div class="field">
+          <span class="label">이름</span>
+          <input type="text" class="input-field" aria-label="이름" />
+        </div>
+        <div class="field">
+          <span class="label">종/품종</span>
+          <input type="text" class="input-field" aria-label="종/품종" />
+        </div>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <span class="label">나이</span>
+          <input type="text" class="input-field" aria-label="나이" />
+        </div>
+        <div class="field">
+          <span class="label">성별</span>
+          <input type="text" class="input-field" aria-label="성별" />
+        </div>
+        <div class="field">
+          <span class="label">중성화 여부</span>
+          <div class="pill-group">
+            <label class="pill"><input type="radio" name="neutral" /><span class="ui" aria-hidden="true"></span><span class="txt">예</span></label>
+            <label class="pill"><input type="radio" name="neutral" /><span class="ui" aria-hidden="true"></span><span class="txt">아니오</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid print-pair">
+        <div class="field">
+          <span class="label">마이크로칩 등록번호</span>
+          <input type="text" class="input-field" aria-label="마이크로칩 등록번호" />
+        </div>
+        <div class="field">
+          <span class="label">성격 특징</span>
+          <textarea class="textarea-box" aria-label="성격 특징" placeholder="예: 겁이 많음, 사람을 좋아함, 특정 소리에 민감함 등"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ⅱ -->
+    <section class="card">
+      <h2><span>Ⅱ. 돌봄 네트워크</span> <span class="en">(Care Network)</span></h2>
+
+      <h3>1. 보호 체계</h3>
+      <div class="grid grid-2">
+        <div class="field">
+          <span class="label">제1 보호자(우선 인수) - 성명</span>
+          <input type="text" class="input-field" aria-label="제1 보호자(우선 인수) - 성명" />
+        </div>
+        <div class="field">
+          <span class="label">제1 보호자 연락처</span>
+          <input type="text" class="input-field" aria-label="제1 보호자 연락처" />
+        </div>
+        <div class="field">
+          <span class="label">관계</span>
+          <input type="text" class="input-field" aria-label="관계" />
+        </div>
+        <div class="field">
+          <span class="label">인수 시점</span>
+          <div class="pill-group">
+            <label class="pill"><input type="radio" name="timing" /><span class="ui" aria-hidden="true"></span><span class="txt">즉시</span></label>
+            <label class="pill"><input type="radio" name="timing" /><span class="ui" aria-hidden="true"></span><span class="txt">장례 이후</span></label>
+            <label class="pill"><input type="radio" name="timing" /><span class="ui" aria-hidden="true"></span><span class="txt">기타(아래 기입)</span></label>
+          </div>
+          <input type="text" class="input-field input-follow" placeholder="기타 인수 시점" aria-label="기타 인수 시점" />
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="field">
+          <span class="label">제2 보호자(대안 처) - 성명/기관</span>
+          <input type="text" class="input-field" aria-label="제2 보호자(대안 처) - 성명/기관" />
+        </div>
+        <div class="field">
+          <span class="label">제2 보호자 연락처</span>
+          <input type="text" class="input-field" aria-label="제2 보호자 연락처" />
+        </div>
+        <div class="field span-all">
+          <span class="label">보호 형태</span>
+          <div class="pill-group">
+            <label class="pill"><input type="radio" name="type" /><span class="ui" aria-hidden="true"></span><span class="txt">임시보호</span></label>
+            <label class="pill"><input type="radio" name="type" /><span class="ui" aria-hidden="true"></span><span class="txt">영구입양</span></label>
+            <label class="pill"><input type="radio" name="type" /><span class="ui" aria-hidden="true"></span><span class="txt">보호소 위탁</span></label>
+          </div>
+        </div>
+      </div>
+
+      <h3>2. 긴급 대응 및 인계</h3>
+      <div class="grid">
+        <div class="field">
+          <span class="label">주거지 출입 방법</span>
+          <input type="text" class="input-field" aria-label="주거지 출입 방법" />
+        </div>
+        <div class="field">
+          <span class="label">인계 품목</span>
+          <div class="pill-group">
+            <label class="pill"><input type="checkbox" /><span class="ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="txt">사료</span></label>
+            <label class="pill"><input type="checkbox" /><span class="ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="txt">평소 쓰던 식기</span></label>
+            <label class="pill"><input type="checkbox" /><span class="ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="txt">이동장</span></label>
+            <label class="pill"><input type="checkbox" /><span class="ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="txt">애착 침구</span></label>
+            <label class="pill"><input type="checkbox" /><span class="ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="txt">건강기록부</span></label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ⅲ -->
+    <section class="card page-start roomy">
+      <h2><span>Ⅲ. 일상의 서사</span> <span class="en">(Daily Routine &amp; Soul)</span></h2>
+
+      <h3>1. 식사 의례 및 습관</h3>
+      <div class="grid grid-2">
+        <div class="field">
+          <span class="label">사료 종류</span>
+          <input type="text" class="input-field" aria-label="사료 종류" />
+        </div>
+        <div class="field">
+          <span class="label">급여량 및 시간</span>
+          <input type="text" class="input-field" aria-label="급여량 및 시간" />
+        </div>
+        <div class="field span-all">
+          <span class="label">급여 습관</span>
+          <textarea class="textarea-box" aria-label="급여 습관" placeholder="예: '기다려' 필수, 사료를 물에 불려줄 것, 손으로 줘야 먹음 등"></textarea>
+        </div>
+        <div class="field span-all">
+          <span class="label">간식 및 알레르기(절대 금지 음식 포함)</span>
+          <input type="text" class="input-field" aria-label="간식 및 알레르기(절대 금지 음식 포함)" />
+        </div>
+      </div>
+
+      <h3>2. 안정의 상징과 언어</h3>
+      <div class="grid grid-2">
+        <div class="field">
+          <span class="label">불안 시 대처</span>
+          <textarea class="textarea-box" aria-label="불안 시 대처" placeholder="좋아하는 숨바꼭질 장소, 보호자 냄새가 밴 애착 물건 등"></textarea>
+        </div>
+        <div class="field">
+          <span class="label">교감 언어</span>
+          <textarea class="textarea-box" aria-label="교감 언어" placeholder="알아듣는 명령어, 칭찬 표현, 싫어하는 접촉 부위나 행동"></textarea>
+        </div>
+      </div>
+
+      <h3>3. 활동 및 환경</h3>
+      <div class="grid grid-2">
+        <div class="field">
+          <span class="label">산책/놀이</span>
+          <textarea class="textarea-box" aria-label="산책/놀이" placeholder="선호 시간대, 산책 코스, 좋아하는 장난감 및 놀이 방식"></textarea>
+        </div>
+        <div class="field">
+          <span class="label">기피 상황</span>
+          <input type="text" class="input-field" aria-label="기피 상황" placeholder="천둥, 큰 소리, 낯선 개, 오토바이 소리 등" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Ⅳ -->
+    <section class="card page-start roomy-xl">
+      <h2><span>Ⅳ. 의료 및 건강 아카이브</span> <span class="en">(Medical Care)</span></h2>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <span class="label">전담 동물병원(병원명)</span>
+          <input type="text" class="input-field" aria-label="전담 동물병원(병원명)" />
+        </div>
+        <div class="field">
+          <span class="label">주치의</span>
+          <input type="text" class="input-field" aria-label="주치의" />
+        </div>
+        <div class="field">
+          <span class="label">연락처</span>
+          <input type="text" class="input-field" aria-label="연락처" />
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="field">
+          <span class="label">투약 및 관리</span>
+          <textarea class="textarea-box" aria-label="투약 및 관리" placeholder="현재 복용 약/영양제, 투약 요령, 지병 유무"></textarea>
+        </div>
+        <div class="field">
+          <span class="label">노령/중병 관리</span>
+          <textarea class="textarea-box" aria-label="노령/중병 관리" placeholder="인지 저하, 관절 주의사항, 안락사 및 연명치료에 대한 나의 생각"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ⅴ -->
+    <section class="card">
+      <h2><span>Ⅴ. 재정적·법적 책임</span> <span class="en">(Support &amp; Legal)</span></h2>
+
+      <div class="field">
+        <span class="label">경제적 지원</span>
+        <div class="pill-group">
+          <label class="pill"><input type="radio" name="finance" /><span class="ui" aria-hidden="true"></span><span class="txt">별도 계좌</span></label>
+          <label class="pill"><input type="radio" name="finance" /><span class="ui" aria-hidden="true"></span><span class="txt">유산 배정</span></label>
+          <label class="pill"><input type="radio" name="finance" /><span class="ui" aria-hidden="true"></span><span class="txt">상조 가입</span></label>
+          <label class="pill"><input type="radio" name="finance" /><span class="ui" aria-hidden="true"></span><span class="txt">기타(아래 기입)</span></label>
+        </div>
+        <input type="text" class="input-field input-follow" placeholder="기타 경제적 지원 내용" aria-label="기타 경제적 지원 내용" />
+      </div>
+
+      <div class="field">
+        <span class="label">소유권 이전</span>
+        <div class="pill-group">
+          <label class="pill"><input type="radio" name="ownership" /><span class="ui" aria-hidden="true"></span><span class="txt">제1 보호자에게 이전</span></label>
+          <label class="pill"><input type="radio" name="ownership" /><span class="ui" aria-hidden="true"></span><span class="txt">제2 보호자에게 이전</span></label>
+          <label class="pill"><input type="radio" name="ownership" /><span class="ui" aria-hidden="true"></span><span class="txt">가족 판단 준용</span></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ⅵ -->
+    <section class="card page-start roomy-lg">
+      <h2><span>Ⅵ. 마지막 배웅과 추모</span> <span class="en">(The Final Farewell)</span></h2>
+
+      <h3>1. 반려동물의 이별 예식 (반려동물이 먼저 떠날 경우)</h3>
+      <div class="field">
+        <span class="label">희망 방식</span>
+        <div class="pill-group">
+          <label class="pill"><input type="radio" name="farewell" /><span class="ui" aria-hidden="true"></span><span class="txt">화장</span></label>
+          <label class="pill"><input type="radio" name="farewell" /><span class="ui" aria-hidden="true"></span><span class="txt">수목장</span></label>
+          <label class="pill"><input type="radio" name="farewell" /><span class="ui" aria-hidden="true"></span><span class="txt">메모리얼 스톤</span></label>
+          <label class="pill"><input type="radio" name="farewell" /><span class="ui" aria-hidden="true"></span><span class="txt">기타(아래 기입)</span></label>
+        </div>
+        <input type="text" class="input-field input-follow" placeholder="기타 방식" aria-label="기타 방식" />
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <span class="label">장례 시설</span>
+          <input type="text" class="input-field" aria-label="장례 시설" />
+        </div>
+        <div class="field">
+          <span class="label">마지막 당부</span>
+          <textarea class="textarea-box" aria-label="마지막 당부" placeholder="떠나는 아이에게 꼭 해주고 싶은 말이나 마지막 예우"></textarea>
+        </div>
+      </div>
+
+      <h3>2. 나의 장례식과 반려동물 (Option)</h3>
+      <div class="pill-group stack">
+        <label class="pill"><input type="checkbox" /><span class="ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="txt">나의 장례식 당일, 반려동물과의 마지막 대면(동반)을 희망함</span></label>
+        <label class="pill"><input type="checkbox" /><span class="ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="txt">나의 추모 공간(영정 사진 등)에 반려동물의 흔적을 함께 남겨주길 희망함</span></label>
+        <label class="pill"><input type="checkbox" /><span class="ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span class="txt">사후 나의 안식처에 반려동물의 물품 혹은 유골을 동반 안치하길 희망함</span></label>
+      </div>
+    </section>
+
+    <!-- Ⅶ -->
+    <section class="card page-start">
+      <h2><span>Ⅶ. 마지막 편지</span> <span class="en">(Final Message)</span></h2>
+      <div class="field">
+        <span class="label">남겨질 아이에게, 혹은 새로운 보호자에게</span>
+        <textarea class="textarea-box tall" aria-label="남겨질 아이에게, 혹은 새로운 보호자에게" placeholder="남겨질 아이에게, 혹은 새로운 보호자에게 전하고 싶은 진심을 남겨주세요."></textarea>
+      </div>
+    </section>
+
+    <!-- 서명 -->
+    <section class="sign-area">
+      <p class="sign-text">
+        본 문서는 나의 부재 시 나의 가장 내밀한 동반자인 ( <input type="text" class="input-field" aria-label="반려동물 이름" /> )의 삶이 고유한 결을 잃지 않기를 바라는 마음으로 작성되었습니다.
+        새로운 보호자께서는 이 지침을 단순히 정보의 전달이 아닌, 떠난 자가 남긴 생명에 대한 마지막 책임이자 간절한 약속으로 받아들여 주시길 부탁드립니다.
+      </p>
+
+      <div class="grid grid-2">
+        <div class="field">
+          <span class="label">작성자(서명)</span>
+          <input type="text" class="input-field" aria-label="작성자(서명)" />
+        </div>
+        <div class="field">
+          <span class="label">공유 대상(대리인)(서명)</span>
+          <input type="text" class="input-field" aria-label="공유 대상(대리인)(서명)" />
+        </div>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="field">
+          <span class="label">작성일(년)</span>
+          <input type="text" class="input-field" placeholder="202□" aria-label="작성일(년)" />
+        </div>
+        <div class="field">
+          <span class="label">월</span>
+          <input type="text" class="input-field" aria-label="월" />
+        </div>
+        <div class="field">
+          <span class="label">일</span>
+          <input type="text" class="input-field" aria-label="일" />
+        </div>
+      </div>
+    </section>
+
+    <div class="closing-quote">
+      존엄은 우연히 주어지지 않습니다.<br />
+      준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
+    </div>
+
+    <footer class="info-box">
+      <div class="info-brand">
+        <h3>웰다잉통합예술교육협회</h3>
+        <p>삶을 빚는 예술, 죽음을 품는 인문학. 삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
+      </div>
+      <div class="info-contact">
+        <p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.800 3 2.800 15 0 18M12 3c-2.800 3-2.800 15 0 18"/></svg>
+          <b>홈페이지:</b> <a href="http://wia-edu.org" target="_blank" rel="noopener">http://wia-edu.org</a>
+        </p>
+        <p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.500 6.500l4 4"/></svg>
+          <b>블로그:</b> <a href="https://blog.naver.com/say2sky" target="_blank" rel="noopener">https://blog.naver.com/say2sky</a>
+        </p>
+        <p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.500 3.500h3l1.500 4-2 1.500a12 12 0 0 0 6 6l1.500-2 4 1.500v3a2 2 0 0 1-2 2A15.500 15.500 0 0 1 4.500 5.500a2 2 0 0 1 2-2z"/></svg>
+          <b>프로그램 문의:</b> 010-5635-7989
+        </p>
+      </div>
+    </footer>
+
+  </div>
+
+  <button id="btnPrint" class="btn-print no-print" type="button">고화질 PDF로 보관하기</button>
+
+  <script>
+    // 긴 글을 써도 인쇄 시 잘리지 않도록 글상자 높이를 내용에 맞춤
+    const areas = document.querySelectorAll('.textarea-box');
+    const fit = (el) => {
+      el.style.height = 'auto';
+      if (el.value) el.style.height = (el.scrollHeight + 2) + 'px';
+      else el.style.height = '';
+    };
+    const fitAll = () => areas.forEach(fit);
+    areas.forEach((el) => el.addEventListener('input', () => fit(el)));
+    window.addEventListener('beforeprint', fitAll);
+    window.addEventListener('afterprint', fitAll);
+
+    // 웹폰트 로딩이 끝난 뒤 인쇄(PDF 글자 품질 확보)
+    const btn = document.getElementById('btnPrint');
+    btn.addEventListener('click', async () => {
+      try {
+        if (document.fonts && document.fonts.ready) {
+          btn.textContent = 'PDF 준비 중...';
+          btn.disabled = true;
+          await document.fonts.ready;
+        }
+      } finally {
+        btn.textContent = '고화질 PDF로 보관하기';
+        btn.disabled = false;
+        fitAll();
+        window.print();
+      }
+    });
+  </script>
+</body>
+</html>
