@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>인생 아카이브 매거진 - Hye-yum (혜윰)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri.css">
+
+<style>
+
+/* ==================================================
+   기본 색상
+================================================== */
+
+:root {
+  --primary-color: #2b1830;
+  --accent-color: #9c4d81;
+  --accent-soft: rgba(156, 77, 129, 0.15);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --border-color: #ead5e7;
+  --border-hover: #cf9ec5;
+  --text-main: #2b1a2d;
+  --text-muted: #6b5570;
+  --hover-bg: #fff5fa;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'MaruBuri', 'Noto Serif KR', serif;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffeef6 0%,
+      #f6e8fb 50%,
+      #eae2fd 100%
+    );
+
+  background-attachment: fixed;
+
+  color: var(--text-main);
+
+  line-height: 1.8;
+
+  padding: 40px 16px;
+
+  letter-spacing: -0.2px;
+}
+
+.container {
+  max-width: 860px;
+
+  margin: 0 auto;
+
+  background: var(--card-bg);
+
+  padding: 56px 44px;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 12px 40px rgba(88, 45, 84, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.02);
+
+  border: 1px solid rgba(255,255,255,.95);
+}
+
+
+/* ==================================================
+   HEADER
+================================================== */
+
+header {
+  text-align: center;
+
+  border-bottom: 1.5px solid var(--border-color);
+
+  padding-bottom: 28px;
+
+  margin-bottom: 36px;
+}
+
+.sub-title {
+  font-family: 'Cormorant Garamond', serif;
+
+  font-size: 16px;
+
+  letter-spacing: 4px;
+
+  text-transform: uppercase;
+
+  color: var(--accent-color);
+
+  font-weight: 700;
+
+  margin-bottom: 6px;
+}
+
+.main-title {
+  font-family: 'Cormorant Garamond', 'MaruBuri', serif;
+
+  font-size: 38px;
+
+  font-weight: 700;
+
+  color: var(--primary-color);
+
+  letter-spacing: 0.5px;
+
+  margin-bottom: 10px;
+}
+
+.desc {
+  font-size: 15px;
+
+  color: var(--text-muted);
+
+  word-break: keep-all;
+}
+
+
+/* ==================================================
+   COVER STORY
+================================================== */
+
+.cover-story {
+  background: #fdf6fa;
+
+  padding: 24px;
+
+  border-radius: 12px;
+
+  margin-bottom: 40px;
+
+  border-left: 4px solid var(--accent-color);
+
+  box-shadow:
+    0 2px 8px rgba(156, 77, 129, 0.06);
+}
+
+.cover-story h2 {
+  font-size: 19px;
+
+  margin-bottom: 14px;
+
+  color: var(--primary-color);
+
+  font-weight: 700;
+}
+
+.protagonist-input {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  font-size: 15.5px;
+
+  font-weight: 600;
+}
+
+.protagonist-input input {
+  flex: 1;
+}
+
+
+/* ==================================================
+   ARCHIVE
+================================================== */
+
+.archive-card {
+  margin-bottom: 36px;
+
+  padding: 24px;
+
+  border-radius: 14px;
+
+  border: 1px solid transparent;
+
+  transition: .25s;
+}
+
+.archive-card:hover {
+  background-color: rgba(255,255,255,.88);
+
+  border-color: var(--border-hover);
+
+  box-shadow:
+    0 8px 24px rgba(130,70,115,.07);
+}
+
+.archive-header {
+  margin-bottom: 18px;
+}
+
+.archive-badge {
+  display: inline-block;
+
+  font-family: 'Cormorant Garamond', serif;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  color: #fff;
+
+  background: var(--accent-color);
+
+  padding: 2px 10px;
+
+  border-radius: 20px;
+
+  margin-bottom: 8px;
+}
+
+.archive-card h3 {
+  font-size: 20px;
+
+  color: var(--primary-color);
+
+  margin-bottom: 6px;
+
+  font-weight: 700;
+}
+
+.archive-card .sub-guide {
+  font-size: 14px;
+
+  color: var(--text-muted);
+}
+
+.form-group {
+  margin-top: 20px;
+
+  padding: 12px;
+
+  border-radius: 10px;
+}
+
+.form-group:hover {
+  background-color: rgba(250,235,246,.45);
+}
+
+.form-group label {
+  display: block;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  margin-bottom: 10px;
+
+  color: var(--primary-color);
+}
+
+.hint {
+  font-size: 13px;
+
+  color: var(--text-muted);
+
+  font-weight: 400;
+
+  margin-left: 6px;
+}
+
+
+/* ==================================================
+   INPUT
+================================================== */
+
+textarea,
+input[type="text"] {
+  width: 100%;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 8px;
+
+  padding: 14px 16px;
+
+  font-family: 'MaruBuri', serif;
+
+  font-size: 14.5px;
+
+  color: var(--text-main);
+
+  background-color: #fdfbfc;
+
+  transition: .25s;
+}
+
+textarea:hover,
+input[type="text"]:hover {
+  background: #fff;
+
+  border-color: var(--border-hover);
+}
+
+textarea:focus,
+input[type="text"]:focus {
+  outline: none;
+
+  background: #fff;
+
+  border-color: var(--accent-color);
+
+  box-shadow:
+    0 0 0 3.5px var(--accent-soft);
+}
+
+textarea {
+  resize: vertical;
+
+  min-height: 100px;
+}
+
+.inline-sentence {
+  margin-top: 14px;
+
+  font-size: 15.5px;
+
+  line-height: 2.2;
+
+  padding: 12px 16px;
+
+  background: #fdf5fb;
+
+  border-radius: 8px;
+
+  border-left: 3px solid #dcb5d6;
+}
+
+.inline-sentence input {
+  display: inline-block;
+
+  width: auto;
+
+  min-width: 150px;
+
+  padding: 3px 8px;
+
+  margin: 0 6px;
+
+  border: none;
+
+  border-bottom: 2px solid #825c7e;
+
+  border-radius: 0;
+
+  background: transparent;
+
+  text-align: center;
+
+  font-weight: 600;
+}
+
+
+/* ==================================================
+   LIFE TREE
+================================================== */
+
+.tree-section {
+  text-align: center;
+
+  margin-top: 40px;
+
+  padding: 36px 20px;
+
+  background: #fbf5fc;
+
+  border-radius: 16px;
+
+  border: 1px solid var(--border-color);
+}
+
+.tree-section h3 {
+  font-size: 24px;
+
+  margin-bottom: 8px;
+
+  color: var(--primary-color);
+
+  font-weight: 700;
+}
+
+.guide-text {
+  font-size: 14.5px;
+
+  color: var(--text-muted);
+
+  margin-bottom: 18px;
+
+  word-break: keep-all;
+
+  line-height: 1.8;
+}
+
+.symbol-info {
+  max-width: 650px;
+
+  margin: 0 auto 22px;
+
+  padding: 13px 18px;
+
+  background: #f3e6f2;
+
+  border-radius: 12px;
+
+  font-size: 13.5px;
+
+  color: var(--primary-color);
+
+  line-height: 1.8;
+}
+
+
+/* ==================================================
+   COLOR TOOLBAR
+================================================== */
+
+.color-toolbar {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 0 auto 22px;
+
+  background: #ffffff;
+
+  padding: 14px 24px;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 4px 14px rgba(90,40,80,.06);
+
+  border: 1px solid #eedbed;
+}
+
+.palette-title {
+  font-size: 13px;
+
+  font-weight: 700;
+
+  color: var(--primary-color);
+}
+
+.color-palette {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  justify-content: center;
+
+  align-items: center;
+
+  max-width: 550px;
+}
+
+.color-btn {
+  width: 29px;
+
+  height: 29px;
+
+  border-radius: 50%;
+
+  border: 2.5px solid #fff;
+
+  cursor: pointer;
+
+  outline: 1.5px solid #d8bfd6;
+
+  transition: transform .2s;
+}
+
+.color-btn:hover {
+  transform: scale(1.18);
+}
+
+.color-btn.active {
+  transform: scale(1.28);
+
+  outline: 2.5px solid var(--primary-color);
+
+  box-shadow:
+    0 2px 8px rgba(0,0,0,.25);
+}
+
+.tool-btn {
+  background: #f7eef7;
+
+  border: 1px solid #dec6db;
+
+  padding: 7px 18px;
+
+  border-radius: 20px;
+
+  font-family: 'MaruBuri', serif;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  color: var(--text-main);
+
+  font-weight: 600;
+}
+
+.tool-btn:hover {
+  background: #edd5eb;
+}
+
+
+/* ==================================================
+   ART CONTAINER
+================================================== */
+
+.art-container {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 700px;
+
+  margin: 0 auto;
+
+  background: #fff;
+
+  border: 1.5px solid #dec6db;
+
+  border-radius: 16px;
+
+  padding: 18px 18px 26px;
+
+  box-shadow:
+    0 8px 24px rgba(130,70,115,.09);
+}
+
+.tree-art {
+  width: 100%;
+
+  height: auto;
+
+  display: block;
+}
+
+.fillable {
+  cursor: pointer;
+
+  transition:
+    fill .25s ease,
+    filter .2s ease;
+}
+
+.fillable:hover {
+  filter:
+    brightness(.96)
+    drop-shadow(
+      0 0 4px rgba(156,77,129,.35)
+    );
+}
+
+
+/* ==================================================
+   TREE BOXES
+================================================== */
+
+.tree-bottom-boxes {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+
+  margin-top: 25px;
+}
+
+.value-box-wrap {
+  grid-column: 1 / -1;
+}
+
+.bottom-box {
+  text-align: left;
+}
+
+.bottom-box-label {
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: var(--primary-color);
+
+  margin-bottom: 7px;
+
+  display: flex;
+
+  align-items: center;
+}
+
+.box-number {
+  width: 25px;
+
+  height: 25px;
+
+  display: inline-flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  border-radius: 50%;
+
+  background: var(--accent-color);
+
+  color: white;
+
+  font-size: 13px;
+
+  margin-right: 7px;
+}
+
+.tree-bottom-boxes textarea {
+  background: white;
+
+  border: 2px solid #444;
+
+  box-shadow:
+    2px 2px 0 rgba(0,0,0,.08);
+
+  line-height: 1.7;
+}
+
+.value-input {
+  min-height: 130px;
+}
+
+.title-input {
+  min-height: 140px;
+}
+
+.message-input {
+  min-height: 140px;
+}
+
+
+/* ==================================================
+   BUTTON
+================================================== */
+
+.btn-wrap {
+  display: flex;
+
+  justify-content: center;
+
+  margin-top: 34px;
+}
+
+.btn {
+  padding: 12px 28px;
+
+  border-radius: 8px;
+
+  font-family: 'MaruBuri', serif;
+
+  font-size: 14.5px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  border: none;
+}
+
+.btn-print {
+  background: var(--primary-color);
+
+  color: #fff;
+
+  box-shadow:
+    0 4px 14px rgba(43,24,48,.25);
+}
+
+.btn-print:hover {
+  background: #46264f;
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+footer {
+  text-align: center;
+
+  margin-top: 48px;
+
+  padding-top: 28px;
+
+  border-top:
+    1.5px solid var(--border-color);
+
+  font-size: 13.5px;
+
+  color: var(--text-muted);
+}
+
+.brand-title {
+  font-size: 16px;
+
+  font-weight: 700;
+
+  color: var(--primary-color);
+
+  margin-bottom: 4px;
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media(max-width:650px) {
+
+  body {
+    padding: 20px 8px;
+  }
+
+  .container {
+    padding: 32px 18px;
+  }
+
+  .main-title {
+    font-size: 32px;
+  }
+
+  .protagonist-input {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .tree-bottom-boxes {
+    grid-template-columns: 1fr;
+  }
+
+  .value-box-wrap {
+    grid-column: auto;
+  }
+
+}
+
+
+/* ==================================================
+   PRINT
+================================================== */
+
+@media print {
+
+  body {
+    background: #fff;
+
+    padding: 0;
+  }
+
+  .container {
+    border: none;
+
+    box-shadow: none;
+
+    padding: 0;
+  }
+
+  .color-toolbar,
+  .btn-wrap {
+    display: none !important;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header>
+
+  <div class="sub-title">
+    Life Archive Magazine
+  </div>
+
+  <h1 class="main-title">
+    Hye-yum (혜윰)
+  </h1>
+
+  <p class="desc">
+    깊이 생각하고 헤아린다는 뜻,
+    당신의 삶을 천천히 헤아려보는 시간입니다.
+  </p>
+
+</header>
+
+
+<!-- ==================================================
+     COVER STORY
+================================================== -->
+
+<section class="cover-story">
+
+  <h2>
+    COVER STORY ‘나의 발걸음을 축복하며’
+  </h2>
+
+  <div class="protagonist-input">
+
+    <label for="protagonist">
+      이달의 주인공 :
+    </label>
+
+    <input
+      type="text"
+      id="protagonist"
+      placeholder="이름을 입력해주세요"
+    >
+
+  </div>
+
+</section>
+
+
+<!-- ==================================================
+     ARCHIVE 01
+================================================== -->
+
+<section class="archive-card">
+
+  <div class="archive-header">
+
+    <span class="archive-badge">
+      ARCHIVE 01
+    </span>
+
+    <h3>
+      눈부신 기억의 조각
+
+      <small style="
+        font-weight:normal;
+        font-size:14px;
+        color:#6b5570;
+      ">
+        (자아의 발견)
+      </small>
+
+    </h3>
+
+    <p class="sub-guide">
+      • 진짜 ‘나’를 발견했던 빛나는 순간을 떠올려 봅니다.
+    </p>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      내가 가장 살아있다고 느꼈던
+      ‘빛나는 순간’은 언제였나요?
+    </label>
+
+    <textarea
+      placeholder="그 순간의 풍경, 감정, 온기를 자유롭게 적어보세요."
+    ></textarea>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+
+      그때 내 안에 숨쉬고 있던 가치는 무엇인가요?
+
+      <span class="hint">
+        (예: 사랑, 용기, 성실, 자유, 따뜻함, 책임, 도전 등)
+      </span>
+
+    </label>
+
+    <input
+      type="text"
+      placeholder="내 안의 가치 적기"
+    >
+
+  </div>
+
+</section>
+
+
+<!-- ==================================================
+     ARCHIVE 02
+================================================== -->
+
+<section class="archive-card">
+
+  <div class="archive-header">
+
+    <span class="archive-badge">
+      ARCHIVE 02
+    </span>
+
+    <h3>
+
+      인생 칼럼:
+      고난을 넘어 피어난 단단함
+
+      <small style="
+        font-weight:normal;
+        font-size:14px;
+        color:#6b5570;
+      ">
+        (고난의 재해석)
+      </small>
+
+    </h3>
+
+    <p class="sub-guide">
+      삶의 무게 속에서
+      나를 지탱해주었던 깊은 온기를 돌아봅니다.
+    </p>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      • 힘들었던 순간,
+      나를 버티게 하고 여기까지 데려온 힘은 무엇이었나요?
+    </label>
+
+    <textarea
+      placeholder="나를 지켜준 사람, 신념, 기억, 작은 습관 등을 떠올려보세요."
+    ></textarea>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      ● 그 힘든 시간을 지나오며
+      나에게 새로 생긴 ‘단단함(지혜)’은 무엇인가요?
+    </label>
+
+    <textarea
+      placeholder="그 시간을 지나오며 얻게 된 나만의 지혜를 적어보세요."
+    ></textarea>
+
+  </div>
+
+</section>
+
+
+<!-- ==================================================
+     ARCHIVE 03
+================================================== -->
+
+<section class="archive-card">
+
+  <div class="archive-header">
+
+    <span class="archive-badge">
+      ARCHIVE 03
+    </span>
+
+    <h3>
+      에필로그 :
+      나의 안부를 묻고 온기를 채우다
+    </h3>
+
+    <p class="sub-guide">
+      지친 나를 다정하게 안아주고,
+      앞으로의 나에게 남겨줄 따뜻한 선물을 생각합니다.
+    </p>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      ● 기자의 말
+      (나에게 전하는 칭찬과 안부)
+    </label>
+
+    <div class="inline-sentence">
+
+      “오늘도 묵묵히 애쓴 나야,
+
+      <textarea
+        placeholder="나에게 건네고 싶은 따뜻한 위로와 격려의 말을 적어보세요."
+        style="margin-top:10px;"
+      ></textarea>
+
+      ”
+
+    </div>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+
+      ● 내가 세상과 나 자신에게
+      남기고 싶은 선물
+
+      <span class="hint">
+        (예: 미소, 넉넉한 마음, 용기, 여유)
+      </span>
+
+    </label>
+
+
+    <div class="inline-sentence">
+
+      나는
+
+      <input
+        type="text"
+        style="width:220px;"
+        placeholder="선물"
+      >
+
+      을(를) 선물로 남깁니다.
+
+    </div>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      • 나의 인생 한 줄 헤드라인
+    </label>
+
+    <div class="inline-sentence">
+
+      내 삶은
+
+      <input
+        type="text"
+        style="width:260px;"
+        placeholder="한 줄 표현"
+      >
+
+      이었습니다.
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==================================================
+     LIFE TREE
+================================================== -->
+
+<section class="tree-section">
+
+
+<h3>
+  EPILOGUE. 나의 인생나무 가꾸기
+</h3>
+
+
+<p class="guide-text">
+
+  내 삶을 한 그루의 사과나무라고 생각해 봅니다.<br>
+
+  원하는 색을 선택한 뒤
+  <strong>잎, 사과열매, 줄기와 가지를 클릭</strong>하여
+  나만의 인생나무를 완성해 보세요.<br>
+
+  <strong>
+    사과열매에는 글자를 쓰지 않고
+    색으로만 표현합니다.
+  </strong>
+
+</p>
+
+
+<div class="symbol-info">
+
+  🍎 <strong>나무 위의 사과열매</strong>는
+  내가 살아오며 맺은 소중한 가치와 삶의 결실입니다.<br>
+
+  🍎 <strong>땅에 놓인 사과열매</strong>는
+  이루지 못한 꿈이나 아쉬움도
+  결국 오늘의 나를 키워낸 삶의 한 부분임을 의미합니다.
+
+</div>
+
+
+<!-- ==================================================
+     COLOR PALETTE
+================================================== -->
+
+<div class="color-toolbar">
+
+
+<div class="palette-title">
+  색을 선택한 후 나무의 원하는 부분을 눌러주세요.
+</div>
+
+
+<div class="color-palette">
+
+
+<div
+  class="color-btn active"
+  style="background:#e63946;"
+  data-color="#e63946"
+  title="사과 빨강">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#ff758f;"
+  data-color="#ff758f"
+  title="분홍">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#f77f00;"
+  data-color="#f77f00"
+  title="주황">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#fcbf49;"
+  data-color="#fcbf49"
+  title="노랑">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#ffe49e;"
+  data-color="#ffe49e"
+  title="연노랑">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#95d5b2;"
+  data-color="#95d5b2"
+  title="연두">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#52b788;"
+  data-color="#52b788"
+  title="초록">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#2d6a4f;"
+  data-color="#2d6a4f"
+  title="진초록">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#64dfdf;"
+  data-color="#64dfdf"
+  title="민트">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#90e0ef;"
+  data-color="#90e0ef"
+  title="하늘색">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#cdb4db;"
+  data-color="#cdb4db"
+  title="보라">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#b5838d;"
+  data-color="#b5838d"
+  title="말린 장미">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#d4a373;"
+  data-color="#d4a373"
+  title="베이지">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#b08968;"
+  data-color="#b08968"
+  title="갈색">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#7f4f24;"
+  data-color="#7f4f24"
+  title="진갈색">
+</div>
+
+
+<div
+  class="color-btn"
+  style="background:#ffffff;"
+  data-color="#ffffff"
+  title="흰색 / 지우기">
+</div>
+
+
+</div>
+
+
+<button
+  class="tool-btn"
+  id="resetBtn">
+  도안 색상 초기화
+</button>
+
+
+</div>
+
+
+<!-- ==================================================
+     TREE ART
+================================================== -->
+
+<div class="art-container">
+
+
+<svg
+  id="treeSvg"
+  class="tree-art"
+  viewBox="0 0 700 780"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-label="나의 인생 사과나무 색칠도안"
+>
+
+
+<!-- ==================================================
+     땅
+================================================== -->
+
+<path
+  d="
+    M55 690
+    C155 675 245 682 350 688
+    C455 680 545 677 645 690
+  "
+  fill="none"
+  stroke="#222222"
+  stroke-width="4"
+  stroke-linecap="round"
+/>
+
+
+<!-- ==================================================
+     줄기와 가지
+     하나의 굵은 줄기가 위에서 세 방향으로 분기
+================================================== -->
+
+
+<!-- 왼쪽 영역 -->
+
+<path
+  class="fillable trunk-part"
+  d="
+    M350 650
+
+    C326 646 303 640 280 632
+
+    C296 612 308 589 313 563
+
+    L320 474
+
+    C307 454 287 434 263 415
+
+    C236 394 210 372 187 345
+
+    C179 335 181 324 191 317
+
+    C201 311 211 315 219 325
+
+    C245 350 269 367 294 383
+
+    C316 397 334 412 350 429
+
+    L350 650
+
+    Z
+  "
+  fill="#ffffff"
+  stroke="#222222"
+  stroke-width="5"
+  stroke-linejoin="round"
+/>
+
+
+<!-- 가운데 영역 -->
+
+<path
+  class="fillable trunk-part"
+  d="
+    M350 650
+
+    C338 624 334 594 336 560
+
+    L342 431
+
+    C333 399 325 366 320 332
+
+    C316 301 315 270 319 237
+
+    C320 225 328 218 339 219
+
+    C350 220 356 228 356 240
+
+    C354 276 357 309 363 341
+
+    C369 374 374 403 373 433
+
+    L366 560
+
+    C364 595 359 624 350 650
+
+    Z
+  "
+  fill="#ffffff"
+  stroke="#222222"
+  stroke-width="5"
+  stroke-linejoin="round"
+/>
+
+
+<!-- 오른쪽 영역 -->
+
+<path
+  class="fillable trunk-part"
+  d="
+    M350 650
+
+    L350 429
+
+    C368 410 388 394 411 378
+
+    C438 359 464 338 487 312
+
+    C495 302 506 299 516 306
+
+    C526 313 528 324 520 334
+
+    C498 363 470 388 441 410
+
+    C417 428 398 448 380 473
+
+    L387 562
+
+    C392 589 404 612 421 632
+
+    C398 640 375 646 350 650
+
+    Z
+  "
+  fill="#ffffff"
+  stroke="#222222"
+  stroke-width="5"
+  stroke-linejoin="round"
+/>
+
+
+<!-- 뿌리 -->
+
+<path
+  class="fillable trunk-part"
+  d="
+    M280 632
+
+    C257 649 235 659 208 668
+
+    C243 670 272 665 301 657
+
+    C319 652 337 658 350 670
+
+    C365 657 382 652 400 657
+
+    C429 665 458 670 492 668
+
+    C466 659 443 649 421 632
+
+    C398 640 375 646 350 650
+
+    C326 646 303 640 280 632
+
+    Z
+  "
+  fill="#ffffff"
+  stroke="#222222"
+  stroke-width="5"
+  stroke-linejoin="round"
+/>
+
+
+<!-- 줄기 결 -->
+
+<path
+  d="
+    M333 485
+    C327 535 327 585 320 620
+  "
+  fill="none"
+  stroke="#777777"
+  stroke-width="2"
+  stroke-linecap="round"
+/>
+
+
+<path
+  d="
+    M369 486
+    C375 535 375 584 381 620
+  "
+  fill="none"
+  stroke="#777777"
+  stroke-width="2"
+  stroke-linecap="round"
+/>
+
+
+<!-- ==================================================
+     5개의 큰 수관
+================================================== -->
+
+
+<!-- 수관 1 : 왼쪽 위 -->
+
+<path
+  class="fillable foliage"
+  d="
+    M84 294
+
+    C52 272 55 226 85 207
+
+    C72 172 101 139 135 145
+
+    C145 108 188 94 215 120
+
+    C239 94 281 105 291 140
+
+    C321 148 333 184 315 208
+
+    C332 237 312 271 282 275
+
+    C273 307 236 319 211 299
+
+    C183 324 140 312 134 278
+
+    C111 288 95 283 84 294
+
+    Z
+  "
+  fill="#ffffff"
+  stroke="#222222"
+  stroke-width="5"
+  stroke-linejoin="round"
+/>
+
+
+<!-- 수관 2 : 가운데 위 -->
+
+<path
+  class="fillable foliage"
+  d="
+    M241 164
+
+    C226 128 247 94 279 88
+
+    C282 51 319 31 348 52
+
+    C371 20 417 27 430 63
+
+    C465 54 493 82 488 115
+
+    C522 126 532 166 509 190
+
+    C526 220 505 254 474 257
+
+    C458 287 419 293 396 270
+
+    C368 292 327 284 316 253
+
+    C282 260 253 235 258 204
+
+    C245 194 239 180 241 164
+
+    Z
+  "
+  fill="#ffffff"
+  stroke="#222222"
+  stroke-width="5"
+  stroke-linejoin="round"
+/>
+
+
+<!-- 수관 3 : 오른쪽 위 -->
+
+<path
+  class="fillable foliage"
+  d="
+    M434 177
+
+    C449 142 487 130 514 151
+
+    C542 126 584 142 591 178
+
+    C625 182 642 220 622 248
+
+    C647 273 632 314 598 321
+
+    C594 356 555 376 527 355
+
+    C502 379 460 368 450 336
+
+    C419 332 399 299 415 272
+
+    C393 245 407 205 438 196
+
+    C432 190 431 183 434 177
+
+    Z
+  "
+  fill="#ffffff"
+  stroke="#222222"
+  stroke-width="5"
+  stroke-linejoin="round"
+/>
+
+
+<!-- 수관 4 : 왼쪽 아래 -->
+
+<path
+  class="fillable foliage"
+  d="
+    M72 358
+
+    C43 335 50 292 79 276
+
+    C70 242 100 215 131 223
+
+    C148 191 190 187 214 214
+
+    C244 196 280 214 284 248
+
+    C315 260 322 297 301 320
+
+    C315 350 291 382 261 381
+
+    C247 412 208 419 184 395
+
+    C158 419 116 408 108 375
+
+    C92 380 79 372 72 358
+
+    Z
+  "
+  fill="#ffffff"
+  stroke="#222222"
+  stroke-width="5"
+  stroke-linejoin="round"
+/>
+
+
+<!-- 수관 5 : 오른쪽 아래 -->
+
+<path
+  class="fillable foliage"
+  d="
+    M407 306
+
+    C416 271 454 255 482 275
+
+    C507 247 550 257 562 291
+
+    C596 291 617 327 601 356
+
+    C626 378 616 420 584 432
+
+    C582 467 544 488 515 469
+
+    C491 497 448 490 434 458
+
+    C402 462 378 432 389 402
+
+    C361 381 368 339 398 324
+
+    C399 316 402 310 407 306
+
+    Z
+  "
+  fill="#ffffff"
+  stroke="#222222"
+  stroke-width="5"
+  stroke-linejoin="round"
+/>
+
+
+<!-- ==================================================
+     사과 10개
+     수관 하나당 2개
+================================================== -->
+
+
+<!-- 수관 1 / 사과 1 -->
+
+<g transform="translate(157 184)">
+
+  <path
+    d="M0 -27 Q-4 -42 7 -48"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -24
+      C-17 -35 -35 -20 -32 -1
+      C-29 21 -9 29 0 29
+      C9 29 29 21 32 -1
+      C35 -20 17 -35 0 -24
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 수관 1 / 사과 2 -->
+
+<g transform="translate(236 238)">
+
+  <path
+    d="M0 -27 Q-4 -42 7 -48"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -24
+      C-17 -35 -35 -20 -32 -1
+      C-29 21 -9 29 0 29
+      C9 29 29 21 32 -1
+      C35 -20 17 -35 0 -24
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 수관 2 / 사과 1 -->
+
+<g transform="translate(337 107)">
+
+  <path
+    d="M0 -27 Q-4 -42 7 -48"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -24
+      C-17 -35 -35 -20 -32 -1
+      C-29 21 -9 29 0 29
+      C9 29 29 21 32 -1
+      C35 -20 17 -35 0 -24
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 수관 2 / 사과 2 -->
+
+<g transform="translate(421 188)">
+
+  <path
+    d="M0 -27 Q-4 -42 7 -48"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -24
+      C-17 -35 -35 -20 -32 -1
+      C-29 21 -9 29 0 29
+      C9 29 29 21 32 -1
+      C35 -20 17 -35 0 -24
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 수관 3 / 사과 1 -->
+
+<g transform="translate(522 207)">
+
+  <path
+    d="M0 -27 Q-4 -42 7 -48"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -24
+      C-17 -35 -35 -20 -32 -1
+      C-29 21 -9 29 0 29
+      C9 29 29 21 32 -1
+      C35 -20 17 -35 0 -24
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 수관 3 / 사과 2 -->
+
+<g transform="translate(558 300)">
+
+  <path
+    d="M0 -27 Q-4 -42 7 -48"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -24
+      C-17 -35 -35 -20 -32 -1
+      C-29 21 -9 29 0 29
+      C9 29 29 21 32 -1
+      C35 -20 17 -35 0 -24
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 수관 4 / 사과 1 -->
+
+<g transform="translate(137 296)">
+
+  <path
+    d="M0 -27 Q-4 -42 7 -48"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -24
+      C-17 -35 -35 -20 -32 -1
+      C-29 21 -9 29 0 29
+      C9 29 29 21 32 -1
+      C35 -20 17 -35 0 -24
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 수관 4 / 사과 2 -->
+
+<g transform="translate(226 344)">
+
+  <path
+    d="M0 -27 Q-4 -42 7 -48"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -24
+      C-17 -35 -35 -20 -32 -1
+      C-29 21 -9 29 0 29
+      C9 29 29 21 32 -1
+      C35 -20 17 -35 0 -24
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 수관 5 / 사과 1 -->
+
+<g transform="translate(459 349)">
+
+  <path
+    d="M0 -27 Q-4 -42 7 -48"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -24
+      C-17 -35 -35 -20 -32 -1
+      C-29 21 -9 29 0 29
+      C9 29 29 21 32 -1
+      C35 -20 17 -35 0 -24
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 수관 5 / 사과 2 -->
+
+<g transform="translate(528 410)">
+
+  <path
+    d="M0 -27 Q-4 -42 7 -48"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -24
+      C-17 -35 -35 -20 -32 -1
+      C-29 21 -9 29 0 29
+      C9 29 29 21 32 -1
+      C35 -20 17 -35 0 -24
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- ==================================================
+     땅에 떨어진 사과 3개
+================================================== -->
+
+
+<!-- 왼쪽 -->
+
+<g transform="translate(155 720)">
+
+  <path
+    d="M0 -26 Q-5 -39 5 -45"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -23
+      C-17 -34 -34 -19 -31 -1
+      C-28 21 -8 28 0 28
+      C8 28 28 21 31 -1
+      C34 -19 17 -34 0 -23
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 가운데 -->
+
+<g transform="translate(350 730)">
+
+  <path
+    d="M0 -26 Q-5 -39 5 -45"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -23
+      C-17 -34 -34 -19 -31 -1
+      C-28 21 -8 28 0 28
+      C8 28 28 21 31 -1
+      C34 -19 17 -34 0 -23
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+<!-- 오른쪽 -->
+
+<g transform="translate(548 720)">
+
+  <path
+    d="M0 -26 Q-5 -39 5 -45"
+    fill="none"
+    stroke="#222"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    class="fillable apple"
+    d="
+      M0 -23
+      C-17 -34 -34 -19 -31 -1
+      C-28 21 -8 28 0 28
+      C8 28 28 21 31 -1
+      C34 -19 17 -34 0 -23
+      Z
+    "
+    fill="#ffffff"
+    stroke="#222"
+    stroke-width="4"
+  />
+
+</g>
+
+
+</svg>
+
+
+<!-- ==================================================
+     3개의 기록 박스
+================================================== -->
+
+<div class="tree-bottom-boxes">
+
+
+<!-- 1 -->
+
+<div class="bottom-box value-box-wrap">
+
+  <div class="bottom-box-label">
+
+    <span class="box-number">
+      1
+    </span>
+
+    사과열매의 의미 적기
+
+  </div>
+
+
+  <textarea
+    class="value-input"
+    placeholder="내가 색칠한 사과열매에는 어떤 의미가 담겨 있나요?
+
+예)
+빨간 사과 = 사랑
+노란 사과 = 감사
+초록 사과 = 성장
+분홍 사과 = 가족
+
+내 삶에서 소중했던 가치와 결실을 자유롭게 적어보세요."
+  ></textarea>
+
+</div>
+
+
+<!-- 2 -->
+
+<div class="bottom-box">
+
+  <div class="bottom-box-label">
+
+    <span class="box-number">
+      2
+    </span>
+
+    나의 인생나무의 주제 적기
+
+  </div>
+
+
+  <textarea
+    class="title-input"
+    placeholder="완성된 나무를 바라보며 나의 삶을 하나의 주제로 표현해보세요.
+
+예)
+고난을 지나 피어난 나무
+사랑으로 자란 나무
+다시 봄을 맞이한 나무"
+  ></textarea>
+
+</div>
+
+
+<!-- 3 -->
+
+<div class="bottom-box">
+
+  <div class="bottom-box-label">
+
+    <span class="box-number">
+      3
+    </span>
+
+    나무에게 보내는 글
+
+  </div>
+
+
+  <textarea
+    class="message-input"
+    placeholder="오랜 세월 비바람을 견디며 열매를 맺어온 이 나무가 바로 나입니다.
+
+지금까지 살아온 나에게 다정한 한마디를 건네보세요."
+  ></textarea>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     PRINT BUTTON
+================================================== -->
+
+<div class="btn-wrap">
+
+  <button
+    class="btn btn-print"
+    onclick="window.print()"
+  >
+
+    작성 내용 인쇄 / PDF 저장
+
+  </button>
+
+</div>
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+  <div class="brand-title">
+    Hye-yum. 삶을 헤아리는 시간
+  </div>
+
+  <p>
+    - 웰다잉통합예술교육협회 -
+  </p>
+
+</footer>
+
+
+</div>
+
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script>
+
+/* ==================================================
+   현재 선택된 색
+================================================== */
+
+let selectedColor = '#e63946';
+
+
+/* ==================================================
+   색상 팔레트 선택
+================================================== */
+
+const colorBtns =
+  document.querySelectorAll('.color-btn');
+
+
+colorBtns.forEach(btn => {
+
+  btn.addEventListener('click', function() {
+
+    colorBtns.forEach(otherBtn => {
+
+      otherBtn.classList.remove('active');
+
+    });
+
+
+    this.classList.add('active');
+
+
+    selectedColor =
+      this.getAttribute('data-color');
+
+  });
+
+});
+
+
+/* ==================================================
+   나무 클릭 색칠
+================================================== */
+
+const treeSvg =
+  document.getElementById('treeSvg');
+
+
+treeSvg.addEventListener('click', function(event) {
+
+  const clickedPart = event.target;
+
+
+  if (
+    clickedPart.classList.contains('fillable')
+  ) {
+
+    clickedPart.setAttribute(
+      'fill',
+      selectedColor
+    );
+
+  }
+
+});
+
+
+/* ==================================================
+   색칠 초기화
+   작성한 글은 삭제하지 않음
+================================================== */
+
+const resetBtn =
+  document.getElementById('resetBtn');
+
+
+resetBtn.addEventListener('click', function() {
+
+  const confirmed =
+    confirm(
+      '나무에 칠한 색상을 모두 지울까요?\n작성한 글은 그대로 유지됩니다.'
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  const fillableParts =
+    document.querySelectorAll(
+      '#treeSvg .fillable'
+    );
+
+
+  fillableParts.forEach(part => {
+
+    part.setAttribute(
+      'fill',
+      '#ffffff'
+    );
+
+  });
+
+});
+
+
+</script>
+
+
+</body>
+</html>
