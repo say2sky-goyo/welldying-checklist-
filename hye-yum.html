@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인생 아카이브 매거진 - Hye-yum (혜윰)</title>
+  
+  <!-- 웹폰트: MaruBuri & Cormorant Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri.css">
+  
+  <style>
+    :root {
+      --primary-color: #2b1830;
+      --accent-color: #9c4d81;
+      --accent-soft: rgba(156, 77, 129, 0.15);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --border-color: #ead5e7;
+      --border-hover: #cf9ec5;
+      --text-main: #2b1a2d;
+      --text-muted: #6b5570;
+      --hover-bg: #fff5fa;
+    }
+  
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+  
+    body {
+      font-family: 'MaruBuri', 'Noto Serif KR', serif;
+      background: linear-gradient(135deg, #ffeef6 0%, #f6e8fb 50%, #eae2fd 100%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.8;
+      padding: 40px 16px;
+      letter-spacing: -0.2px;
+    }
+  
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      padding: 56px 44px;
+      border-radius: 24px;
+      box-shadow: 0 12px 40px rgba(88, 45, 84, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+    }
+  
+    /* Header */
+    header {
+      text-align: center;
+      border-bottom: 1.5px solid var(--border-color);
+      padding-bottom: 28px;
+      margin-bottom: 36px;
+    }
+  
+    .sub-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent-color);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+  
+    .main-title {
+      font-family: 'Cormorant Garamond', 'MaruBuri', serif;
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--primary-color);
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+  
+    .desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      word-break: keep-all;
+    }
+  
+    /* Cover Story */
+    .cover-story {
+      background: #fdf6fa;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      border-left: 4px solid var(--accent-color);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(156, 77, 129, 0.06);
+    }
+  
+    .cover-story:hover {
+      background: #faeef7;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(156, 77, 129, 0.12);
+    }
+  
+    .cover-story h2 {
+      font-size: 19px;
+      margin-bottom: 14px;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+  
+    .protagonist-input {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15.5px;
+      font-weight: 600;
+    }
+  
+    .protagonist-input input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-family: 'MaruBuri', serif;
+      font-size: 15px;
+      background: #ffffff;
+      transition: all 0.3s ease;
+      color: var(--text-main);
+    }
+  
+    .protagonist-input input:hover,
+    .protagonist-input input:focus {
+      border-color: var(--accent-color);
+      background-color: var(--hover-bg);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+      outline: none;
+    }
+  
+    /* Archive Sections */
+    .archive-card {
+      margin-bottom: 36px;
+      padding: 24px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background-color: transparent;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+  
+    .archive-card:hover {
+      background-color: rgba(255, 255, 255, 0.88);
+      border-color: var(--border-hover);
+      box-shadow: 0 8px 24px rgba(130, 70, 115, 0.07);
+      transform: translateY(-2px);
+    }
+  
+    .archive-header {
+      margin-bottom: 18px;
+    }
+  
+    .archive-badge {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      background: var(--accent-color);
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+  
+    .archive-card h3 {
+      font-size: 20px;
+      color: var(--primary-color);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+  
+    .archive-card .sub-guide {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+  
+    .form-group {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 10px;
+      transition: all 0.25s ease;
+    }
+  
+    .form-group:hover {
+      background-color: rgba(250, 235, 246, 0.45);
+    }
+  
+    .form-group label {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+  
+    .form-group .hint {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-left: 6px;
+    }
+  
+    textarea, input[type="text"] {
+      width: 100%;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'MaruBuri', serif;
+      font-size: 14.5px;
+      color: var(--text-main);
+      background-color: #fdfbfc;
+      transition: all 0.25s ease;
+    }
+  
+    textarea:hover, input[type="text"]:hover {
+      background-color: #ffffff;
+      border-color: var(--border-hover);
+      box-shadow: 0 2px 10px rgba(156, 77, 129, 0.08);
+    }
+  
+    textarea:focus, input[type="text"]:focus {
+      outline: none;
+      background-color: #ffffff;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3.5px var(--accent-soft);
+    }
+  
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+  
+    .inline-sentence {
+      margin-top: 14px;
+      font-size: 15.5px;
+      line-height: 2.2;
+      padding: 12px 16px;
+      background: #fdf5fb;
+      border-radius: 8px;
+      border-left: 3px solid #dcb5d6;
+      transition: all 0.3s ease;
+    }
+  
+    .inline-sentence:hover {
+      background: #faeaf7;
+      border-left-color: var(--accent-color);
+    }
+  
+    .inline-sentence input {
+      display: inline-block;
+      width: auto;
+      min-width: 150px;
+      padding: 3px 8px;
+      margin: 0 6px;
+      border: none;
+      border-bottom: 2px solid #825c7e;
+      border-radius: 0;
+      background: transparent;
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+  
+    /* Life Tree Section */
+    .tree-section {
+      text-align: center;
+      margin-top: 40px;
+      padding: 36px 20px;
+      background: #fbf5fc;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+  
+    .tree-section:hover {
+      box-shadow: 0 8px 30px rgba(156, 77, 129, 0.09);
+      border-color: var(--border-hover);
+    }
+  
+    .tree-section h3 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+  
+    .tree-section .guide-text {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      word-break: keep-all;
+      line-height: 1.6;
+    }
+
+    .tree-section .symbol-info {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      font-size: 13.5px;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      flex-wrap: wrap;
+    }
+
+    .symbol-info span {
+      background: #f2e1ef;
+      padding: 4px 14px;
+      border-radius: 16px;
+      font-weight: 600;
+    }
+  
+    /* Palette Toolbar (15가지 컬러) */
+    .color-toolbar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      background: #ffffff;
+      padding: 12px 24px;
+      border-radius: 40px;
+      box-shadow: 0 4px 14px rgba(90, 40, 80, 0.06);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid #eedbed;
+    }
+  
+    .color-palette {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      max-width: 540px;
+    }
+  
+    .color-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2.5px solid #ffffff;
+      cursor: pointer;
+      outline: 1.5px solid #d8bfd6;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+  
+    .color-btn:hover {
+      transform: scale(1.18);
+    }
+  
+    .color-btn.active {
+      transform: scale(1.28);
+      outline: 2.5px solid var(--primary-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+  
+    .tool-btn {
+      background: #f7eef7;
+      border: 1px solid #dec6db;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-family: 'MaruBuri', serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-main);
+      font-weight: 600;
+    }
+  
+    .tool-btn:hover {
+      background: #edd5eb;
+    }
+  
+    /* Interactive SVG Art Container */
+    .art-container {
+      position: relative;
+      width: 100%;
+      max-width: 740px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1.5px solid #dec6db;
+      border-radius: 16px;
+      padding: 20px 14px 28px 14px;
+      box-shadow: 0 8px 24px rgba(130, 70, 115, 0.09);
+    }
+  
+    .tree-art {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+    }
+  
+    /* 채색 가능한 SVG 파트 */
+    .fillable {
+      cursor: pointer;
+      transition: fill 0.22s ease, filter 0.2s ease;
+    }
+  
+    .fillable:hover {
+      filter: brightness(0.96) drop-shadow(0 0 5px rgba(156, 77, 129, 0.45));
+    }
+
+    /* 하단 3개 네모박스 영역 */
+    .tree-bottom-boxes {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.2fr;
+      gap: 14px;
+      margin-top: 24px;
+      padding: 0 4px;
+    }
+  
+    .box-wrap {
+      text-align: left;
+    }
+  
+    .bottom-box-label {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  
+    .bottom-box-label::before {
+      content: '■';
+      font-size: 10px;
+      color: var(--accent-color);
+    }
+  
+    .card-textarea {
+      width: 100%;
+      height: 125px;
+      border: 1.8px solid #4a384e;
+      border-radius: 8px;
+      background-color: #fdfbfc;
+      padding: 12px;
+      font-family: 'MaruBuri', serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-main);
+      outline: none;
+      resize: vertical;
+      transition: all 0.25s ease;
+      box-shadow: 2px 2px 0px rgba(74, 56, 78, 0.1);
+    }
+  
+    .card-textarea:focus {
+      border-color: var(--accent-color);
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    @media (max-width: 768px) {
+      .tree-bottom-boxes {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .card-textarea {
+        height: 100px;
+      }
+    }
+  
+    /* Footer & Print */
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 28px;
+      border-top: 1.5px solid var(--border-color);
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+  
+    .brand-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 4px;
+    }
+  
+    .btn-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 34px;
+    }
+  
+    .btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: 'MaruBuri', serif;
+      font-size: 14.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
+  
+    .btn-print {
+      background: var(--primary-color);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(43, 24, 48, 0.25);
+    }
+  
+    .btn-print:hover {
+      background: #46264f;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(43, 24, 48, 0.3);
+    }
+  
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .container {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+      .color-toolbar, .btn-wrap {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <header>
+      <div class="sub-title">Life Archive Magazine</div>
+      <h1 class="main-title">Hye-yum (혜윰)</h1>
+      <p class="desc">깊이 생각하고 헤아린다는 뜻, 당신의 삶을 천천히 헤아려보는 시간입니다.</p>
+    </header>
+  
+    <!-- Cover Story -->
+    <section class="cover-story">
+      <h2>COVER STORY &lsquo;나의 발걸음을 축복하며&rsquo;</h2>
+      <div class="protagonist-input">
+        <label for="protagonist">이달의 주인공 :</label>
+        <input type="text" id="protagonist" placeholder="이름을 입력해주세요">
+      </div>
+    </section>
+  
+    <!-- Archive 01 -->
+    <section class="archive-card">
+      <div class="archive-header">
+        <span class="archive-badge">ARCHIVE 01</span>
+        <h3>눈부신 기억의 조각 <small style="font-weight: normal; font-size: 14px; color: var(--text-muted);">(자아의 발견)</small></h3>
+        <p class="sub-guide">• 진짜 &lsquo;나&rsquo;를 발견했던 빛나는 순간을 떠올려 봅니다.</p>
+      </div>
+  
+      <div class="form-group">
+        <label>내가 가장 살아있다고 느꼈던 &lsquo;빛나는 순간&rsquo;은 언제였나요?</label>
+        <textarea placeholder="그 순간의 풍경, 감정, 온기를 자유롭게 적어보세요."></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label>그때 내 안에 숨쉬고 있던 가치는 무엇인가요? <span class="hint">(예: 열정, 순수, 용기, 따뜻함 등)</span></label>
+        <input type="text" placeholder="내 안의 가치 적기">
+      </div>
+    </section>
+  
+    <!-- Archive 02 -->
+    <section class="archive-card">
+      <div class="archive-header">
+        <span class="archive-badge">ARCHIVE 02</span>
+        <h3>인생 칼럼: 고난을 넘어 피어난 단단함 <small style="font-weight: normal; font-size: 14px; color: var(--text-muted);">(고난의 재해석)</small></h3>
+        <p class="sub-guide">삶의 무게 속에서 나를 지탱해주었던 깊은 온기입니다.</p>
+      </div>
+  
+      <div class="form-group">
+        <label>• 힘들었던 순간, 나를 버티게 하고 여기까지 데려온 힘은 무엇이었나요?</label>
+        <textarea placeholder="나를 지켜준 사람, 신념, 혹은 작은 습관들..."></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label>● 그 힘든 시간을 지나오며 나에게 새로 생긴 &lsquo;단단함(지혜)&rsquo;은 무엇인가요?</label>
+        <textarea placeholder="고난을 겪으며 얻게 된 나만의 지혜를 적어보세요."></textarea>
+      </div>
+    </section>
+  
+    <!-- Archive 03 -->
+    <section class="archive-card">
+      <div class="archive-header">
+        <span class="archive-badge">ARCHIVE 03</span>
+        <h3>에필로그 : 나의 안부를 묻고 온기를 채우다</h3>
+        <p class="sub-guide">지친 나를 다정하게 안아주고, 앞으로 나에게 남겨줄 따뜻한 선물입니다.</p>
+      </div>
+  
+      <div class="form-group">
+        <label>● 기자의 말 (나에게 전하는 칭찬과 안부):</label>
+        <div class="inline-sentence">
+          &ldquo;오늘도 묵묵히 애쓴 나야,
+          <textarea placeholder="나에게 건네고 싶은 따뜻한 위로와 격려의 말" style="margin-top: 10px;"></textarea>
+          &rdquo;
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>● 내가 세상과 나 자신에게 남기고 싶은 선물 <span class="hint">(예: 미소, 넉넉한 마음, 여유 등)</span></label>
+        <div class="inline-sentence">
+          나는 <input type="text" style="width: 220px;" placeholder="선물"> 을(를) 선물로 남깁니다.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>• 나의 인생 한 줄 헤드라인:</label>
+        <div class="inline-sentence">
+          내 삶은 <input type="text" style="width: 260px;" placeholder="한 줄 표현"> 이었습니다.
+        </div>
+      </div>
+    </section>
+  
+    <!-- Life Tree Click-Fill Section -->
+    <section class="tree-section">
+      <h3>EPILOGUE. 나의 인생나무 가꾸기</h3>
+      <p class="guide-text">
+        원하는 색상을 선택한 후 <strong>잎사귀 뭉텅이(5구역), 나무 줄기 및 가지들, 13개의 사과 열매</strong>를 클릭하여 색칠해보세요.<br>
+        사과열매의 의미와 인생나무에 담긴 소중한 이야기들은 하단 3개의 상자에 기록할 수 있습니다.
+      </p>
+  
+      <div class="symbol-info">
+        <span>🍎 나무 위의 사과 10개 : 내 삶을 채운 소중한 가치와 결실</span>
+        <span>🍂 바닥의 사과 3개 : 이루지 못했으나 나를 단련시킨 아쉬운 꿈들</span>
+      </div>
+      
+      <!-- Palette Toolbar: 15가지 색상 -->
+      <div class="color-toolbar">
+        <div class="color-palette">
+          <div class="color-btn active" style="background: #e63946;" data-color="#e63946" title="애플 레드"></div>
+          <div class="color-btn" style="background: #c1121f;" data-color="#c1121f" title="딥 루비"></div>
+          <div class="color-btn" style="background: #ff758f;" data-color="#ff758f" title="로즈 핑크"></div>
+          <div class="color-btn" style="background: #f77f00;" data-color="#f77f00" title="오렌지"></div>
+          <div class="color-btn" style="background: #fcbf49;" data-color="#fcbf49" title="골든 옐로우"></div>
+          <div class="color-btn" style="background: #70e000;" data-color="#70e000" title="라임 연두"></div>
+          <div class="color-btn" style="background: #38b000;" data-color="#38b000" title="올리브 그린"></div>
+          <div class="color-btn" style="background: #007200;" data-color="#007200" title="포레스트 그린"></div>
+          <div class="color-btn" style="background: #004b23;" data-color="#004b23" title="딥 그린"></div>
+          <div class="color-btn" style="background: #48cae4;" data-color="#48cae4" title="스카이 블루"></div>
+          <div class="color-btn" style="background: #d4a373;" data-color="#d4a373" title="라떼 카멜"></div>
+          <div class="color-btn" style="background: #b08968;" data-color="#b08968" title="우드 브라운"></div>
+          <div class="color-btn" style="background: #7f4f24;" data-color="#7f4f24" title="체스트넛 브라운"></div>
+          <div class="color-btn" style="background: #582f0e;" data-color="#582f0e" title="다크 바크"></div>
+          <div class="color-btn" style="background: #ffffff;" data-color="#ffffff" title="흰색 (지우개)"></div>
+        </div>
+        <button class="tool-btn" id="resetBtn">도안 색상 초기화</button>
+      </div>
+  
+      <!-- Interactive SVG Art Container (첨부 이미지 도안 기반) -->
+      <div class="art-container">
+        <svg id="treeSvg" class="tree-art" viewBox="0 0 1000 1280" xmlns="http://www.w3.org/2000/svg">
+          <!-- 대지 / 바닥 언덕 -->
+          <path class="fillable" id="groundPath" d="M 60,1160 Q 280,1100 500,1120 T 940,1160 L 940,1250 L 60,1250 Z" 
+                fill="#ffffff" stroke="#222222" stroke-width="4.5" stroke-linecap="round"/>
+
+          <!-- 1. 잎새 뭉텅이 5개 구역 (세세한 잎 대신 5개의 큰 구역으로 채색) -->
+          <g id="leafClustersGroup">
+            <!-- 뭉텅이 1: 상단 중앙 잎무리 -->
+            <path class="fillable" data-label="잎새 뭉텅이 1 (상단)" d="M 500,60 C 640,60 760,120 780,240 C 720,290 640,310 500,310 C 360,310 280,290 220,240 C 240,120 360,60 500,60 Z" 
+                  fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round"/>
+            
+            <!-- 뭉텅이 2: 좌측 상단 잎무리 -->
+            <path class="fillable" data-label="잎새 뭉텅이 2 (좌측 상단)" d="M 220,240 C 280,290 350,310 400,350 C 320,440 210,480 120,410 C 60,340 70,240 140,180 C 170,160 200,200 220,240 Z" 
+                  fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round"/>
+            
+            <!-- 뭉텅이 3: 우측 상단 잎무리 -->
+            <path class="fillable" data-label="잎새 뭉텅이 3 (우측 상단)" d="M 780,240 C 720,290 650,310 600,350 C 680,440 790,480 880,410 C 940,340 930,240 860,180 C 830,160 800,200 780,240 Z" 
+                  fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round"/>
+            
+            <!-- 뭉텅이 4: 좌측 하단 잎무리 -->
+            <path class="fillable" data-label="잎새 뭉텅이 4 (좌측 하단)" d="M 120,410 C 210,480 320,460 380,510 C 370,640 250,750 140,680 C 60,610 50,490 120,410 Z" 
+                  fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round"/>
+            
+            <!-- 뭉텅이 5: 우측 하단 잎무리 (그네 제거 후 풍성한 잎사귀로 완성) -->
+            <path class="fillable" data-label="잎새 뭉텅이 5 (우측 하단)" d="M 880,410 C 790,480 680,460 620,510 C 630,640 750,750 860,680 C 940,610 950,490 880,410 Z" 
+                  fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round"/>
+          </g>
+
+          <!-- 2. 나무 줄기 및 가지 (따로따로 색칠 가능) -->
+          <g id="branchesGroup">
+            <!-- 좌측 큰 가지 -->
+            <path class="fillable" data-label="좌측 가지" d="M 440,560 C 380,490 280,440 220,420 C 270,470 340,530 410,610 Z" 
+                  fill="#ffffff" stroke="#222222" stroke-width="4.5" stroke-linejoin="round"/>
+
+            <!-- 우측 큰 가지 (그네가 걸려있던 부분을 정갈한 나뭇가지로 변경) -->
+            <path class="fillable" data-label="우측 가지" d="M 560,560 C 620,490 720,440 780,420 C 730,470 660,530 590,610 Z" 
+                  fill="#ffffff" stroke="#222222" stroke-width="4.5" stroke-linejoin="round"/>
+
+            <!-- 중앙 상단 뻗은 가지 -->
+            <path class="fillable" data-label="중앙 가지" d="M 470,490 C 460,400 480,340 500,310 C 520,340 540,400 530,490 C 500,510 500,510 470,490 Z" 
+                  fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round"/>
+
+            <!-- 중앙 메인 기둥 및 뿌리 밑동 -->
+            <path class="fillable" data-label="나무 기둥과 밑동" d="M 440,560 C 480,590 520,590 560,560 C 590,610 590,720 560,860 C 540,960 560,1050 630,1110 C 580,1105 520,1090 490,1125 C 460,1090 400,1105 350,1110 C 420,1050 440,960 420,860 C 390,720 390,610 440,560 Z" 
+                  fill="#ffffff" stroke="#222222" stroke-width="5" stroke-linejoin="round"/>
+            
+            <!-- 기둥 수피 질감 스케치 라인 -->
+            <path d="M 470,680 C 460,760 465,850 460,940" fill="none" stroke="#222222" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 520,680 C 530,760 525,850 530,940" fill="none" stroke="#222222" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+
+          <!-- 3. 사과 열매 13개 (나무 위 10개 + 땅 위 3개, 글자 없이 색칠만 가능) -->
+          <g id="applesGroup">
+            <!-- [나무 위 사과 10개] -->
+            <!-- 사과 1 (상단 중앙) -->
+            <g class="apple-item" transform="translate(365, 190)">
+              <path d="M0,-30 Q-5,-48 8,-54" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-20,-42 -40,-25 -38,-2 C-34,26 -6,32 0,34 C6,32 34,26 38,-2 C40,-25 20,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 사과 2 (상단 우측) -->
+            <g class="apple-item" transform="translate(595, 260)">
+              <path d="M0,-30 Q-5,-48 8,-54" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-20,-42 -40,-25 -38,-2 C-34,26 -6,32 0,34 C6,32 34,26 38,-2 C40,-25 20,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 사과 3 (중상단 좌측) -->
+            <g class="apple-item" transform="translate(335, 390)">
+              <path d="M0,-30 Q-5,-48 8,-54" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-20,-42 -40,-25 -38,-2 C-34,26 -6,32 0,34 C6,32 34,26 38,-2 C40,-25 20,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 사과 4 (중앙) -->
+            <g class="apple-item" transform="translate(528, 435)">
+              <path d="M0,-30 Q-5,-48 8,-54" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-20,-42 -40,-25 -38,-2 C-34,26 -6,32 0,34 C6,32 34,26 38,-2 C40,-25 20,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 사과 5 (중상단 우측) -->
+            <g class="apple-item" transform="translate(680, 395)">
+              <path d="M0,-30 Q-5,-48 8,-54" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-20,-42 -40,-25 -38,-2 C-34,26 -6,32 0,34 C6,32 34,26 38,-2 C40,-25 20,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 사과 6 (중하단 좌측 외곽) -->
+            <g class="apple-item" transform="translate(186, 485)">
+              <path d="M0,-30 Q-5,-48 8,-54" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-20,-42 -40,-25 -38,-2 C-34,26 -6,32 0,34 C6,32 34,26 38,-2 C40,-25 20,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 사과 7 (중하단 우측 외곽) -->
+            <g class="apple-item" transform="translate(850, 505)">
+              <path d="M0,-30 Q-5,-48 8,-54" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-20,-42 -40,-25 -38,-2 C-34,26 -6,32 0,34 C6,32 34,26 38,-2 C40,-25 20,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 사과 8 (하단 좌측 잎 부근) -->
+            <g class="apple-item" transform="translate(312, 605)">
+              <path d="M0,-30 Q-5,-48 8,-54" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-20,-42 -40,-25 -38,-2 C-34,26 -6,32 0,34 C6,32 34,26 38,-2 C40,-25 20,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 사과 9 (하단 우측 가지 부근) -->
+            <g class="apple-item" transform="translate(715, 560)">
+              <path d="M0,-30 Q-5,-48 8,-54" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-20,-42 -40,-25 -38,-2 C-34,26 -6,32 0,34 C6,32 34,26 38,-2 C40,-25 20,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 사과 10 (그네가 있던 자리에 배치된 10번째 사과) -->
+            <g class="apple-item" transform="translate(730, 725)">
+              <path d="M0,-30 Q-5,-48 8,-54" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-20,-42 -40,-25 -38,-2 C-34,26 -6,32 0,34 C6,32 34,26 38,-2 C40,-25 20,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- [땅에 떨어진 사과 3개] -->
+            <!-- 땅 사과 1 (좌측 바닥) -->
+            <g class="apple-item" transform="translate(240, 1130)">
+              <path d="M0,-28 Q-10,-44 4,-48" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-22,-42 -42,-25 -40,-2 C-36,26 -6,33 0,35 C6,33 36,26 40,-2 C42,-25 22,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 땅 사과 2 (중앙 바닥) -->
+            <g class="apple-item" transform="translate(580, 1195)">
+              <path d="M0,-28 Q-10,-44 4,-48" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-22,-42 -42,-25 -40,-2 C-36,26 -6,33 0,35 C6,33 36,26 40,-2 C42,-25 22,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+
+            <!-- 땅 사과 3 (우측 바닥) -->
+            <g class="apple-item" transform="translate(830, 1140)">
+              <path d="M0,-28 Q-10,-44 4,-48" fill="none" stroke="#222222" stroke-width="3" stroke-linecap="round"/>
+              <path class="fillable apple-body" d="M0,-28 C-22,-42 -42,-25 -40,-2 C-36,26 -6,33 0,35 C6,33 36,26 40,-2 C42,-25 22,-42 0,-28 Z" fill="#ffffff" stroke="#222222" stroke-width="3.8"/>
+            </g>
+          </g>
+        </svg>
+
+        <!-- 나무 하단 네모 박스 3개 영역 -->
+        <div class="tree-bottom-boxes">
+          <!-- 박스 1: 사과열매 의미 적기 -->
+          <div class="box-wrap">
+            <div class="bottom-box-label">1. 사과열매 의미 적기</div>
+            <textarea class="card-textarea" placeholder="• 나무 위 10개 열매의 의미:&#10;• 바닥에 떨어진 3개 열매(이루지 못한 나의 꿈들)의 의미:"></textarea>
+          </div>
+
+          <!-- 박스 2: 나의 인생 나무의 주제 적기 -->
+          <div class="box-wrap">
+            <div class="bottom-box-label">2. 나의 인생 나무의 주제</div>
+            <textarea class="card-textarea" placeholder="나만의 인생 나무에 이름을 붙여보세요 (예: 비바람을 뚫고 맺은 단단한 지혜의 나무)"></textarea>
+          </div>
+
+          <!-- 박스 3: 나무에게 보내는 글 -->
+          <div class="box-wrap">
+            <div class="bottom-box-label">3. 나무에게 보내는 글</div>
+            <textarea class="card-textarea" placeholder="여기까지 푸르게 열매 맺으며 묵묵히 자라준 나의 인생 나무(나 자신)에게 따뜻한 한 줄을 건네보세요..."></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <div class="btn-wrap">
+      <button class="btn btn-print" onclick="window.print()">작성 내용 인쇄 / PDF 저장</button>
+    </div>
+  
+    <footer>
+      <div class="brand-title">Hye-yum. 삶을 헤아리는 시간</div>
+      <p>- 웰다잉통합예술교육협회 -</p>
+    </footer>
+  </div>
+  
+  <script>
+    // 현재 선택된 색상 (기본: 애플 레드)
+    let selectedColor = '#e63946';
+  
+    // 15가지 색상 팔레트 클릭 이벤트
+    const colorBtns = document.querySelectorAll('.color-btn');
+    colorBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        colorBtns.forEach(b => b.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        selectedColor = e.currentTarget.getAttribute('data-color');
+      });
+    });
+  
+    // 채색 이벤트: SVG 내부의 채색 가능(.fillable) 요소 클릭 시 즉시 색칠
+    const svgArea = document.getElementById('treeSvg');
+    svgArea.addEventListener('click', (e) => {
+      if (e.target.classList.contains('fillable')) {
+        e.target.setAttribute('fill', selectedColor);
+      }
+    });
+  
+    // 전체 초기화 버튼
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      if (confirm('도안의 색상과 작성된 글을 모두 초기화하시겠습니까?')) {
+        document.querySelectorAll('.fillable').forEach(part => {
+          part.setAttribute('fill', '#ffffff');
+        });
+        document.querySelectorAll('.card-textarea').forEach(box => {
+          box.value = '';
+        });
+      }
+    });
+  </script>
+</body>
+</html>
