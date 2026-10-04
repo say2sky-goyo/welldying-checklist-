@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>그대에게 닿을 나의 이야기 - 워크북</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --rose: #f6c4d4;        /* 지면: 진분홍 파스텔 */
+      --rose-deep: #e79fba;   /* 화면 바탕, 진한 선 */
+      --blush: #fff3f6;       /* 글 쓰는 칸, 박스 */
+      --line: #d889a7;        /* 테두리 */
+      --rule: #f0c9d6;        /* 줄노트 선 */
+      --ink: #32101e;         /* 본문 글자 */
+      --ink-soft: #5a2a3c;    /* 보조 글자 */
+      --plum: #8a1648;        /* 제목, 강조 */
+
+      --serif: "Gowun Batang", "Nanum Myeongjo", "Noto Serif KR", "Batang", serif;
+      --sans: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    }
+
+    *{ box-sizing: border-box; }
+
+    html{
+      font-size: 16px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body{
+      margin: 0;
+      background: var(--rose-deep);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 1rem;
+      line-height: 1.62;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+    }
+
+    p{ margin: 0; }
+    ul{ margin: 0; padding-left: 1.25em; }
+    li{ margin: 0.22em 0; }
+    li::marker{ color: var(--plum); }
+    strong{ font-weight: 700; color: var(--ink); }
+
+    /* ---------- 화면 전용 안내 ---------- */
+    .warning-banner{
+      max-width: 210mm;
+      margin: 18px auto 0;
+      padding: 12px 16px;
+      background: var(--blush);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--plum);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    /* ---------- 지면(한 장 = A4 한 쪽) ---------- */
+    .sheet{
+      background: var(--rose);
+      margin: 16px 12px;
+      padding: 26px 20px;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------- 표지 머리 ---------- */
+    header{
+      text-align: center;
+      padding-bottom: 1.1rem;
+      margin-bottom: 1.1rem;
+      border-bottom: 1px solid var(--line);
+    }
+    h1{
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 2.3rem;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--plum);
+    }
+    .subtitle{
+      margin-top: 0.55rem;
+      font-family: var(--serif);
+      font-size: 1.12rem;
+      color: var(--ink);
+    }
+    .meta-note{
+      margin-top: 0.3rem;
+      font-size: 0.86rem;
+      color: var(--ink-soft);
+    }
+
+    /* ---------- 제목 위계 ---------- */
+    h2{
+      margin: 0 0 0.75rem;
+      padding-bottom: 0.4rem;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 1.5rem;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--plum);
+      border-bottom: 2px solid var(--plum);
+    }
+    h2.next{ margin-top: 1.5rem; }
+
+    h3{
+      margin: 1rem 0 0.4rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--plum);
+    }
+
+    .chapter-title{
+      margin: 0 0 0.55rem;
+      padding-left: 0.7rem;
+      border-left: 5px solid var(--plum);
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 1.2rem;
+      line-height: 1.35;
+      color: var(--plum);
+    }
+    .chapter-title.next{ margin-top: 1.3rem; }
+
+    /* ---------- 박스 ---------- */
+    .content-box{
+      background: var(--blush);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0;
+    }
+    .content-box p + p{ margin-top: 0.3rem; }
+
+    .lead-box{ margin: 0 0 1.2rem; }
+
+    .activity{
+      border-style: dashed;
+      border-width: 1.5px;
+      border-color: var(--plum);
+      text-align: center;
+      font-weight: 700;
+      padding: 0.55rem 1rem;
+    }
+
+    .target-goal{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+    .goal-card{
+      background: var(--blush);
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--plum);
+      border-radius: 10px;
+      padding: 0.6rem 0.8rem 0.7rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+    .goal-card strong{
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 1.02rem;
+      color: var(--plum);
+    }
+
+    /* ---------- 질문과 쓰는 칸 ---------- */
+    .q{ font-weight: 500; margin-top: 0.55rem; }
+    .deep{ font-size: 0.93rem; color: var(--ink-soft); margin-top: 0.45rem; }
+
+    .textarea-box{
+      display: block;
+      width: 100%;
+      height: 132px;
+      margin: 0.35rem 0 0;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      resize: none;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 30px;
+      color: var(--ink);
+      background-color: var(--blush);
+      background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 29px, var(--rule) 29px, var(--rule) 30px);
+      background-position: 0 6px;
+      background-attachment: local;
+    }
+    .textarea-box.tall{ height: 210px; }
+    .textarea-box:focus, .input-line:focus{
+      outline: 2px solid var(--plum);
+      outline-offset: 1px;
+    }
+
+    .fill{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .input-line{
+      flex: 1 1 9rem;
+      min-width: 0;
+      border: 0;
+      border-bottom: 2px solid var(--plum);
+      border-radius: 0;
+      background: transparent;
+      padding: 2px 6px;
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    /* ---------- 체크리스트 ---------- */
+    .checklist{
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-top: 0.5rem;
+    }
+    .check-item{
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 0.7rem;
+      align-items: center;
+      padding: 0.5rem 0.8rem;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+    .check-item:hover{ border-color: var(--plum); }
+    .cb-input{ position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .cb-ui{
+      width: 22px; height: 22px;
+      display: grid; place-items: center;
+      border: 2px solid var(--plum);
+      border-radius: 6px;
+      background: #fff;
+      transition: background .15s;
+    }
+    .cb-ui svg{ width: 15px; height: 15px; color: #fff; opacity: 0; transition: opacity .15s; }
+    .cb-input:checked + .cb-ui{ background: var(--plum); }
+    .cb-input:checked + .cb-ui svg{ opacity: 1; }
+    .cb-input:focus-visible + .cb-ui{ outline: 2px solid var(--ink); outline-offset: 2px; }
+    .check-item:has(.cb-input:checked){ border-color: var(--plum); background: #ffe6ee; }
+    .check-item:has(.cb-input:checked) .check-text{ font-weight: 700; }
+
+    .copyright{
+      margin-top: 0.9rem;
+      font-size: 0.84rem;
+      color: var(--ink-soft);
+    }
+
+    /* ---------- 맺음말 ---------- */
+    .closing{
+      margin-top: 1.4rem;
+      text-align: center;
+      font-family: var(--serif);
+      font-size: 1.12rem;
+      line-height: 1.75;
+      padding: 1rem 1.2rem;
+    }
+    .pledge{
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--plum);
+    }
+
+    /* ---------- 기관 정보 ---------- */
+    .info-box{
+      margin-top: 1.4rem;
+      padding: 6px;
+      background: #fff;
+      border: 2px solid var(--plum);
+      border-radius: 16px;
+      text-align: center;
+    }
+    .info-inner{
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 1.1rem 1.2rem 1rem;
+    }
+    .info-box h4{
+      margin: 0 0 0.35rem;
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--plum);
+    }
+    .info-box .motto{ font-size: 0.95rem; color: var(--ink); }
+    .info-box hr{
+      border: 0;
+      border-top: 1px solid var(--line);
+      width: 60%;
+      margin: 0.8rem auto;
+    }
+    .contacts{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+      font-size: 0.93rem;
+    }
+    .contacts p{ white-space: nowrap; }
+    .info-box a{
+      color: var(--plum);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+    }
+    .info-box a:hover{ border-bottom-color: var(--plum); }
+
+    /* ---------- 버튼 ---------- */
+    .btn-print{
+      position: fixed;
+      right: 22px; bottom: 22px;
+      z-index: 10;
+      padding: 13px 24px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--plum);
+      color: #fff;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(50,16,30,.28);
+    }
+    .btn-print:hover{ background: #6f0f39; }
+    .btn-print:focus-visible{ outline: 3px solid var(--ink); outline-offset: 3px; }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ transition: none !important; }
+    }
+
+    /* =====================================================
+       A4 지면 배치: 넓은 화면과 인쇄에서 동일하게 4쪽
+       ===================================================== */
+    @media print, (min-width: 860px){
+      html{ font-size: 10.8pt; }
+
+      .sheet{
+        width: 210mm;
+        height: 297mm;
+        margin: 22px auto;
+        padding: 13mm 16mm 13mm;
+        border-radius: 0;
+        overflow: hidden;
+        box-shadow: 0 10px 34px rgba(50,16,30,.22);
+      }
+
+      .target-goal{ grid-template-columns: repeat(3, 1fr); }
+      .contacts{ display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem 1.6rem; }
+
+      /* 쓰는 칸이 남는 지면을 나눠 가짐 → 쪽을 넘기지 않음 */
+      .write .textarea-box{ flex: 1 1 0; height: auto; min-height: 20mm; line-height: 8mm; padding: 1.5mm 4mm;
+        background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(8mm - 1px), var(--rule) calc(8mm - 1px), var(--rule) 8mm);
+        background-position: 0 1.5mm; }
+      .write .textarea-box.tall{ flex-grow: 1.6; }
+
+      .last .closing{ margin-top: auto; }
+      .last .info-box{ margin-top: auto; }
+    }
+
+    @page{ size: A4; margin: 0; }
+
+    @media print{
+      html, body{ background: var(--rose) !important; }
+      .no-print{ display: none !important; }
+      .sheet{
+        margin: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .sheet:last-of-type{ break-after: auto; page-break-after: auto; }
+      .textarea-box, .input-line{ outline: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="no-print warning-banner">
+    ⚠️ 주의: 작성 내용은 서버에 저장하지 않습니다. 새로고침 시 내용이 삭제되니, 작성 후 반드시 아래 버튼을 눌러 PDF로 보관하세요.
+  </div>
+
+  <!-- ===================== 1쪽 ===================== -->
+  <section class="sheet">
+    <header>
+      <h1>📘 그대에게 닿을 나의 이야기</h1>
+      <p class="subtitle">부제: 석양에 머문 문장들, 사랑하는 이에게 남기는 빛</p>
+      <p class="meta-note">(비상업적 용도의 무료 배포를 권장합니다)</p>
+    </header>
+
+    <div class="content-box lead-box">
+      본 워크북은 존엄치료(Dignity Therapy)의 철학을 바탕으로, 삶의 궤적을 정리하고 사랑하는 이들에게 정서적 유산을 남기고자 하는 분들을 위해 제작되었습니다.
+    </div>
+
+    <h2>Ⅰ. 시작하며: 존엄의 가치</h2>
+    <p>인간은 신체적으로 약해질지라도, 자신의 삶을 반추하고 목소리를 낼 수 있을 때 진정한 존엄을 유지합니다. 이 워크북은 하비 맥스 초치노프 박사의 '존엄 모델'을 기반으로 설계되었으며, 당신을 단순한 '환자'가 아닌 '풍성한 역사를 지닌 고유한 인격체'로 조명합니다.</p>
+
+    <h3>🎯 핵심 목표</h3>
+    <div class="target-goal">
+      <div class="goal-card"><strong>고통의 완화</strong>삶의 의미를 재발견함으로써 허무함과 존재적 불안을 줄입니다.</div>
+      <div class="goal-card"><strong>자아의 통합</strong>과거와 현재를 연결하여 '나'라는 존재의 연속성을 회복합니다.</div>
+      <div class="goal-card"><strong>정서적 유대</strong>사랑하는 이들과의 관계 속에서 자신의 위치를 다시 확인합니다.</div>
+    </div>
+
+    <h3>🎁 기록의 의미: 유산 문서(Legacy Document)</h3>
+    <p>이 워크북을 통해 완성될 기록은 단순히 과거를 적은 종이가 아니라, 세상에 남길 당신의 소중한 유산입니다.</p>
+    <ul>
+      <li><strong>나에게 주는 선물:</strong> 흩어진 삶의 조각들을 하나로 모아 평온하게 매듭짓는 '삶의 통합'</li>
+      <li><strong>가족에게 주는 선물:</strong> 당신의 목소리가 담긴 기록을 통해 슬픔을 극복할 힘을 얻는 '치유의 자원'</li>
+    </ul>
+
+    <h2 class="next">Ⅱ. 마음지기(진행자) 가이드</h2>
+
+    <h3 style="margin-top:0;">- 기본 원칙 (3No)</h3>
+    <p>작성자의 심리적 안전을 위해 다음의 3No 원칙을 반드시 지켜주세요.</p>
+    <div class="content-box">
+      <p><strong>1. No Correction (교정 금지):</strong> 조언이나 비판 없이 있는 그대로 수용하기.</p>
+      <p><strong>2. No Hurrying (침묵 존중):</strong> 눈물과 침묵도 대화의 일부입니다. 충분히 기다려 주기.</p>
+      <p><strong>3. No Pressure (강요 금지):</strong> 답변하기 힘든 질문은 언제든 건너뛰기.</p>
+    </div>
+
+    <h3>- 상황별 대응 및 전문가 연계</h3>
+    <ul>
+      <li><strong>감정의 동요:</strong> "괜찮습니다, 천천히 하셔도 됩니다"라며 안심시켜 드립니다.</li>
+      <li><strong>죄책감 표현:</strong> "그 당시 상황에서 최선을 다하신 것임을 압니다"라고 공감합니다.</li>
+      <li><strong>중단 신호:</strong> 자살 암시, 극심한 공황, 현실 판단 저하가 나타나면 즉시 중단하고 전문가의 도움을 요청하십시오.</li>
+    </ul>
+  </section>
+
+  <!-- ===================== 2쪽 ===================== -->
+  <section class="sheet write">
+    <h2>Ⅲ. [워크북] 나의 삶, 나의 목소리</h2>
+
+    <div class="chapter-title">제1장. 눈부신 기억의 조각 (에너지 회복)</div>
+    <p class="q" style="margin-top:0;">• 당신의 인생에서 가장 빛나던 시절은 언제였으며, 그때 당신은 어떤 모습이었나요?</p>
+    <textarea class="textarea-box"></textarea>
+    <p class="q">• 떠올리기만 해도 미소가 지어지는 소중한 장소나 순간은 어디인가요?</p>
+    <textarea class="textarea-box"></textarea>
+    <p class="deep">[심화 질문]: 그 시절의 냄새나 소리가 기억나시나요? 어린 날 꿈꾸던 당신의 모습은 어땠나요?</p>
+    <div class="content-box activity">[활동]: 리즈 시절 사진 붙이기 또는 행복했던 장면 그리기</div>
+
+    <div class="chapter-title next">제2장. 삶을 일군 긍지와 성취 (자존감 회복)</div>
+    <p class="q" style="margin-top:0;">• 부모, 배우자, 혹은 직업인으로서 스스로가 대견했던 최고의 순간은?</p>
+    <textarea class="textarea-box"></textarea>
+    <p class="q">• 모진 풍파 속에서도 당신을 일으켜 세운 신념이나 사람은 누구인가요?</p>
+    <textarea class="textarea-box"></textarea>
+    <p class="fill">✍️ 나의 정의: “나는 <input type="text" class="input-line" aria-label="나의 정의"> 한 사람이었다.”</p>
+    <div class="content-box activity" style="margin-bottom:0;">[활동]: 나에게 수여하는 ‘인생 공로상’ 작성하기</div>
+  </section>
+
+  <!-- ===================== 3쪽 ===================== -->
+  <section class="sheet write">
+    <div class="chapter-title">제3장. 사랑하는 이들에게 띄우는 편지 (관계의 완성)</div>
+    <p class="q" style="margin-top:0;">• 쑥스러워 차마 전하지 못했던 "고맙다", "미안하다", "사랑한다"는 말을 남겨주세요.</p>
+    <textarea class="textarea-box tall"></textarea>
+    <p class="q">• 마음에 담아두었던 응어리나, 이제는 편안히 놓고 싶은 기억이 있나요?</p>
+    <textarea class="textarea-box"></textarea>
+    <p class="deep">[심화 질문]: 가족에게 꼭 물려주고 싶은 나만의 손맛(레시피)이나 습관이 있나요?</p>
+
+    <div class="chapter-title next">제4장. 세상에 남기는 지혜 (유산의 영속성)</div>
+    <p class="q" style="margin-top:0;">• 후손들이 인생의 비바람을 만났을 때 길을 잃지 않도록 해줄 조언은 무엇인가요?</p>
+    <textarea class="textarea-box"></textarea>
+    <p class="q">• 다음 세대가 이것만은 꼭 지키며 살길 바라는 가치가 있나요?</p>
+    <textarea class="textarea-box"></textarea>
+    <p class="fill">✍️ 마지막 문장: “나의 삶은 <input type="text" class="input-line" aria-label="마지막 문장"> 였다.”</p>
+  </section>
+
+  <!-- ===================== 4쪽 ===================== -->
+  <section class="sheet last">
+    <h2>Ⅳ. 유산 문서(Legacy Document) 활용</h2>
+
+    <div class="content-box">
+      <p>1. 보관: 정돈된 글과 함께 당시의 대화 음성(USB/QR)을 함께 보관하면 감동이 배가됩니다.</p>
+      <p>2. 전달 방식 (본인 선택):</p>
+
+      <div class="checklist">
+        <label class="check-item">
+          <input class="cb-input" type="checkbox">
+          <span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <span class="check-text">지금 가족과 함께 읽으며 온기를 나누기</span>
+        </label>
+        <label class="check-item">
+          <input class="cb-input" type="checkbox">
+          <span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <span class="check-text">특정 기념일(생일, 결혼기념일 등)에 전달하기</span>
+        </label>
+        <label class="check-item">
+          <input class="cb-input" type="checkbox">
+          <span class="cb-ui" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <span class="check-text">사후 유품으로 전달하여 마지막 위로 전하기</span>
+        </label>
+      </div>
+    </div>
+
+    <h3>💡 기록을 돕는 '말문 열기' 팁</h3>
+    <ul>
+      <li><strong>오감을 자극하세요:</strong> "어땠나요?"보다 "그때 어떤 소리가 들렸고 어떤 냄새가 났나요?"라고 질문하면 기억이 더 선명해집니다.</li>
+      <li><strong>취향을 물어보세요:</strong> 사소한 취향(좋아하는 노래, 커피, 꽃)을 묻는 것이 큰 이야기의 시작이 될 수 있습니다.</li>
+      <li><strong>동행자가 되어주세요:</strong> 당신은 치료자가 아니라, 인생이라는 여행을 함께 돌아보는 동행자임을 잊지 마세요.</li>
+    </ul>
+
+    <p class="copyright">⚖️ 저작권 안내: 본 자료는 비상업적 용도로 자유롭게 활용 가능하며, 재배포 시 출처를 명시해 주시기 바랍니다. (의료적 처방을 대체할 수는 없습니다.)</p>
+
+    <div class="content-box closing">
+      🌿 맺음말:<br>
+      삶은 완벽해서 아름다운 것이 아니라, 당신이라는 소중한 흔적이 남기에 아름답습니다.<br>
+      이 기록은 당신이 남기는 마지막 선물인 동시에, 지금의 당신을 안아주는 따뜻한 시간이 될 것입니다.
+    </div>
+
+    <div class="pledge">
+      존엄은 우연히 주어지지 않습니다.<br>
+      준비하는 만큼, 삶은 마지막까지 ‘나의 것’이 됩니다.
+    </div>
+
+    <footer class="info-box">
+      <div class="info-inner">
+        <h4>웰다잉통합예술교육협회</h4>
+        <p class="motto">삶을 빚는 예술, 죽음을 품는 인문학.</p>
+        <p class="motto">삶과 죽음 사이의 숨결을 함께 빚어가는 곳</p>
+        <hr>
+        <div class="contacts">
+          <p>🌐 홈페이지: <a href="http://wia-edu.org" target="_blank" rel="noopener">http://wia-edu.org</a></p>
+          <p>📝 블로그: <a href="https://blog.naver.com/say2sky" target="_blank" rel="noopener">https://blog.naver.com/say2sky</a></p>
+          <p>📞 프로그램문의: 010-5635-7989</p>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <button id="btnPrint" class="btn-print no-print" type="button">고화질 PDF로 보관하기</button>
+
+  <script>
+    // 웹폰트 로딩이 끝난 뒤 인쇄(대체 글꼴로 찍히는 사고 방지)
+    const btn = document.getElementById('btnPrint');
+    btn.addEventListener('click', async () => {
+      try {
+        if (document.fonts && document.fonts.ready) {
+          btn.textContent = 'PDF 준비 중...';
+          btn.disabled = true;
+          await document.fonts.ready;
+        }
+      } finally {
+        btn.textContent = '고화질 PDF로 보관하기';
+        btn.disabled = false;
+        window.print();
+      }
+    });
+  </script>
+</body>
+</html>
