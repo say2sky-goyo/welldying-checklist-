@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마음카드 | 마음별</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f7f2ee;
+    color: #322639;
+    font: 1rem/1.65 system-ui, sans-serif;
+  }
+  main { width: min(60rem, calc(100% - 2rem)); margin: 2rem auto; }
+  h1 { font: 700 clamp(2.25rem, 7vw, 3.5rem)/1.2 Georgia, Batang, serif; }
+  h1, h2, p { margin: 0 0 .65rem; }
+  h2 { font-size: 1.25rem; }
+  section {
+    margin-top: 1rem;
+    padding: clamp(1rem, 4vw, 2rem);
+    background: #fffdfb;
+    border: 1px solid #ded3dc;
+    border-radius: 1.5rem;
+  }
+  .palette {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .65rem;
+    margin: 1rem 0;
+  }
+  button {
+    min-height: 44px;
+    background: #fffdfb;
+    color: inherit;
+    border: 1px solid #796681;
+    border-radius: .8rem;
+    font: inherit;
+    cursor: pointer;
+  }
+  button:focus-visible, #message:focus-visible {
+    outline: 3px solid #553865;
+    outline-offset: 3px;
+  }
+  .swatch { position: relative; padding: .4rem; }
+  .sample {
+    display: block;
+    height: 2.2rem;
+    margin-bottom: .35rem;
+    border: 1px solid #32263955;
+    border-radius: .5rem;
+    background: var(--color);
+  }
+  .swatch[aria-pressed="true"] { border: 2px solid #553865; font-weight: 700; }
+  .order {
+    position: absolute;
+    top: .55rem;
+    right: .55rem;
+    min-width: 1.5rem;
+    border-radius: 50%;
+    background: #322639;
+    color: #fff;
+  }
+  .actions { display: flex; flex-wrap: wrap; gap: .65rem; }
+  .actions button { padding: .55rem 1rem; }
+  #reveal { background: #553865; color: #fff; font-weight: 700; }
+  #reveal:disabled { background: #eee5ef; color: #5a4a60; cursor: default; }
+  #card {
+    display: grid;
+    place-items: center;
+    min-height: 16rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background:
+      radial-gradient(ellipse at bottom left, var(--first), transparent 64%),
+      radial-gradient(ellipse at top right, var(--second), transparent 64%),
+      #fffbf4;
+  }
+  #message {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    background: #fffdf7;
+    border-radius: .8rem;
+    text-align: center;
+    overflow-wrap: anywhere;
+    font: 700 clamp(1.15rem, 4vw, 1.75rem)/1.8 Georgia, Batang, serif;
+  }
+  [hidden] { display: none !important; }
+  @media (max-width: 480px) {
+    .palette { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>마음카드</h1>
+    <p>오늘 곁에 두고 싶은 색을 한 가지 또는 두 가지 골라보세요.</p>
+  </header>
+
+  <section aria-labelledby="palette-title">
+    <h2 id="palette-title">색 고르기</h2>
+    <p id="status" role="status">선택한 색 0 / 2</p>
+    <div class="palette" id="palette"></div>
+    <div class="actions">
+      <button type="button" id="reveal" aria-controls="result" disabled>지금 내가 듣고 싶은 말</button>
+      <button type="button" id="reset">다시 고르기</button>
+    </div>
+  </section>
+
+  <section id="result" aria-labelledby="result-title" hidden>
+    <h2 id="result-title">나에게 건네는 말</h2>
+    <p id="chosen"></p>
+    <div id="card"><p id="message" tabindex="-1"></p></div>
+  </section>
+</main>
+
+<script>
+const cards = [
+  ["연분홍", "#F8CDD8", "오늘 느낀 마음을 있는 그대로 두어도 괜찮아."],
+  ["선명한 빨강", "#E74653", "나에게 중요한 일이라면 내 뜻을 말해도 돼."],
+  ["짙은 자주빛 빨강", "#8B273F", "그때의 나에게도 그때의 사정이 있었어."],
+  ["말린 장미색", "#B47683", "보고 싶은 날엔 그 사람 이야기를 꺼내도 돼."],
+  ["살구색", "#FFD2AB", "다 끝내기 전에도 쉴 수 있어."],
+  ["선명한 주황", "#F68A3D", "가장 작은 일 하나부터 시작해도 돼."],
+  ["짙은 호박색", "#995022", "괜찮은 척 애쓰느라 지쳤다면 그 마음부터 살펴도 돼."],
+  ["흙빛 주황", "#C88E72", "내가 해온 일 가운데 마음에 드는 것 하나를 기억해도 좋아."],
+  ["크림색", "#FFF0C4", "막막한 일은 한 사람에게 먼저 말해봐도 돼."],
+  ["레몬빛", "#F5D64B", "오늘의 작은 즐거움을 마음에 담아둘래."],
+  ["짙은 겨자색", "#91701C", "지금 결정하기 어렵다면 생각할 시간을 청해도 돼."],
+  ["볏짚색", "#CDB989", "이미 지난 하루를 더 잘해냈어야 한다고 나를 몰아세우지 않을래."],
+  ["연한 황록", "#E3F1AE", "나한테 필요한 만큼 시간을 써도 돼."],
+  ["선명한 황록", "#ACCE35", "궁금한 게 있다면 한 번 더 물어봐도 돼."],
+  ["짙은 올리브색", "#556021", "오래 해온 일이라도 지금의 나에게 맞게 바꿔도 돼."],
+  ["잿빛 올리브색", "#A4A77F", "아껴 온 기억은 나만의 방식으로 간직해도 돼."],
+  ["연한 초록", "#CCEBCF", "몸이 무거운 오늘은 잠깐 앉아 있어도 돼."],
+  ["잎초록", "#58A34C", "조금 해본 것만으로도 오늘의 시도는 남아 있어."],
+  ["숲초록", "#28583C", "나를 도와주는 사람에게도 내가 편한 방식을 말해도 돼."],
+  ["세이지색", "#A2B49A", "누군가 내 곁에 잠깐 있어 주면 좋겠다고 말해도 돼."],
+  ["연한 민트", "#C5F1E6", "내 마음을 오늘 다 설명하지 않아도 돼."],
+  ["맑은 청록", "#32C5BD", "한 번 멈춘 일도 마음이 내킬 때 다시 해볼 수 있어."],
+  ["짙은 청록", "#175D63", "지금 하기 어려운 부탁에는 어렵다고 말해도 돼."],
+  ["회청록", "#80A8A5", "그리운 사람을 기억하며 오늘을 살아가도 돼."],
+  ["하늘색", "#CADEF8", "남은 일은 내일의 나에게 맡겨도 돼."],
+  ["선명한 파랑", "#497CE4", "어디서부터 해야 할지 모르겠으면 같이 정해 달라고 해도 돼."],
+  ["짙은 남색", "#293C76", "힘들었다는 걸 나부터 알아줄래."],
+  ["회청색", "#899AB6", "마음이 가라앉는 데 필요한 시간을 내게 줄래."],
+  ["연보라", "#DFCEF5", "오늘은 여기까지만 해도 돼. 이제 쉬어도 돼."],
+  ["선명한 보라", "#9960D8", "내가 바라는 게 달라졌다면 새로 말해도 돼."],
+  ["가지색", "#583768", "문득 그리워지는 날엔 그 마음이 머물 자리를 내어줘도 돼."],
+  ["회보라", "#A797B2", "내가 지켜온 소중한 것 하나를 내 말로 남겨도 돼."]
+];
+
+const palette = document.getElementById("palette");
+const status = document.getElementById("status");
+const reveal = document.getElementById("reveal");
+const result = document.getElementById("result");
+const chosen = document.getElementById("chosen");
+const card = document.getElementById("card");
+const message = document.getElementById("message");
+const selection = [];
+
+const buttons = cards.map(([name, color], index) => {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "swatch";
+  button.setAttribute("aria-pressed", "false");
+
+  const sample = document.createElement("span");
+  sample.className = "sample";
+  sample.style.setProperty("--color", color);
+  sample.setAttribute("aria-hidden", "true");
+
+  const order = document.createElement("span");
+  order.className = "order";
+  order.hidden = true;
+  order.setAttribute("aria-hidden", "true");
+
+  button.append(sample, order, document.createTextNode(name));
+  button.addEventListener("click", () => toggleColor(index));
+  palette.append(button);
+  return { button, order };
+});
+
+function updateSelection() {
+  for (const [index, { button, order }] of buttons.entries()) {
+    const position = selection.indexOf(index) + 1;
+    button.setAttribute("aria-pressed", String(position > 0));
+    order.hidden = position === 0;
+    order.textContent = position || "";
+  }
+
+  const names = selection.map(index => cards[index][0]);
+  status.textContent = names.length
+    ? "선택한 색 " + names.length + " / 2 · " + names.join(", ")
+    : "선택한 색 0 / 2";
+  reveal.disabled = selection.length === 0;
+  result.hidden = true;
+  message.textContent = "";
+}
+
+function toggleColor(index) {
+  const position = selection.indexOf(index);
+
+  if (position !== -1) {
+    selection.splice(position, 1);
+  } else if (selection.length < 2) {
+    selection.push(index);
+  } else {
+    status.textContent = "최대 두 색까지 고를 수 있어요. 바꾸려면 선택한 색을 다시 눌러주세요.";
+    return;
+  }
+
+  updateSelection();
+}
+
+reveal.addEventListener("click", () => {
+  if (selection.length === 0) return;
+
+  const selectedCards = selection.map(index => cards[index]);
+  const [first, second] = selectedCards;
+
+  chosen.textContent = selectedCards.map(([name]) => name).join(" · ");
+  card.style.setProperty("--first", first[1] + "A8");
+  card.style.setProperty("--second", second ? second[1] + "A8" : "transparent");
+  message.textContent = selectedCards.map(([, , words]) => words).join(" ");
+  result.hidden = false;
+  message.focus();
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+  selection.length = 0;
+  updateSelection();
+  buttons[0].button.focus();
+});
+</script>
+</body>
+</html>
